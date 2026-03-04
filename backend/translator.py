@@ -2,7 +2,7 @@ import json
 import re
 import unicodedata
 from pathlib import Path
-from typing import Dict, List, TypedDict
+from typing import Dict, List, Optional, TypedDict
 
 DICTIONARY_ENTRY_SPAN_LIMIT = 500
 ITALIAN_DETECTION_THRESHOLD = 0.2
@@ -134,11 +134,8 @@ ANCIENT_TO_ENGLISH_ADDITIONS = {
     "edtha": "and",
     "mar": "many",
     "frëma": "fear",
-    "frema": "fear",
     "né": "not",
-    "ne": "not",
     "thön": "those",
-    "thon": "those",
     "eka": "i",
     "threyja": "three",
 }
@@ -394,11 +391,13 @@ def build_reverse_dictionary(dictionary: Dict[str, str]) -> Dict[str, str]:
         normalized_ancient = normalize_term(ancient)
         if normalized_ancient:
             reverse_dictionary.setdefault(normalized_ancient, english)
-            reverse_dictionary.setdefault(strip_diacritics(normalized_ancient), english)
+            plain_ancient = strip_diacritics(normalized_ancient)
+            if plain_ancient != normalized_ancient:
+                reverse_dictionary.setdefault(plain_ancient, english)
     return reverse_dictionary
 
 
-def lookup_ancient_to_english(source_phrase: str, reverse_dictionary: Dict[str, str]) -> str | None:
+def lookup_ancient_to_english(source_phrase: str, reverse_dictionary: Dict[str, str]) -> Optional[str]:
     lowered = source_phrase.lower()
     plain = strip_diacritics(lowered)
     return (
