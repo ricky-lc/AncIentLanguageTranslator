@@ -25,6 +25,7 @@ class TranslatorTests(unittest.TestCase):
         self.assertEqual(dictionary.get("might"), "máttr")
         self.assertEqual(dictionary.get("if"), "ef")
         self.assertEqual(dictionary.get("and"), "ok")
+        self.assertGreaterEqual(len(dictionary), 220)
 
     def test_translation_with_common_connectors(self):
         dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
@@ -70,6 +71,13 @@ class TranslatorTests(unittest.TestCase):
         result = translate_from_ancient_language("ef brisingr er néiat deloi", dictionary)
         self.assertEqual(result["translation"], "if fire is not water")
         self.assertEqual(result["sourceLanguage"], "ancient")
+
+    def test_requested_domain_words_are_translated(self):
+        dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
+        italian = translate_to_ancient_language("domani matematica test", dictionary, source_language="italian")
+        english = translate_to_ancient_language("math test male female", dictionary, source_language="english")
+        self.assertEqual(italian["translation"], "á morgin reikningr próf")
+        self.assertEqual(english["translation"], "reikningr próf karl kona")
 
 
 if __name__ == "__main__":
