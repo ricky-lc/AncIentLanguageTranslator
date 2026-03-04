@@ -79,6 +79,13 @@ class TranslatorTests(unittest.TestCase):
         self.assertEqual(italian["translation"], "á morgin reikningr próf")
         self.assertEqual(english["translation"], "reikningr próf karl kvenna")
 
+    def test_official_phrase_words_translate_from_ancient(self):
+        dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
+        phrase = "kverst malmr du huildrs edtha, mar frëma né thön eka threyja."
+        result = translate_from_ancient_language(phrase, dictionary)
+        self.assertEqual(result["translation"], "strength metal you shield maiden and, many fear not those i three.")
+        self.assertEqual(result["coverage"], 1.0)
+
 
 if __name__ == "__main__":
     unittest.main()

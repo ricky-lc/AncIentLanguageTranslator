@@ -1,5 +1,6 @@
 import json
 import re
+import unicodedata
 from pathlib import Path
 from typing import Dict, List, TypedDict
 
@@ -125,6 +126,22 @@ EXTENDED_ESSENTIAL_ANCIENT_ADDITIONS = {
 
 ALL_ITALIAN_TO_ENGLISH = {**ITALIAN_TO_ENGLISH, **EXTENDED_ITALIAN_TO_ENGLISH}
 ALL_ESSENTIAL_ANCIENT_ADDITIONS = {**ESSENTIAL_ANCIENT_ADDITIONS, **EXTENDED_ESSENTIAL_ANCIENT_ADDITIONS}
+ANCIENT_TO_ENGLISH_ADDITIONS = {
+    "kverst": "strength",
+    "malmr": "metal",
+    "du": "you",
+    "huildrs": "shield maiden",
+    "edtha": "and",
+    "mar": "many",
+    "frëma": "fear",
+    "frema": "fear",
+    "né": "not",
+    "ne": "not",
+    "thön": "those",
+    "thon": "those",
+    "eka": "i",
+    "threyja": "three",
+}
 IRREGULAR_ITALIAN_GERUNDS = {
     "facendo": "fare",
     "dicendo": "dire",
@@ -136,6 +153,11 @@ IRREGULAR_ITALIAN_GERUNDS = {
 
 def normalize_apostrophes(text: str) -> str:
     return re.sub(r"[’‘`ʼ]", "'", text)
+
+
+def strip_diacritics(text: str) -> str:
+    decomposed = unicodedata.normalize("NFD", text)
+    return "".join(ch for ch in decomposed if unicodedata.category(ch) != "Mn")
 
 
 def normalize_term(text: str) -> str:
@@ -372,7 +394,19 @@ def build_reverse_dictionary(dictionary: Dict[str, str]) -> Dict[str, str]:
         normalized_ancient = normalize_term(ancient)
         if normalized_ancient:
             reverse_dictionary.setdefault(normalized_ancient, english)
+            reverse_dictionary.setdefault(strip_diacritics(normalized_ancient), english)
     return reverse_dictionary
+
+
+def lookup_ancient_to_english(source_phrase: str, reverse_dictionary: Dict[str, str]) -> str | None:
+    lowered = source_phrase.lower()
+    plain = strip_diacritics(lowered)
+    return (
+        ANCIENT_TO_ENGLISH_ADDITIONS.get(lowered)
+        or ANCIENT_TO_ENGLISH_ADDITIONS.get(plain)
+        or reverse_dictionary.get(lowered)
+        or reverse_dictionary.get(plain)
+    )
 
 
 def translate_from_ancient_language(
@@ -410,7 +444,7 @@ def translate_from_ancient_language(
                 continue
 
             source_phrase = " ".join(part.lower() for part in span)
-            english = reverse_dictionary.get(source_phrase)
+            english = lookup_ancient_to_english(source_phrase, reverse_dictionary)
             if english:
                 output.append(english)
                 mapped_terms += size
