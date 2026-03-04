@@ -4,8 +4,8 @@
   "private": true,
   "description": "Lightweight English/Italian to Paolini Ancient Language translator",
   "scripts": {
-    "start": "node src/server.js",
-    "test": "node --test"
+    "start": "python -m backend.server",
+    "test": "python -m unittest discover -s tests -p 'test_*.py' && node --test"
   },
   "engines": {
     "node": ">=18"
