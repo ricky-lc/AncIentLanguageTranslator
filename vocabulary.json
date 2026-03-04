@@ -3165,8 +3165,6 @@
         ]
       }
     ],
-{
-  "advanced_vocabulary_features": {
     "synonym_groups": [
       {
         "concept": "bravery, courage",
@@ -3659,8 +3657,7 @@
         "symbolism": "Greatest dragon treasure, impossible to destroy",
         "access": "Only dragon or bonded rider can use"
       }
-    ]
-  },
+    ],
     "linguistic_principles": [
       "Follows Old Norse linguistic patterns",
       "Consistent ablaut (vowel change) system",
