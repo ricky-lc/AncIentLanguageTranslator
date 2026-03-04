@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ancient Language Translator</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: system-ui, sans-serif; max-width: 760px; margin: 2rem auto; padding: 0 1rem; }
+    textarea, button { width: 100%; font: inherit; }
+    textarea { min-height: 120px; padding: .7rem; }
+    button { margin-top: .8rem; padding: .7rem 1rem; cursor: pointer; }
+    .card { border: 1px solid #8884; border-radius: 10px; padding: 1rem; margin-top: 1rem; }
+    .muted { opacity: .75; font-size: .9rem; }
+    #output { white-space: pre-wrap; font-size: 1.1rem; }
+  </style>
+</head>
+<body>
+  <h1>Ancient Language Translator</h1>
+  <p class="muted">Translate English or Italian into Paolini's Ancient Language using the bundled vocabulary.</p>
+
+  <label for="input">Input</label>
+  <textarea id="input" placeholder="Write in English or Italian..."></textarea>
+  <button id="translateBtn">Translate</button>
+
+  <div class="card">
+    <div id="output">—</div>
+    <div id="meta" class="muted"></div>
+  </div>
+
+  <script>
+    const inputEl = document.getElementById('input');
+    const outputEl = document.getElementById('output');
+    const metaEl = document.getElementById('meta');
+    const button = document.getElementById('translateBtn');
+
+    async function runTranslation() {
+      const text = inputEl.value.trim();
+      if (!text) {
+        outputEl.textContent = '—';
+        metaEl.textContent = '';
+        return;
+      }
+
+      outputEl.textContent = 'Translating...';
+      metaEl.textContent = '';
+
+      try {
+        const response = await fetch('/api/translate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text })
+        });
+        const result = await response.json();
+        outputEl.textContent = result.translation || '—';
+        metaEl.textContent = `Detected: ${result.sourceLanguage || 'unknown'} • Coverage: ${Math.round((result.coverage || 0) * 100)}%`;
+      } catch (error) {
+        outputEl.textContent = 'Translation failed.';
+        metaEl.textContent = error.message;
+      }
+    }
+
+    button.addEventListener('click', runTranslation);
+    inputEl.addEventListener('keydown', (event) => {
+      if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+        runTranslation();
+      }
+    });
+  </script>
+</body>
+</html>
