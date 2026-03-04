@@ -23,6 +23,62 @@ const ITALIAN_TO_ENGLISH = {
 const WORD_RE = /[\p{L}\p{M}']+|[^\s\p{L}\p{M}']+/gu;
 const DICTIONARY_ENTRY_SPAN_LIMIT = 500;
 const ITALIAN_DETECTION_THRESHOLD = 0.2;
+const ENGLISH_CONTRACTION_MAP = {
+  "isn't": 'is not',
+  "aren't": 'are not',
+  "wasn't": 'was not',
+  "weren't": 'were not',
+  "don't": 'do not',
+  "doesn't": 'does not',
+  "didn't": 'did not',
+  "can't": 'cannot',
+  "won't": 'will not',
+  "i'm": 'i am',
+  "you're": 'you are',
+  "we're": 'we are',
+  "they're": 'they are',
+  "it's": 'it is',
+  "that's": 'that is',
+  "there's": 'there is',
+  "i've": 'i have',
+  "you've": 'you have',
+  "we've": 'we have',
+  "they've": 'they have',
+  "i'll": 'i will',
+  "you'll": 'you will',
+  "we'll": 'we will',
+  "they'll": 'they will'
+};
+const ESSENTIAL_ANCIENT_ADDITIONS = {
+  and: 'ok',
+  or: 'eða',
+  but: 'en',
+  if: 'ef',
+  is: 'er',
+  are: 'eru',
+  am: 'em',
+  was: 'var',
+  were: 'váru',
+  not: 'néiat',
+  yes: 'já',
+  no: 'nei',
+  to: 'at',
+  of: 'af',
+  in: 'í',
+  on: 'á',
+  with: 'með',
+  for: 'fyrir',
+  from: 'frá',
+  have: 'hafa',
+  has: 'hefir',
+  do: 'gera',
+  does: 'gerir',
+  can: 'mátt',
+  cannot: 'né mátt',
+  will: 'mun',
+  would: 'myndi',
+  should: 'skyldi'
+};
 
 function normalizeTerm(text) {
   return text
@@ -45,6 +101,18 @@ function splitEnglishVariants(english) {
     .split(/,|\s+or\s+|\s*\/\s*|;/g)
     .map((s) => s.trim())
     .filter(Boolean);
+}
+
+function addEssentialEntries(dictionary) {
+  for (const [english, ancient] of Object.entries(ESSENTIAL_ANCIENT_ADDITIONS)) {
+    if (!dictionary.has(english)) {
+      dictionary.set(english, ancient);
+    }
+  }
+}
+
+function normalizeApostrophes(text) {
+  return text.replace(/[’‘`]/g, '\'');
 }
 
 function buildDictionaryFromRawVocabulary(raw) {
@@ -75,6 +143,7 @@ function buildDictionaryFromRawVocabulary(raw) {
     }
   }
 
+  addEssentialEntries(dictionary);
   return dictionary;
 }
 
@@ -90,6 +159,13 @@ function getDefaultDictionary() {
 
 function tokenize(text) {
   return text.match(WORD_RE) || [];
+}
+
+function expandEnglishContractions(text) {
+  return text.replace(/\b[\p{L}\p{M}']+\b/gu, (token) => {
+    const lower = token.toLowerCase();
+    return ENGLISH_CONTRACTION_MAP[lower] || token;
+  });
 }
 
 function isWord(token) {
@@ -126,13 +202,14 @@ function rejoinTokens(tokens) {
 
 function translateToAncientLanguage(text, options = {}) {
   const dictionary = options.dictionary || getDefaultDictionary();
-  const input = `${text || ''}`.trim();
+  const input = normalizeApostrophes(`${text || ''}`.trim());
   if (!input) {
     return { translation: '', sourceLanguage: 'unknown', mappedTerms: 0, totalTerms: 0 };
   }
 
   const isItalianInput = detectLikelyItalian(input);
-  const tokens = tokenize(input);
+  const normalizedInput = isItalianInput ? input : expandEnglishContractions(input);
+  const tokens = tokenize(normalizedInput);
   const output = [];
   let mappedTerms = 0;
   let totalTerms = 0;
@@ -192,6 +269,7 @@ function translateToAncientLanguage(text, options = {}) {
 }
 
 module.exports = {
+  addEssentialEntries,
   buildDictionaryFromRawVocabulary,
   detectLikelyItalian,
   translateToAncientLanguage

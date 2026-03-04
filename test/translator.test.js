@@ -22,7 +22,7 @@ test('buildDictionaryFromRawVocabulary extracts english to ancient pairs', () =>
 test('translateToAncientLanguage translates english words', () => {
   const dictionary = buildDictionaryFromRawVocabulary(mockVocabulary);
   const result = translateToAncientLanguage('fire and water', { dictionary });
-  assert.equal(result.translation, 'brisingr and deloi');
+  assert.equal(result.translation, 'brisingr ok deloi');
   assert.equal(result.sourceLanguage, 'english');
 });
 
@@ -31,4 +31,11 @@ test('translateToAncientLanguage maps Italian words through english fallback', (
   const result = translateToAncientLanguage('grazie acqua', { dictionary });
   assert.equal(result.translation, 'thorta deloi');
   assert.equal(result.sourceLanguage, 'italian');
+});
+
+test('translateToAncientLanguage covers missing essentials like if and contractions', () => {
+  const dictionary = buildDictionaryFromRawVocabulary(mockVocabulary);
+  const result = translateToAncientLanguage("if fire isn't water", { dictionary });
+  assert.equal(result.translation, 'ef brisingr er néiat deloi');
+  assert.equal(result.sourceLanguage, 'english');
 });
