@@ -1,6 +1,10 @@
 import unittest
 
-from backend.translator import build_dictionary_from_raw_vocabulary, translate_to_ancient_language
+from backend.translator import (
+    build_dictionary_from_raw_vocabulary,
+    translate_from_ancient_language,
+    translate_to_ancient_language,
+)
 
 
 MOCK_VOCABULARY = """
@@ -38,6 +42,34 @@ class TranslatorTests(unittest.TestCase):
         dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
         result = translate_to_ancient_language("if fire isn't water", dictionary)
         self.assertEqual(result["translation"], "ef brisingr er néiat deloi")
+
+    def test_language_selector_forces_english_or_italian(self):
+        dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
+        italian_forced = translate_to_ancient_language("grazie acqua", dictionary, source_language="italian")
+        english_forced = translate_to_ancient_language("grazie acqua", dictionary, source_language="english")
+        self.assertEqual(italian_forced["translation"], "thorta deloi")
+        self.assertEqual(english_forced["translation"], "grazie acqua")
+
+    def test_common_words_do_and_make_are_supported(self):
+        dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
+        result = translate_to_ancient_language("do make", dictionary)
+        self.assertEqual(result["translation"], "gera gera")
+
+    def test_english_ing_forms_map_to_base_verbs(self):
+        dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
+        result = translate_to_ancient_language("doing making speaking", dictionary)
+        self.assertEqual(result["translation"], "gera gera mæla")
+
+    def test_italian_gerund_forms_map_to_base_verbs(self):
+        dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
+        result = translate_to_ancient_language("facendo parlando", dictionary, source_language="italian")
+        self.assertEqual(result["translation"], "gera mæla")
+
+    def test_reverse_translation_from_ancient(self):
+        dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
+        result = translate_from_ancient_language("ef brisingr er néiat deloi", dictionary)
+        self.assertEqual(result["translation"], "if fire is not water")
+        self.assertEqual(result["sourceLanguage"], "ancient")
 
 
 if __name__ == "__main__":

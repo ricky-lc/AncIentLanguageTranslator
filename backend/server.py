@@ -3,7 +3,7 @@ import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-from backend.translator import translate_to_ancient_language
+from backend.translator import translate_from_ancient_language, translate_to_ancient_language
 
 MAX_REQUEST_SIZE = 1_000_000
 INDEX_HTML = Path(__file__).resolve().parent.parent.joinpath("index.html")
@@ -45,7 +45,13 @@ class TranslatorHandler(BaseHTTPRequestHandler):
         except json.JSONDecodeError:
             body = {}
 
-        result = translate_to_ancient_language(body.get("text", ""))
+        direction = body.get("direction", "to_ancient")
+        text = body.get("text", "")
+        source_language = body.get("sourceLanguage", "auto")
+        if direction == "from_ancient":
+            result = translate_from_ancient_language(text)
+        else:
+            result = translate_to_ancient_language(text, source_language=source_language)
         payload = json.dumps(result, ensure_ascii=False).encode("utf-8")
 
         self.send_response(200)

@@ -52,6 +52,13 @@ ESSENTIAL_ANCIENT_ADDITIONS = {
     "today": "í dag", "tomorrow": "á morgin", "yesterday": "í gær", "now": "nú", "always": "æ", "never": "aldri",
     "please": "blítt", "hello": "heill", "thanks": "þakkir", "thank": "þakka"
 }
+IRREGULAR_ITALIAN_GERUNDS = {
+    "facendo": "fare",
+    "dicendo": "dire",
+    "bevendo": "bere",
+    "ponendo": "porre",
+    "traendo": "trarre"
+}
 
 
 def normalize_apostrophes(text: str) -> str:
@@ -140,6 +147,36 @@ def rejoin_tokens(tokens: List[str]) -> str:
     return "".join(out)
 
 
+def english_ing_candidates(word: str) -> List[str]:
+    lower = word.lower()
+    if not lower.endswith("ing") or len(lower) <= 4:
+        return []
+    stem = lower[:-3]
+    candidates = [stem]
+    if len(stem) >= 2 and stem[-1] == stem[-2]:
+        candidates.append(stem[:-1])
+    if stem and stem[-1] not in "aeiou":
+        candidates.append(f"{stem}e")
+    # Preserve order and uniqueness.
+    return list(dict.fromkeys([candidate for candidate in candidates if candidate]))
+
+
+def italian_gerund_candidates(word: str) -> List[str]:
+    lower = word.lower()
+    if len(lower) <= 5:
+        return []
+    if lower in IRREGULAR_ITALIAN_GERUNDS:
+        return [IRREGULAR_ITALIAN_GERUNDS[lower]]
+    candidates: List[str] = []
+    if lower.endswith("ando"):
+        root = lower[:-4]
+        candidates.extend([f"{root}are", f"{root}ere", f"{root}ire"])
+    if lower.endswith("endo"):
+        root = lower[:-4]
+        candidates.extend([f"{root}ere", f"{root}ire", f"{root}are"])
+    return list(dict.fromkeys([candidate for candidate in candidates if len(candidate) > 2]))
+
+
 _cached_dictionary: Dict[str, str] | None = None
 
 
@@ -160,13 +197,20 @@ def get_default_dictionary() -> Dict[str, str]:
     return _cached_dictionary
 
 
-def translate_to_ancient_language(text: str, dictionary: Dict[str, str] | None = None) -> TranslationResult:
+def translate_to_ancient_language(
+    text: str,
+    dictionary: Dict[str, str] | None = None,
+    source_language: str = "auto"
+) -> TranslationResult:
     dictionary = dictionary or get_default_dictionary()
     input_text = normalize_apostrophes((text or "").strip())
     if not input_text:
         return {"translation": "", "sourceLanguage": "unknown", "mappedTerms": 0, "totalTerms": 0, "coverage": 0}
 
-    is_italian_input = detect_likely_italian(input_text)
+    forced_italian = source_language.lower() == "italian"
+    forced_english = source_language.lower() == "english"
+    is_italian_input = forced_italian or (not forced_english and detect_likely_italian(input_text))
+    allow_italian_fallback = not forced_english
     normalized_input = input_text if is_italian_input else expand_english_contractions(input_text)
     tokens = tokenize(normalized_input)
 
@@ -211,8 +255,22 @@ def translate_to_ancient_language(text: str, dictionary: Dict[str, str] | None =
             continue
 
         lower = token.lower()
-        italian_as_english = ITALIAN_TO_ENGLISH.get(lower)
-        ancient = dictionary.get(lower) or (dictionary.get(italian_as_english) if italian_as_english else None)
+        italian_as_english = ITALIAN_TO_ENGLISH.get(lower) if allow_italian_fallback else None
+        english_ing_as_base = next((candidate for candidate in english_ing_candidates(lower) if dictionary.get(candidate)), None)
+        italian_gerund_as_english = None
+        if allow_italian_fallback and not italian_as_english:
+            for italian_candidate in italian_gerund_candidates(lower):
+                english_variant = ITALIAN_TO_ENGLISH.get(italian_candidate)
+                if english_variant:
+                    italian_gerund_as_english = english_variant
+                    break
+
+        ancient = (
+            dictionary.get(lower)
+            or (dictionary.get(italian_as_english) if italian_as_english else None)
+            or (dictionary.get(english_ing_as_base) if english_ing_as_base else None)
+            or (dictionary.get(italian_gerund_as_english) if italian_gerund_as_english else None)
+        )
         if ancient:
             output.append(ancient)
             mapped_terms += 1
@@ -224,6 +282,75 @@ def translate_to_ancient_language(text: str, dictionary: Dict[str, str] | None =
     return {
         "translation": rejoin_tokens(output),
         "sourceLanguage": "italian" if is_italian_input else "english",
+        "mappedTerms": mapped_terms,
+        "totalTerms": total_terms,
+        "coverage": coverage
+    }
+
+
+def build_reverse_dictionary(dictionary: Dict[str, str]) -> Dict[str, str]:
+    reverse_dictionary: Dict[str, str] = {}
+    for english, ancient in dictionary.items():
+        normalized_ancient = normalize_term(ancient)
+        if normalized_ancient:
+            reverse_dictionary.setdefault(normalized_ancient, english)
+    return reverse_dictionary
+
+
+def translate_from_ancient_language(
+    text: str,
+    dictionary: Dict[str, str] | None = None,
+    reverse_dictionary: Dict[str, str] | None = None
+) -> TranslationResult:
+    dictionary = dictionary or get_default_dictionary()
+    reverse_dictionary = reverse_dictionary or build_reverse_dictionary(dictionary)
+    input_text = normalize_apostrophes((text or "").strip())
+    if not input_text:
+        return {"translation": "", "sourceLanguage": "unknown", "mappedTerms": 0, "totalTerms": 0, "coverage": 0}
+
+    tokens = tokenize(input_text)
+    output: List[str] = []
+    mapped_terms = 0
+    total_terms = 0
+
+    i = 0
+    while i < len(tokens):
+        token = tokens[i]
+        if not is_word(token):
+            output.append(token)
+            i += 1
+            continue
+
+        total_terms += 1
+        replaced = False
+
+        for size in range(4, 0, -1):
+            if i + size > len(tokens):
+                continue
+            span = tokens[i:i + size]
+            if not all(is_word(part) for part in span):
+                continue
+
+            source_phrase = " ".join(part.lower() for part in span)
+            english = reverse_dictionary.get(source_phrase)
+            if english:
+                output.append(english)
+                mapped_terms += size
+                total_terms += size - 1
+                i += size
+                replaced = True
+                break
+
+        if replaced:
+            continue
+
+        output.append(token)
+        i += 1
+
+    coverage = 0 if total_terms == 0 else round(mapped_terms / total_terms, 3)
+    return {
+        "translation": rejoin_tokens(output),
+        "sourceLanguage": "ancient",
         "mappedTerms": mapped_terms,
         "totalTerms": total_terms,
         "coverage": coverage
