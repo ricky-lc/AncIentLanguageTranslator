@@ -153,7 +153,7 @@ def english_ing_candidates(word: str) -> List[str]:
         return []
     stem = lower[:-3]
     candidates = [stem]
-    if len(stem) >= 2 and stem[-1] == stem[-2]:
+    if len(stem) >= 2 and stem[-1] == stem[-2] and stem[-1] not in "aeiou":
         candidates.append(stem[:-1])
     if stem and stem[-1] not in "aeiou":
         candidates.append(f"{stem}e")
@@ -173,7 +173,7 @@ def italian_gerund_candidates(word: str) -> List[str]:
         candidates.extend([f"{root}are", f"{root}ere", f"{root}ire"])
     if lower.endswith("endo"):
         root = lower[:-4]
-        candidates.extend([f"{root}ere", f"{root}ire", f"{root}are"])
+        candidates.extend([f"{root}are", f"{root}ere", f"{root}ire"])
     return list(dict.fromkeys([candidate for candidate in candidates if len(candidate) > 2]))
 
 
@@ -256,7 +256,12 @@ def translate_to_ancient_language(
 
         lower = token.lower()
         italian_as_english = ITALIAN_TO_ENGLISH.get(lower) if allow_italian_fallback else None
-        english_ing_as_base = next((candidate for candidate in english_ing_candidates(lower) if dictionary.get(candidate)), None)
+        english_ing_as_base = None
+        if not forced_italian:
+            english_ing_as_base = next(
+                (candidate for candidate in english_ing_candidates(lower) if dictionary.get(candidate)),
+                None
+            )
         italian_gerund_as_english = None
         if allow_italian_fallback and not italian_as_english:
             for italian_candidate in italian_gerund_candidates(lower):
