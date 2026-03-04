@@ -144,7 +144,7 @@
     }
     .lang-select:focus {
       border-color: color-mix(in oklab, var(--brand) 62%, #ffffff 38%);
-      box-shadow: 0 0 0 4px color-mix(in oklab, #2563eb 16%, transparent);
+      box-shadow: 0 0 0 4px color-mix(in oklab, #2563eb 40%, transparent);
     }
     .direction-wrap {
       display: grid;
@@ -174,7 +174,7 @@
       box-shadow: 0 6px 20px #0ea5e966;
     }
     textarea, button { width: 100%; font: inherit; border-radius: var(--radius-lg); }
-    label[for="input"] {
+    .input-label {
       display: inline-block;
       margin: .25rem 0 .4rem;
       color: color-mix(in oklab, #dbeafe 78%, #93c5fd 22%);
@@ -182,6 +182,14 @@
       text-transform: uppercase;
       font-size: .74rem;
       font-weight: 700;
+    }
+    kbd {
+      font: inherit;
+      font-size: .85em;
+      padding: .08rem .34rem;
+      border-radius: 6px;
+      border: 1px solid color-mix(in oklab, #ffffff 36%, transparent);
+      background: color-mix(in oklab, #0f172a 50%, transparent);
     }
     textarea {
       min-height: 148px;
@@ -239,8 +247,8 @@
   <div class="orb orb-c"></div>
   <main class="app-shell">
     <div class="topbar">
-      <span class="pill">◈ Real-time translation</span>
-      <span>⌘/Ctrl + Enter to translate</span>
+      <span class="pill"><span aria-hidden="true">◈</span> Quick translation</span>
+      <span><kbd>⌘/Ctrl</kbd> + <kbd>Enter</kbd> to translate</span>
     </div>
     <div class="content-grid">
       <section class="glass-card">
@@ -263,7 +271,7 @@
             <option value="italian">Italian</option>
           </select>
         </div>
-        <label for="input">Input</label>
+        <label for="input" class="input-label">Input</label>
         <textarea id="input" placeholder="Write in English or Italian..."></textarea>
         <button id="translateBtn">Translate</button>
       </section>
