@@ -92,7 +92,7 @@ EXTENDED_ESSENTIAL_ANCIENT_ADDITIONS = {
     "again": "aptr", "soon": "brátt", "late": "seint", "early": "árla", "already": "þegar", "still": "enn",
     "today": "í dag", "tonight": "í nótt", "morning": "morginn", "evening": "kveld", "day": "dagr", "night": "nótt",
     "time": "tími", "year": "ár", "month": "mánuðr", "week": "vika", "hour": "stund", "minute": "mínúta",
-    "man": "maðr", "woman": "kona", "male": "karl", "female": "kona",
+    "man": "maðr", "woman": "kona", "male": "karl", "female": "kvenna",
     "boy": "drengr", "girl": "mær", "child": "barn", "children": "börn",
     "person": "maðr", "people": "fólk", "friend": "vinr", "enemy": "óvinr",
     "family": "ætt", "father": "faðir", "mother": "móðir", "brother": "bróðir", "sister": "systir",

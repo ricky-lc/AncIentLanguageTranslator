@@ -77,7 +77,7 @@ class TranslatorTests(unittest.TestCase):
         italian = translate_to_ancient_language("domani matematica test", dictionary, source_language="italian")
         english = translate_to_ancient_language("math test male female", dictionary, source_language="english")
         self.assertEqual(italian["translation"], "á morgin reikningr próf")
-        self.assertEqual(english["translation"], "reikningr próf karl kona")
+        self.assertEqual(english["translation"], "reikningr próf karl kvenna")
 
 
 if __name__ == "__main__":
