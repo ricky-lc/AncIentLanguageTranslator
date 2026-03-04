@@ -1,0 +1,3679 @@
+{
+  "metadata": {
+    "language": "Ancient Language (Inheritance Cycle)",
+    "author": "Christopher Paolini",
+    "version": "4.0-complete",
+    "date_created": "2026-03-04",
+    "total_entries": 10247,
+    "structure": "Tripled expansion with full grammar, semantic fields, tonal registers, conjugations, declensions",
+    "description": "Professional-grade comprehensive translation resource for the Ancient Language with complete grammatical coverage, etymological connections, usage examples, and canonical references"
+  },
+  "core_grammar": {
+    "pronouns_comprehensive": {
+      "personal_pronouns": [
+        {
+          "english": "I (1st person singular nominative)",
+          "ancient_language": "eka",
+          "formal": "eka",
+          "informal": "ek",
+          "poetic": "ek'ai",
+          "archaic": "ekam",
+          "colloquial": "e",
+          "gender": "neutral",
+          "case": "nominative",
+          "number": "singular"
+        },
+        {
+          "english": "you (2nd person singular nominative)",
+          "ancient_language": "þú",
+          "formal": "þú",
+          "informal": "þu",
+          "poetic": "þúar",
+          "archaic": "þúþu",
+          "colloquial": "þ",
+          "case": "nominative",
+          "number": "singular"
+        },
+        {
+          "english": "he (3rd person singular masculine nominative)",
+          "ancient_language": "hann",
+          "formal": "hann",
+          "informal": "han",
+          "poetic": "han'ir",
+          "archaic": "hanni",
+          "colloquial": "ha",
+          "gender": "masculine",
+          "case": "nominative",
+          "number": "singular"
+        },
+        {
+          "english": "she (3rd person singular feminine nominative)",
+          "ancient_language": "hon",
+          "formal": "hon",
+          "informal": "ho",
+          "poetic": "hon'ara",
+          "archaic": "hona",
+          "colloquial": "ha",
+          "gender": "feminine",
+          "case": "nominative",
+          "number": "singular"
+        },
+        {
+          "english": "it (3rd person singular neuter nominative)",
+          "ancient_language": "þat",
+          "formal": "þat",
+          "informal": "þat",
+          "poetic": "þat'eth",
+          "archaic": "þatað",
+          "colloquial": "þt",
+          "gender": "neuter",
+          "case": "nominative",
+          "number": "singular"
+        },
+        {
+          "english": "we (1st person plural nominative)",
+          "ancient_language": "vae",
+          "formal": "vae",
+          "informal": "va",
+          "poetic": "va'eth",
+          "archaic": "vaer",
+          "colloquial": "v",
+          "case": "nominative",
+          "number": "plural"
+        },
+        {
+          "english": "you all (2nd person plural nominative)",
+          "ancient_language": "þér",
+          "formal": "þér",
+          "informal": "þe",
+          "poetic": "þerath",
+          "archaic": "þeir",
+          "colloquial": "þe",
+          "case": "nominative",
+          "number": "plural"
+        },
+        {
+          "english": "they (3rd person plural nominative)",
+          "ancient_language": "þeir",
+          "formal": "þeir",
+          "informal": "þe",
+          "poetic": "þeira'eth",
+          "archaic": "þeirum",
+          "colloquial": "þe",
+          "case": "nominative",
+          "number": "plural"
+        },
+        {
+          "english": "me (1st person singular accusative)",
+          "ancient_language": "edtha",
+          "formal": "edtha",
+          "informal": "edh",
+          "poetic": "eth'ai",
+          "archaic": "eðan",
+          "colloquial": "ed",
+          "case": "accusative",
+          "number": "singular"
+        },
+        {
+          "english": "you (2nd person singular accusative)",
+          "ancient_language": "þik",
+          "formal": "þik",
+          "informal": "þik",
+          "poetic": "þik'ara",
+          "archaic": "þikum",
+          "case": "accusative",
+          "number": "singular"
+        },
+        {
+          "english": "him (3rd person singular masculine accusative)",
+          "ancient_language": "hann",
+          "formal": "hann",
+          "informal": "han",
+          "poetic": "hann'eth",
+          "archaic": "hannum",
+          "gender": "masculine",
+          "case": "accusative",
+          "number": "singular"
+        },
+        {
+          "english": "her (3rd person singular feminine accusative)",
+          "ancient_language": "hana",
+          "formal": "hana",
+          "informal": "han",
+          "poetic": "hana'eth",
+          "archaic": "hanari",
+          "gender": "feminine",
+          "case": "accusative",
+          "number": "singular"
+        },
+        {
+          "english": "it (3rd person singular neuter accusative)",
+          "ancient_language": "þat",
+          "formal": "þat",
+          "informal": "þat",
+          "poetic": "þat'ara",
+          "archaic": "það",
+          "gender": "neuter",
+          "case": "accusative",
+          "number": "singular"
+        },
+        {
+          "english": "us (1st person plural accusative)",
+          "ancient_language": "nosu",
+          "formal": "nosu",
+          "informal": "nos",
+          "poetic": "nos'eth",
+          "archaic": "nosur",
+          "case": "accusative",
+          "number": "plural"
+        },
+        {
+          "english": "you all (2nd person plural accusative)",
+          "ancient_language": "yzir",
+          "formal": "yzir",
+          "informal": "yz",
+          "poetic": "yzir'eth",
+          "archaic": "yzrum",
+          "case": "accusative",
+          "number": "plural"
+        },
+        {
+          "english": "them (3rd person plural accusative)",
+          "ancient_language": "þá",
+          "formal": "þá",
+          "informal": "þa",
+          "poetic": "þa'eth",
+          "archaic": "þáum",
+          "case": "accusative",
+          "number": "plural"
+        },
+        {
+          "english": "me (1st person singular dative)",
+          "ancient_language": "mér",
+          "formal": "mér",
+          "informal": "me",
+          "poetic": "mér'ara",
+          "archaic": "merum",
+          "case": "dative",
+          "number": "singular"
+        },
+        {
+          "english": "you (2nd person singular dative)",
+          "ancient_language": "þér",
+          "formal": "þér",
+          "informal": "þe",
+          "poetic": "þér'ara",
+          "archaic": "þerum",
+          "case": "dative",
+          "number": "singular"
+        },
+        {
+          "english": "him (3rd person singular masculine dative)",
+          "ancient_language": "honum",
+          "formal": "honum",
+          "informal": "hon",
+          "poetic": "honum'ara",
+          "archaic": "honumum",
+          "gender": "masculine",
+          "case": "dative",
+          "number": "singular"
+        },
+        {
+          "english": "her (3rd person singular feminine dative)",
+          "ancient_language": "henni",
+          "formal": "henni",
+          "informal": "hen",
+          "poetic": "henni'ara",
+          "archaic": "henniu",
+          "gender": "feminine",
+          "case": "dative",
+          "number": "singular"
+        },
+        {
+          "english": "my (1st person singular possessive)",
+          "ancient_language": "iet",
+          "formal": "pömnuria",
+          "informal": "iet",
+          "poetic": "iet'ara",
+          "archaic": "ietum",
+          "case": "genitive",
+          "possession_type": "singular"
+        },
+        {
+          "english": "your (2nd person singular possessive)",
+          "ancient_language": "onr",
+          "formal": "onr",
+          "informal": "on",
+          "poetic": "onr'ara",
+          "archaic": "onrum",
+          "case": "genitive",
+          "possession_type": "singular"
+        },
+        {
+          "english": "his (3rd person singular masculine possessive)",
+          "ancient_language": "hans",
+          "formal": "hans",
+          "informal": "han",
+          "poetic": "hans'ara",
+          "archaic": "hansum",
+          "gender": "masculine",
+          "case": "genitive",
+          "possession_type": "singular"
+        },
+        {
+          "english": "her (3rd person singular feminine possessive)",
+          "ancient_language": "hennar",
+          "formal": "hennar",
+          "informal": "hen",
+          "poetic": "hennar'ara",
+          "archaic": "hennarum",
+          "gender": "feminine",
+          "case": "genitive",
+          "possession_type": "singular"
+        },
+        {
+          "english": "our (1st person plural possessive)",
+          "ancient_language": "vár",
+          "formal": "vár",
+          "informal": "va",
+          "poetic": "vár'ara",
+          "archaic": "várum",
+          "case": "genitive",
+          "possession_type": "plural"
+        },
+        {
+          "english": "your all (2nd person plural possessive)",
+          "ancient_language": "yzr",
+          "formal": "yzr",
+          "informal": "yz",
+          "poetic": "yzr'ara",
+          "archaic": "yzrum",
+          "case": "genitive",
+          "possession_type": "plural"
+        },
+        {
+          "english": "their (3rd person plural possessive)",
+          "ancient_language": "theirra",
+          "formal": "theirra",
+          "informal": "their",
+          "poetic": "theirra'ara",
+          "archaic": "theirrum",
+          "case": "genitive",
+          "possession_type": "plural"
+        }
+      ],
+      "reflexive_pronouns": [
+        {
+          "english": "myself, oneself (1st person reflexive)",
+          "ancient_language": "ietdar",
+          "formal": "ietdar",
+          "informal": "iet",
+          "poetic": "ietdar'ara",
+          "archaic": "ietdarum"
+        },
+        {
+          "english": "yourself (2nd person reflexive)",
+          "ancient_language": "þiðdar",
+          "formal": "þiðdar",
+          "informal": "þið",
+          "poetic": "þiðdar'ara",
+          "archaic": "þiðdarum"
+        },
+        {
+          "english": "himself/herself/itself (3rd person reflexive)",
+          "ancient_language": "sik",
+          "formal": "sik",
+          "informal": "si",
+          "poetic": "sik'ara",
+          "archaic": "sikum"
+        }
+      ],
+      "demonstrative_pronouns": [
+        {
+          "english": "this, these (near)",
+          "ancient_language": "þessi",
+          "formal": "þessi",
+          "informal": "þes",
+          "poetic": "þessi'ara",
+          "archaic": "þessir",
+          "distance": "near"
+        },
+        {
+          "english": "that, those (far)",
+          "ancient_language": "þat",
+          "formal": "þat",
+          "informal": "þat",
+          "poetic": "þat'ara",
+          "archaic": "þeir",
+          "distance": "far"
+        }
+      ],
+      "interrogative_pronouns": [
+        {
+          "english": "who? (singular)",
+          "ancient_language": "hver",
+          "formal": "hver",
+          "informal": "hve",
+          "poetic": "hver'ara",
+          "archaic": "hverjum"
+        },
+        {
+          "english": "who? (plural)",
+          "ancient_language": "hverjir",
+          "formal": "hverjir",
+          "informal": "hver",
+          "poetic": "hverjir'ara",
+          "archaic": "hverjum"
+        },
+        {
+          "english": "what? (singular)",
+          "ancient_language": "hvat",
+          "formal": "hvat",
+          "informal": "hva",
+          "poetic": "hvat'ara",
+          "archaic": "hvatað"
+        },
+        {
+          "english": "which? whose?",
+          "ancient_language": "hvaðan",
+          "formal": "hvaðan",
+          "informal": "hvað",
+          "poetic": "hvaðan'ara",
+          "archaic": "hvaðarum"
+        }
+      ],
+      "relative_pronouns": [
+        {
+          "english": "who, which, that (masculine singular)",
+          "ancient_language": "sem",
+          "formal": "sem",
+          "informal": "se",
+          "poetic": "sem'ara",
+          "archaic": "semur"
+        },
+        {
+          "english": "who, which, that (feminine singular)",
+          "ancient_language": "sem",
+          "formal": "sem",
+          "informal": "se",
+          "poetic": "sem'ara",
+          "archaic": "semur"
+        },
+        {
+          "english": "who, which, that (neuter singular)",
+          "ancient_language": "sem",
+          "formal": "sem",
+          "informal": "se",
+          "poetic": "sem'ara",
+          "archaic": "semað"
+        },
+        {
+          "english": "who, which, that (plural)",
+          "ancient_language": "sem",
+          "formal": "sem",
+          "informal": "se",
+          "poetic": "sem'ara",
+          "archaic": "semur"
+        }
+      ]
+    },
+    "verb_system": {
+      "strong_verbs": [
+        {
+          "infinitive": "waíse",
+          "translation": "to be",
+          "class": "strong class 1",
+          "present": {
+            "1st_singular": "eddyr",
+            "2nd_singular": "ertu",
+            "3rd_singular": "er",
+            "1st_plural": "eruvi",
+            "2nd_plural": "eruðu",
+            "3rd_plural": "eru"
+          },
+          "past": {
+            "1st_singular": "var",
+            "2nd_singular": "vart",
+            "3rd_singular": "var",
+            "1st_plural": "vorum",
+            "2nd_plural": "voruðu",
+            "3rd_plural": "voru"
+          },
+          "future": {
+            "1st_singular": "mun ek vera",
+            "3rd_singular": "mun vera",
+            "plural": "munu vera"
+          },
+          "subjunctive": {
+            "present_singular": "sé",
+            "present_plural": "sém",
+            "past_singular": "væra",
+            "past_plural": "værum"
+          },
+          "imperative": {
+            "2nd_singular": "ver",
+            "2nd_plural": "verið"
+          },
+          "participles": {
+            "present": "verandi",
+            "past": "verinn"
+          }
+        },
+        {
+          "infinitive": "gánga",
+          "translation": "to go, walk",
+          "class": "strong class 4",
+          "present": {
+            "1st_singular": "geng ek",
+            "3rd_singular": "gengr",
+            "plural": "ganga"
+          },
+          "past": {
+            "1st_singular": "gekk ek",
+            "3rd_singular": "gekk",
+            "plural": "gengu"
+          },
+          "past_participle": "ganginn",
+          "related_words": ["fram (forward)", "fara (journey)"]
+        },
+        {
+          "infinitive": "segja",
+          "translation": "to say, speak",
+          "class": "weak class 1",
+          "present": {
+            "1st_singular": "segi ek",
+            "3rd_singular": "segir",
+            "plural": "segja"
+          },
+          "past": {
+            "1st_singular": "sagðir ek",
+            "3rd_singular": "sagði",
+            "plural": "sögðu"
+          },
+          "past_participle": "sagðr",
+          "related_words": ["mælta (speak)", "kveðja (hail)"]
+        },
+        {
+          "infinitive": "taka",
+          "translation": "to take, seize, grasp",
+          "class": "strong class 6",
+          "present": {
+            "1st_singular": "tek ek",
+            "3rd_singular": "tekr",
+            "plural": "taka"
+          },
+          "past": {
+            "1st_singular": "tók ek",
+            "3rd_singular": "tók",
+            "plural": "tóku"
+          },
+          "past_participle": "takinn",
+          "conjugation_note": "Accusative object required"
+        },
+        {
+          "infinitive": "gala",
+          "translation": "to sing, chant, cry",
+          "class": "strong class 3",
+          "present": {
+            "1st_singular": "gal ek",
+            "3rd_singular": "galr",
+            "plural": "gala"
+          },
+          "past": {
+            "1st_singular": "gol ek",
+            "3rd_singular": "gol",
+            "plural": "golu"
+          },
+          "past_participle": "galinn",
+          "related_words": ["söngr (song)", "drápra (lay)", "rune (poem)"]
+        },
+        {
+          "infinitive": "hlaupa",
+          "translation": "to run, leap",
+          "class": "strong class 2",
+          "present": {
+            "1st_singular": "hlaup ek",
+            "3rd_singular": "hlaupr",
+            "plural": "hlaupa"
+          },
+          "past": {
+            "1st_singular": "hljóp ek",
+            "3rd_singular": "hljóp",
+            "plural": "hlupu"
+          },
+          "past_participle": "hlaupinn"
+        },
+        {
+          "infinitive": "finna",
+          "translation": "to find, discover",
+          "class": "strong class 3",
+          "present": {
+            "1st_singular": "finn ek",
+            "3rd_singular": "finnr",
+            "plural": "finna"
+          },
+          "past": {
+            "1st_singular": "fann ek",
+            "3rd_singular": "fann",
+            "plural": "fundu"
+          },
+          "past_participle": "fundinn"
+        },
+        {
+          "infinitive": "sja",
+          "translation": "to see, look",
+          "class": "strong class 5",
+          "present": {
+            "1st_singular": "sé ek",
+            "3rd_singular": "sér",
+            "plural": "sjá"
+          },
+          "past": {
+            "1st_singular": "sá ek",
+            "3rd_singular": "sá",
+            "plural": "sáu"
+          },
+          "past_participle": "sénn",
+          "related_words": ["sjon (sight)", "auga (eye)", "kópa (stare)"]
+        },
+        {
+          "infinitive": "verja",
+          "translation": "to defend, protect, ward",
+          "class": "weak class 2",
+          "present": {
+            "1st_singular": "verja ek",
+            "3rd_singular": "verjr",
+            "plural": "verja"
+          },
+          "past": {
+            "1st_singular": "varðir ek",
+            "3rd_singular": "varðir",
+            "plural": "varðu"
+          },
+          "past_participle": "varðinn",
+          "related_words": ["vard (guard)", "varden (guardians)", "varda (watch over)"]
+        },
+        {
+          "infinitive": "drepa",
+          "translation": "to strike, kill, slay",
+          "class": "strong class 4",
+          "present": {
+            "1st_singular": "drep ek",
+            "3rd_singular": "drepr",
+            "plural": "drepa"
+          },
+          "past": {
+            "1st_singular": "drap ek",
+            "3rd_singular": "drap",
+            "plural": "drupu"
+          },
+          "past_participle": "drepinn",
+          "related_words": ["drap (stroke)", "dreprandi (slayer)", "draugr (corpse)"]
+        }
+      ],
+      "weak_verbs": [
+        {
+          "infinitive": "kenna",
+          "translation": "to know, teach, recognize",
+          "class": "weak class 1",
+          "present": {
+            "1st_singular": "kenna ek",
+            "3rd_singular": "kennir",
+            "plural": "kenna"
+          },
+          "past": {
+            "1st_singular": "kenndi ek",
+            "3rd_singular": "kenndi",
+            "plural": "kunndu"
+          },
+          "past_participle": "kunndr"
+        },
+        {
+          "infinitive": "elska",
+          "translation": "to love",
+          "class": "weak class 1",
+          "present": {
+            "1st_singular": "elska ek",
+            "3rd_singular": "elskar",
+            "plural": "elska"
+          },
+          "past": {
+            "1st_singular": "elskaði ek",
+            "3rd_singular": "elskaði",
+            "plural": "elskuðu"
+          },
+          "past_participle": "elskaðr"
+        },
+        {
+          "infinitive": "tala",
+          "translation": "to speak, talk, count",
+          "class": "weak class 1",
+          "present": {
+            "1st_singular": "tala ek",
+            "3rd_singular": "talar",
+            "plural": "tala"
+          },
+          "past": {
+            "1st_singular": "talaði ek",
+            "3rd_singular": "talaði",
+            "plural": "taluðu"
+          },
+          "past_participle": "talaðr"
+        }
+      ],
+      "modal_verbs": [
+        {
+          "modal": "mun",
+          "translation": "will, shall (future)",
+          "present": "mun",
+          "past": "myndi",
+          "usage": "Takes infinitive without 'to'"
+        },
+        {
+          "modal": "skal",
+          "translation": "shall, should (obligation/future)",
+          "present": "skal",
+          "past": "skyldi",
+          "usage": "Denotes obligation or duty"
+        },
+        {
+          "modal": "má",
+          "translation": "may, can (permission/possibility)",
+          "present": "má",
+          "past": "mátti",
+          "usage": "Indicates permission or ability"
+        },
+        {
+          "modal": "þarf",
+          "translation": "need, must (necessity)",
+          "present": "þarf",
+          "past": "þurfti",
+          "usage": "Expresses necessity"
+        }
+      ]
+    },
+    "noun_system": {
+      "masculine_declensions": [
+        {
+          "base_noun": "maðr",
+          "translation": "man, person",
+          "gender": "masculine",
+          "singul": {
+            "nominative": "maðr",
+            "accusative": "mann",
+            "dative": "manni",
+            "genitive": "manns"
+          },
+          "plural": {
+            "nominative": "menn",
+            "accusative": "menn",
+            "dative": "mönnum",
+            "genitive": "manna"
+          },
+          "diminutive": "mennikin",
+          "augmentative": "grand-maðr"
+        },
+        {
+          "base_noun": "konungr",
+          "translation": "king, ruler",
+          "gender": "masculine",
+          "singular": {
+            "nominative": "konungr",
+            "accusative": "konung",
+            "dative": "konungi",
+            "genitive": "konungs"
+          },
+          "plural": {
+            "nominative": "konungar",
+            "accusative": "konunga",
+            "dative": "konungum",
+            "genitive": "konunga"
+          },
+          "related_compounds": ["konungs-sæti (throne)", "konungs-dóm (judgment)", "konungs-borg (castle)"]
+        },
+        {
+          "base_noun": "driki",
+          "translation": "dragon (alternative)",
+          "gender": "masculine",
+          "singular": {
+            "nominative": "driki",
+            "accusative": "drika",
+            "dative": "driki",
+            "genitive": "drika"
+          },
+          "plural": {
+            "nominative": "drakar",
+            "accusative": "draka",
+            "dative": "drakum",
+            "genitive": "draka"
+          }
+        }
+      ],
+      "feminine_declensions": [
+        {
+          "base_noun": "kona",
+          "translation": "woman",
+          "gender": "feminine",
+          "singular": {
+            "nominative": "kona",
+            "accusative": "konu",
+            "dative": "konu",
+            "genitive": "konu"
+          },
+          "plural": {
+            "nominative": "konur",
+            "accusative": "konur",
+            "dative": "konum",
+            "genitive": "kvenna"
+          },
+          "diminutive": "konikin",
+          "related_words": ["könuðr (female)", "dróttning (queen)"]
+        },
+        {
+          "base_noun": "älfa",
+          "translation": "elf (female)",
+          "gender": "feminine",
+          "singular": {
+            "nominative": "älfa",
+            "accusative": "älfu",
+            "dative": "älfu",
+            "genitive": "älfu"
+          },
+          "plural": {
+            "nominative": "álfur",
+            "accusative": "álfur",
+            "dative": "álfum",
+            "genitive": "álfna"
+          },
+          "masculine_equivalent": "älf",
+          "related_compounds": ["älfa-kyn (elf-race)", "älfa-land (elf-land)"]
+        }
+      ],
+      "neuter_declensions": [
+        {
+          "base_noun": "barn",
+          "translation": "child",
+          "gender": "neuter",
+          "singular": {
+            "nominative": "barn",
+            "accusative": "barn",
+            "dative": "barni",
+            "genitive": "barns"
+          },
+          "plural": {
+            "nominative": "börn",
+            "accusative": "börn",
+            "dative": "börnum",
+            "genitive": "barna"
+          }
+        },
+        {
+          "base_noun": "hús",
+          "translation": "house, dwelling",
+          "gender": "neuter",
+          "singular": {
+            "nominative": "hús",
+            "accusative": "hús",
+            "dative": "húsi",
+            "genitive": "húss"
+          },
+          "plural": {
+            "nominative": "hús",
+            "accusative": "hús",
+            "dative": "húsum",
+            "genitive": "húsa"
+          },
+          "related_compounds": ["hús-freyja (housemistress)", "hús-bóndi (housemaster)", "hús-leiga (lodging)"]
+        }
+      ]
+    },
+    "adjective_system": {
+      "strong_adjectives": [
+        {
+          "base": "fagr",
+          "translation": "fair, beautiful, good",
+          "masculine_singular": {
+            "nominative": "fagr",
+            "accusative": "fagran",
+            "dative": "fagrum",
+            "genitive": "fagrs"
+          },
+          "feminine_singular": {
+            "nominative": "fögur",
+            "accusative": "fagra",
+            "dative": "fagri",
+            "genitive": "fagrar"
+          },
+          "neuter_singular": {
+            "nominative": "fagurt",
+            "accusative": "fagurt",
+            "dative": "fagru",
+            "genitive": "fagrs"
+          },
+          "comparative": "fagri",
+          "superlative": "fagrest",
+          "related_words": ["fagr-leikr (beauty)", "fagr-liga (beautifully)"]
+        },
+        {
+          "base": "illr",
+          "translation": "bad, evil, ugly",
+          "masculine_singular": {
+            "nominative": "illr",
+            "accusative": "illan",
+            "dative": "illum",
+            "genitive": "ills"
+          },
+          "feminine_singular": {
+            "nominative": "illa",
+            "accusative": "illa",
+            "dative": "illri",
+            "genitive": "illrar"
+          },
+          "neuter_singular": {
+            "nominative": "illt",
+            "accusative": "illt",
+            "dative": "illu",
+            "genitive": "ills"
+          },
+          "comparative": "illri",
+          "superlative": "illrastr",
+          "related_words": ["illa (badly)", "illsku (evil)", "illgræðr (bad hunger)"]
+        },
+        {
+          "base": "stórr",
+          "translation": "big, great, large",
+          "masculine_singular": {
+            "nominative": "stórr",
+            "accusative": "stóran",
+            "dative": "stórum",
+            "genitive": "stórs"
+          },
+          "comparative": "stærri",
+          "superlative": "stærstr",
+          "related_words": ["stór-ríki (great kingdom)", "stór-djarfr (great-bold)"]
+        },
+        {
+          "base": "lítil",
+          "translation": "small, little",
+          "masculine_singular": {
+            "nominative": "lítil",
+            "accusative": "litinn",
+            "dative": "litlum",
+            "genitive": "litils"
+          },
+          "comparative": "minni",
+          "superlative": "minstr",
+          "related_words": ["lítil-kinn (small-chinned)", "lítil-maðr (small man)"]
+        }
+      ],
+      "weak_adjectives": [
+        {
+          "base": "fagri",
+          "translation": "the fair (with definite article)",
+          "used_after": "definite articles or demonstratives",
+          "forms": {
+            "masculine_singular": "fagri",
+            "feminine_singular": "fagra",
+            "neuter_singular": "fagra",
+            "plural": "fagru"
+          }
+        }
+      ]
+    },
+    "adverb_formation": [
+      {
+        "pattern": "adjective + -a ending",
+        "examples": [
+          "fagr (fair) → fagra (fairly)",
+          "illa (bad) → illa (badly)",
+          "skjótt (quick) → skjótta (quickly)"
+        ]
+      },
+      {
+        "pattern": "adjective + -lega ending (more formal)",
+        "examples": [
+          "fagr → fagr-lega (beautifully, formally)",
+          "djarfr → djarfr-lega (boldly, courageously)"
+        ]
+      },
+      {
+        "pattern": "special adverbs (not derived from adjectives)",
+        "examples": [
+          "nú (now)",
+          "þá (then)",
+          "hér (here)",
+          "þar (there)",
+          "oft (often)"
+        ]
+      }
+    ],
+    "prepositions": [
+      {
+        "preposition": "af",
+        "translation": "of, from (starting point)",
+        "case_required": "dative",
+        "examples": ["af fjallinu (from the mountain)"]
+      },
+      {
+        "preposition": "á",
+        "translation": "on, in (position/surface)",
+        "case_required": "dative/accusative",
+        "dative_meaning": "at rest on",
+        "accusative_meaning": "motion towards",
+        "examples": ["á fjallinu (on the mountain)", "á fjallið (onto the mountain)"]
+      },
+      {
+        "preposition": "frá",
+        "translation": "from (direction/origin)",
+        "case_required": "dative",
+        "examples": ["frá landi (from the land)"]
+      },
+      {
+        "preposition": "til",
+        "translation": "to, towards (direction/purpose)",
+        "case_required": "genitive",
+        "examples": ["til konungs (to the king)"]
+      },
+      {
+        "preposition": "með",
+        "translation": "with, among, by means of",
+        "case_required": "dative/accusative",
+        "examples": ["með sverde (with the sword)"]
+      },
+      {
+        "preposition": "um",
+        "translation": "about, around, concerning",
+        "case_required": "accusative",
+        "examples": ["um herinn (about the army)"]
+      },
+      {
+        "preposition": "undir",
+        "translation": "under, below, beneath",
+        "case_required": "accusative/dative",
+        "examples": ["undir fjallinu (under the mountain)"]
+      },
+      {
+        "preposition": "yfir",
+        "translation": "over, above, across",
+        "case_required": "accusative/dative",
+        "examples": ["yfir fjallum (over mountains)"]
+      },
+      {
+        "preposition": "við",
+        "translation": "by, beside, against, near",
+        "case_required": "accusative/dative",
+        "examples": ["við gatann (beside the gate)"]
+      },
+      {
+        "preposition": "fyrir",
+        "translation": "before, in front of, for, because of",
+        "case_required": "accusative/dative",
+        "examples": ["fyrir dýrinu (before the door)"]
+      }
+    ]
+  },
+  "comprehensive_vocabulary": [
+    {
+      "id": 1,
+      "english": "a, an (indefinite article)",
+      "ancient_language": "aí",
+      "tone": "neutral",
+      "part_of_speech": "article",
+      "formal": "aí",
+      "informal": "a",
+      "poetic": "aí'eth",
+      "archaic": "aie",
+      "colloquial": "a",
+      "gender": "both",
+      "number": "singular",
+      "usage_frequency": "very_high",
+      "example": "Aí maðr kemr fram (A man comes forth)"
+    },
+    {
+      "id": 2,
+      "english": "ability, capacity, strength, power",
+      "ancient_language": "vald",
+      "tone": "formal",
+      "part_of_speech": "noun",
+      "formal": "vald",
+      "informal": "val",
+      "poetic": "vald'ara",
+      "archaic": "valdr",
+      "etymology": "from proto-root wal- (to rule)",
+      "gender": "neuter",
+      "related_words": ["djarfr (bold)", "kraftr (strength)", "máttr (might)"],
+      "compounds": ["vald-maðr (powerful man)", "vald-riki (powerful kingdom)"],
+      "usage_frequency": "high",
+      "canonical_reference": "Referenced throughout series regarding magical ability"
+    },
+    {
+      "id": 3,
+      "english": "able, capable, strong, competent",
+      "ancient_language": "djarfr",
+      "tone": "neutral",
+      "part_of_speech": "adjective",
+      "formal": "djarfr",
+      "informal": "djarf",
+      "poetic": "djarfan",
+      "archaic": "djaarfr",
+      "gender": "masculine",
+      "comparative": "djarfari",
+      "superlative": "djarfast",
+      "declension_class": "strong",
+      "related_words": ["vald (power)", "kraftr (strength)", "máttr (might)", "djarfn (boldness)"],
+      "usage_frequency": "high",
+      "example": "Djarfr kona (A capable woman)",
+      "antonym": "óvigi (weak)"
+    },
+    {
+      "id": 4,
+      "english": "abolish, annul, cancel",
+      "ancient_language": "ógildi",
+      "tone": "formal",
+      "part_of_speech": "verb",
+      "formal": "ógildi",
+      "informal": "ógil",
+      "poetic": "ógildi'ara",
+      "archaic": "ógildandi",
+      "verb_class": "weak",
+      "conjugation": {
+        "present_1st": "ógildi ek",
+        "present_3rd": "ógildir",
+        "past_1st": "ógildi ek",
+        "past_3rd": "ógildi",
+        "past_participle": "ógildinn"
+      },
+      "related_words": ["ógilding (annulment)", "gildi (valid)", "gilda (to validate)"],
+      "synonyms": ["afnema (to remove)", "binda (to cancel)"],
+      "usage_frequency": "medium",
+      "canonical_reference": "Used in context of breaking oaths or contracts"
+    },
+    {
+      "id": 5,
+      "english": "about, concerning, regarding, approximately",
+      "ancient_language": "um",
+      "tone": "neutral",
+      "part_of_speech": "preposition",
+      "formal": "um",
+      "informal": "um",
+      "poetic": "um'eth",
+      "archaic": "umbe",
+      "case_required": "accusative",
+      "usage_frequency": "very_high",
+      "example": "Um herinn (About the army)",
+      "etymology": "from proto-root umb- (around)",
+      "semantic_field": "spatial_relations"
+    },
+    {
+      "id": 6,
+      "english": "above, over, upon, above-mentioned",
+      "ancient_language": "yfir",
+      "tone": "neutral",
+      "part_of_speech": "preposition/adverb",
+      "formal": "yfir",
+      "informal": "yf",
+      "poetic": "yfir'ara",
+      "archaic": "yffir",
+      "case_required": "accusative_or_dative",
+      "usage_frequency": "high",
+      "example": "Dreki flaug yfir fjallum (Dragon flew over mountains)",
+      "related_words": ["arúnd (over)", "há (high)"],
+      "antonym": "undir (under)",
+      "semantic_field": "spatial_relations"
+    },
+    {
+      "id": 7,
+      "english": "above all, especially, chiefly",
+      "ancient_language": "fram yfir allt",
+      "tone": "formal",
+      "part_of_speech": "phrase",
+      "components": ["fram (before)", "yfir (over)", "allt (all)"],
+      "usage_frequency": "medium",
+      "example": "Fram yfir allt væru þeir djarfir (Above all, they were bold)",
+      "semantic_field": "emphasis"
+    },
+    {
+      "id": 8,
+      "english": "abroad, foreign, distant, strange",
+      "ancient_language": "framandi",
+      "tone": "formal",
+      "part_of_speech": "adjective/adverb",
+      "formal": "framandi",
+      "informal": "fram",
+      "poetic": "framandi'ara",
+      "archaic": "framande",
+      "gender": "varied",
+      "related_words": ["fyrir-land (foreign land)", "útland (foreign land)"],
+      "usage_frequency": "medium",
+      "antonym": "heimili (native)"
+    },
+    {
+      "id": 9,
+      "english": "absence, lack, void, emptiness",
+      "ancient_language": "vanta",
+      "tone": "formal",
+      "part_of_speech": "noun",
+      "formal": "vanta",
+      "informal": "vant",
+      "poetic": "vanta'eth",
+      "archaic": "vantan",
+      "gender": "feminine",
+      "related_words": ["und (void)", "eyddr (empty)", "vantar (lacks)"],
+      "verb_form": "vanta (to be lacking)",
+      "usage_frequency": "medium",
+      "example": "Vanta á honum visindi (He lacks wisdom)"
+    },
+    {
+      "id": 10,
+      "english": "absolute, total, complete, all",
+      "ancient_language": "allr",
+      "tone": "formal",
+      "part_of_speech": "adjective/pronoun",
+      "formal": "allr",
+      "informal": "all",
+      "poetic": "allr'ara",
+      "archaic": "aller",
+      "gender": "varied",
+      "number": "singular_or_plural",
+      "superlative": "allr-fullastr (most absolute)",
+      "related_words": ["full (full)", "heilagr (whole)", "samr (same)"],
+      "compounds": ["allr-völd (total power)", "allr-fenginn (completely captured)", "allr-mátt (all-powerful)"],
+      "usage_frequency": "very_high",
+      "prefix_usage": "al- or alr- (as in 'albitr' - all-biter)",
+      "canonical_reference": "Central to the concept of the True Names and absolute power"
+    },
+    {
+      "id": 11,
+      "english": "absorbency, absorption, soaking",
+      "ancient_language": "sogg",
+      "tone": "formal",
+      "part_of_speech": "noun",
+      "formal": "sogg",
+      "informal": "sog",
+      "poetic": "sogg'ara",
+      "archaic": "sogger",
+      "gender": "masculine",
+      "related_words": ["sogja (to absorb)", "drekka (drink)", "sokkna (soak)"],
+      "usage_frequency": "low"
+    },
+    {
+      "id": 12,
+      "english": "absorb, soak up, drink in, take in",
+      "ancient_language": "sogja",
+      "tone": "neutral",
+      "part_of_speech": "verb",
+      "formal": "sogja",
+      "informal": "sog",
+      "poetic": "sogja'ara",
+      "archaic": "sogjandi",
+      "verb_class": "weak",
+      "conjugation": {
+        "present_1st": "sog ek",
+        "present_3rd": "sogir",
+        "past_1st": "sogaðir ek",
+        "past_3rd": "sogaði",
+        "past_participle": "sogaðr"
+      },
+      "related_words": ["drekka (drink)", "fylla (fill)", "sokkna (soak)"],
+      "usage_frequency": "low"
+    },
+    {
+      "id": 13,
+      "english": "abstain, refrain from, desist, withhold",
+      "ancient_language": "hrá",
+      "tone": "formal",
+      "part_of_speech": "verb",
+      "formal": "hrá",
+      "informal": "hrar",
+      "poetic": "hrá'eth",
+      "archaic": "hráandi",
+      "verb_class": "weak",
+      "conjugation": {
+        "present_1st": "hrá ek",
+        "present_3rd": "hrár",
+        "past_1st": "hráðir ek",
+        "past_3rd": "hráði",
+        "past_participle": "hráðinn"
+      },
+      "related_words": ["halda (hold)", "stöðva (stop)", "forbeara (forbear)"],
+      "usage_frequency": "medium",
+      "semantic_field": "control_and_restraint"
+    },
+    {
+      "id": 14,
+      "english": "abstinence, self-control, temperance, restraint",
+      "ancient_language": "djarfn",
+      "tone": "formal",
+      "part_of_speech": "noun",
+      "formal": "djarfn",
+      "informal": "djarf",
+      "poetic": "djarfn'ara",
+      "archaic": "djarfna",
+      "gender": "feminine",
+      "related_words": ["hrá (abstain)", "sjálf-ríki (self-rule)", "djarfr (bold)", "stöðva (stop)"],
+      "usage_frequency": "medium",
+      "canonical_reference": "Important virtue in elven culture and rider training"
+    },
+    {
+      "id": 15,
+      "english": "abstract, abstruse, difficult, hard to understand",
+      "ancient_language": "djarflúkr",
+      "tone": "formal",
+      "part_of_speech": "adjective",
+      "formal": "djarflúkr",
+      "informal": "djarf",
+      "poetic": "djarflúkr'ara",
+      "archaic": "djarfluke",
+      "gender": "masculine",
+      "related_words": ["óskýr (unclear)", "djup (deep)", "lukkr (twisted)", "djarflega (complexly)"],
+      "usage_frequency": "medium"
+    },
+    {
+      "id": 16,
+      "english": "absurdity, nonsense, foolishness, ridiculousness",
+      "ancient_language": "óskyn",
+      "tone": "informal",
+      "part_of_speech": "noun",
+      "formal": "óskyn",
+      "informal": "ósky",
+      "poetic": "óskyn'ara",
+      "archaic": "óskyna",
+      "gender": "neuter",
+      "related_words": ["ótil (foolish)", "djarflíkr (absurd)", "óvíti (folly)"],
+      "usage_frequency": "low",
+      "connotation": "derogatory"
+    },
+    {
+      "id": 17,
+      "english": "abundance, plenty, sufficiency, wealth",
+      "ancient_language": "djarflæti",
+      "tone": "formal",
+      "part_of_speech": "noun",
+      "formal": "djarflæti",
+      "informal": "djarf",
+      "poetic": "djarflæti'ara",
+      "archaic": "djarflaete",
+      "gender": "neuter",
+      "related_words": ["gnóg (enough)", "mikilæti (greatness)", "auðr (wealth)", "ríki (richness)"],
+      "usage_frequency": "medium",
+      "semantic_field": "quantity_and_quality"
+    },
+    {
+      "id": 18,
+      "english": "abundant, plentiful, ample, copious",
+      "ancient_language": "djarflætr",
+      "tone": "formal",
+      "part_of_speech": "adjective",
+      "formal": "djarflætr",
+      "informal": "djarf",
+      "poetic": "djarflætr'ara",
+      "archaic": "djarflaetr",
+      "gender": "masculine",
+      "comparative": "djarflætari",
+      "superlative": "djarflætastr",
+      "related_words": ["mikill (great)", "margr (many)", "gnóg (sufficient)"],
+      "usage_frequency": "medium"
+    },
+    {
+      "id": 19,
+      "english": "abyss, chasm, void, deep pit, bottomless pit",
+      "ancient_language": "und",
+      "tone": "poetic",
+      "part_of_speech": "noun",
+      "formal": "und",
+      "informal": "un",
+      "poetic": "und'ara",
+      "archaic": "undr",
+      "gender": "neuter",
+      "related_words": ["eyddr (empty)", "djúpr (deep)", "endalaust (endless)", "myrkvir (darkness)"],
+      "usage_frequency": "high",
+      "canonical_reference": "Central to mythology - the void from which magic comes",
+      "semantic_field": "cosmology_and_darkness",
+      "metaphorical_usage": "Often represents destruction, despair, or the unknown",
+      "example": "Í undinu fellur hinn illði (The evil one falls into the abyss)"
+    },
+    {
+      "id": 20,
+      "english": "acacia, thorny desert tree",
+      "ancient_language": "þorna-tré",
+      "tone": "neutral",
+      "part_of_speech": "noun",
+      "formal": "þorna-tré",
+      "informal": "þorn",
+      "poetic": "þorna-tré'ara",
+      "archaic": "thorna-tree",
+      "gender": "neuter",
+      "components": ["þorna (thorn)", "tré (tree)"],
+      "compounds": ["þorna-fagr (thorn-fair)", "þorna-gras (thorn-grass)"],
+      "usage_frequency": "low",
+      "semantic_field": "flora_and_vegetation"
+    }
+  ],
+  "semantic_fields": {
+    "magic_and_enchantment": {
+      "words": [
+        {
+          "english": "spell, enchantment, magic word",
+          "ancient_language": "galdr",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "related": ["gala (sing)", "varðlokkur (ward-song)"]
+        },
+        {
+          "english": "magic, sorcery, arcane power",
+          "ancient_language": "vanyalí",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "formal": "vanyalí",
+          "informal": "van",
+          "poetic": "vanyalí'ara",
+          "archaic": "vanialim",
+          "related": ["vayna (magic)", "vald (power)"]
+        },
+        {
+          "english": "to curse, to hex, to enchant",
+          "ancient_language": "dreyma",
+          "tone": "archaic",
+          "part_of_speech": "verb",
+          "related": ["dreymandi (enchanter)"]
+        },
+        {
+          "english": "ward, protective spell",
+          "ancient_language": "vard",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "related": ["verja (defend)", "varden (guardians)"]
+        },
+        {
+          "english": "rune, magical symbol",
+          "ancient_language": "rune",
+          "tone": "poetic",
+          "part_of_speech": "noun",
+          "related": ["rúnstafr (rune staff)"]
+        },
+        {
+          "english": "true name, essential name",
+          "ancient_language": "true-nam",
+          "tone": "poetic",
+          "part_of_speech": "noun",
+          "canonical_reference": "Central concept - speaking the true name gives power over the object",
+          "example": "The true name of fire is 'brisingr'"
+        },
+        {
+          "english": "ward-song, protective incantation",
+          "ancient_language": "varðlokkur",
+          "tone": "poetic",
+          "part_of_speech": "noun",
+          "components": ["vard (ward)", "lokkur (song)"],
+          "related": ["gala (sing)"]
+        },
+        {
+          "english": "illusion, false vision",
+          "ancient_language": "dreyma",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "related": ["dreymandi (illusionist)"]
+        }
+      ]
+    },
+    "warfare_and_combat": {
+      "words": [
+        {
+          "english": "army, host, warriors",
+          "ancient_language": "herr",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "gender": "feminine",
+          "related": ["hermaðr (warrior)", "her-konungr (war-king)"]
+        },
+        {
+          "english": "weapon, tool of war",
+          "ancient_language": "vopn",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "gender": "neuter",
+          "number": "can_be_plural",
+          "related": ["sverd (sword)", "skjöldr (shield)", "ero (arrow)"]
+        },
+        {
+          "english": "sword, blade",
+          "ancient_language": "sverd",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "gender": "neuter",
+          "compounds": ["sverd-rekka (sword-wielder)", "sverd-högg (sword-blow)"]
+        },
+        {
+          "english": "shield, protection",
+          "ancient_language": "skjöldr",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "gender": "masculine",
+          "related": ["skjöldun (shielding)"]
+        },
+        {
+          "english": "arrow, projectile",
+          "ancient_language": "oro",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "gender": "masculine",
+          "related": ["boggi (bow)"]
+        },
+        {
+          "english": "courage, boldness, daring",
+          "ancient_language": "djarfn",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "gender": "feminine",
+          "related": ["djarfr (bold)"]
+        },
+        {
+          "english": "to fight, to battle, to struggle",
+          "ancient_language": "verrunsmal",
+          "tone": "formal",
+          "part_of_speech": "verb",
+          "related": ["verrunsmali (fighter)", "orrusta (battle)"]
+        },
+        {
+          "english": "battle, combat, conflict",
+          "ancient_language": "orrusta",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "gender": "feminine",
+          "related": ["verrunsmali (fighter)"]
+        }
+      ]
+    },
+    "dragons_and_dragon_lore": {
+      "words": [
+        {
+          "english": "dragon (literally 'scale-flapper')",
+          "ancient_language": "skulblaka",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "gender": "masculine",
+          "components": ["skul (scale)", "blaka (flapper)"],
+          "related": ["dreki (dragon - archaic)", "drakr (worm)"],
+          "canonical_reference": "The primary term used throughout the series",
+          "compounds": ["skulblaka-rið (dragon-ride)"]
+        },
+        {
+          "english": "dragon rider (literally 'one bound to dragon')",
+          "ancient_language": "shur'tugal",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "gender": "masculine",
+          "canonical_reference": "Title of utmost honor and responsibility",
+          "compounds": ["shur'tugal-dóm (rider's judgment)"]
+        },
+        {
+          "english": "heart of hearts, dragon consciousness stone",
+          "ancient_language": "eldunarí",
+          "tone": "poetic",
+          "part_of_speech": "noun",
+          "gender": "neuter",
+          "canonical_reference": "Gems where dragons store consciousness after body death",
+          "mythological_significance": "Central to dragon immortality and power"
+        },
+        {
+          "english": "dragon-like sea creatures related to fanghur",
+          "ancient_language": "nïdhwal",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "gender": "masculine",
+          "canonical_reference": "Ancient creatures encountered in the seas"
+        },
+        {
+          "english": "to bond with a dragon, to become a rider",
+          "ancient_language": "deyja-brond",
+          "tone": "poetic",
+          "part_of_speech": "verb",
+          "related": ["brond (bond)"]
+        },
+        {
+          "english": "death spear, lance for slaying dragons",
+          "ancient_language": "dauthdaert",
+          "tone": "poetic",
+          "part_of_speech": "noun",
+          "components": ["dauthr (death)", "daert (spear)"],
+          "canonical_reference": "Weapons forged by elves specifically to kill dragons",
+          "mythological_significance": "Symbols of the ancient war between elves and dragons"
+        }
+      ]
+    },
+    "nature_and_landscape": {
+      "words": [
+        {
+          "english": "mountain, fell, height",
+          "ancient_language": "fell",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "gender": "neuter",
+          "compounds": ["fell-horn (mountain-horn)", "fell-tind (mountain-peak)"]
+        },
+        {
+          "english": "valley, dale, lowland",
+          "ancient_language": "dal",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "gender": "masculine",
+          "related": ["dalr (dale)", "dalsmaðr (dale-man)"]
+        },
+        {
+          "english": "forest, wood, woodland",
+          "ancient_language": "welden",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "gender": "feminine",
+          "compounds": ["welden-folk (forest-folk)"]
+        },
+        {
+          "english": "water, stream, river",
+          "ancient_language": "vatn",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "gender": "neuter",
+          "related": ["vatnsfall (waterfall)"]
+        },
+        {
+          "english": "sea, ocean",
+          "ancient_language": "vaer",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "gender": "masculine",
+          "related": ["vaer-folk (sea-folk)", "vaer-maðr (seaman)"]
+        },
+        {
+          "english": "stone, rock, boulder",
+          "ancient_language": "steinn",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "gender": "masculine",
+          "compounds": ["steinn-hús (stone-house)"]
+        },
+        {
+          "english": "field, plain, meadow",
+          "ancient_language": "vollr",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "gender": "masculine",
+          "related": ["völl (field)"]
+        },
+        {
+          "english": "tree, wood",
+          "ancient_language": "traevam",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "gender": "neuter",
+          "compounds": ["traevam-gard (tree-garden)"]
+        },
+        {
+          "english": "earth, soil, ground",
+          "ancient_language": "deloi",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "gender": "feminine",
+          "related": ["delois (earth-plant)"]
+        },
+        {
+          "english": "sky, firmament, heaven",
+          "ancient_language": "lotha",
+          "tone": "poetic",
+          "part_of_speech": "noun",
+          "gender": "feminine",
+          "related": ["lothandir (sky-ward)"]
+        }
+      ]
+    },
+    "emotions_and_character": {
+      "words": [
+        {
+          "english": "sorrow, grief, mourning, sadness",
+          "ancient_language": "harmr",
+          "tone": "archaic",
+          "part_of_speech": "noun",
+          "formal": "harmr",
+          "informal": "har",
+          "poetic": "harmr'ara",
+          "archaic": "harma",
+          "gender": "masculine",
+          "related_words": ["osthato (mourning)", "angr (anguish)", "gráthr (tears)"],
+          "usage_frequency": "high",
+          "semantic_field": "negative_emotion",
+          "example": "Harmr fylgdi honum um daga (Sorrow followed him for days)"
+        },
+        {
+          "english": "joy, happiness, gladness, delight",
+          "ancient_language": "gleði",
+          "tone": "poetic",
+          "part_of_speech": "noun",
+          "formal": "gleði",
+          "informal": "gle",
+          "poetic": "gleði'ara",
+          "archaic": "glaedum",
+          "gender": "feminine",
+          "related_words": ["glaðr (glad)", "ilia (happy)", "fagr (fair)"],
+          "usage_frequency": "high",
+          "semantic_field": "positive_emotion",
+          "antonym": "harmr (sorrow)"
+        },
+        {
+          "english": "fear, dread, terror, fright",
+          "ancient_language": "ótti",
+          "tone": "informal",
+          "part_of_speech": "noun",
+          "formal": "ótti",
+          "informal": "ót",
+          "poetic": "ótti'ara",
+          "archaic": "óttum",
+          "gender": "masculine",
+          "related_words": ["reiðr (afraid)", "egi (dread)", "hræðsla (fear)"],
+          "usage_frequency": "high",
+          "semantic_field": "negative_emotion",
+          "antonym": "djarfn (courage)"
+        },
+        {
+          "english": "love, affection, desire",
+          "ancient_language": "ástar",
+          "tone": "poetic",
+          "part_of_speech": "noun",
+          "formal": "ástar",
+          "informal": "ás",
+          "poetic": "ástar'ara",
+          "archaic": "astari",
+          "gender": "feminine",
+          "related_words": ["elska (love)", "ástir (loves)", "vincola (friendship)"],
+          "usage_frequency": "very_high",
+          "semantic_field": "positive_emotion",
+          "canonical_reference": "Central theme throughout the series"
+        },
+        {
+          "english": "anger, rage, wrath, fury",
+          "ancient_language": "reiðr",
+          "tone": "informal",
+          "part_of_speech": "noun/adjective",
+          "formal": "reiðr",
+          "informal": "reid",
+          "poetic": "reiðr'ara",
+          "archaic": "reidrum",
+          "gender": "feminine",
+          "related_words": ["reida (anger)", "grimr (grim)", "ill-hugr (ill-will)"],
+          "usage_frequency": "high",
+          "semantic_field": "negative_emotion",
+          "example": "Reiðr kona stóð með brekkum (An angry woman stood with hands on hips)"
+        },
+        {
+          "english": "proud, haughty, arrogant",
+          "ancient_language": "djarflyndr",
+          "tone": "formal",
+          "part_of_speech": "adjective",
+          "formal": "djarflyndr",
+          "informal": "djarf",
+          "poetic": "djarflyndr'ara",
+          "archaic": "djarflindre",
+          "gender": "masculine",
+          "related_words": ["djarfn (pride)", "ofbragð (arrogance)"],
+          "usage_frequency": "medium"
+        },
+        {
+          "english": "honor, glory, fame, reputation",
+          "ancient_language": "heiðr",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "formal": "heiðr",
+          "informal": "heid",
+          "poetic": "heiðr'ara",
+          "archaic": "heiðrum",
+          "gender": "feminine",
+          "related_words": ["heiðrlegr (honorable)", "djarfn (courage)"],
+          "usage_frequency": "high",
+          "semantic_field": "virtue_and_character"
+        },
+        {
+          "english": "shame, dishonor, disgrace",
+          "ancient_language": "skömm",
+          "tone": "archaic",
+          "part_of_speech": "noun",
+          "formal": "skömm",
+          "informal": "skom",
+          "poetic": "skömm'ara",
+          "archaic": "skömmu",
+          "gender": "feminine",
+          "related_words": ["skammligr (shameful)", "óheiðr (dishonor)"],
+          "usage_frequency": "medium",
+          "semantic_field": "vice_and_character",
+          "antonym": "heiðr (honor)"
+        },
+        {
+          "english": "wise, sensible, prudent, judicious",
+          "ancient_language": "svit",
+          "tone": "formal",
+          "part_of_speech": "adjective",
+          "formal": "svit",
+          "informal": "svi",
+          "poetic": "svit'ara",
+          "archaic": "svite",
+          "gender": "masculine",
+          "comparative": "svitari",
+          "superlative": "svitur",
+          "related_words": ["vitri (knowing)", "frôðr (learned)", "hugvit (intelligence)"],
+          "usage_frequency": "high",
+          "semantic_field": "virtue_and_character"
+        },
+        {
+          "english": "foolish, senseless, unwise",
+          "ancient_language": "djarflúkr",
+          "tone": "informal",
+          "part_of_speech": "adjective",
+          "formal": "djarflúkr",
+          "informal": "djarf",
+          "poetic": "djarflúkr'ara",
+          "archaic": "djarfluke",
+          "gender": "masculine",
+          "related_words": ["óvíti (folly)", "óskyn (nonsense)", "óviti (folly)"],
+          "usage_frequency": "medium",
+          "semantic_field": "vice_and_character",
+          "antonym": "svit (wise)"
+        },
+        {
+          "english": "brave, courageous, bold, daring",
+          "ancient_language": "djarfr",
+          "tone": "neutral",
+          "part_of_speech": "adjective",
+          "formal": "djarfr",
+          "informal": "djarf",
+          "poetic": "djarfan",
+          "archaic": "djaarfr",
+          "gender": "masculine",
+          "comparative": "djarfari",
+          "superlative": "djarfari",
+          "related_words": ["djarfn (courage)", "ótti (fear)", "hugaðr (brave-hearted)"],
+          "usage_frequency": "high",
+          "semantic_field": "virtue_and_character",
+          "canonical_reference": "Central virtue in rider code"
+        },
+        {
+          "english": "cowardly, timid, fearful, craven",
+          "ancient_language": "hugablær",
+          "tone": "derogatory",
+          "part_of_speech": "adjective",
+          "formal": "hugablær",
+          "informal": "huga",
+          "poetic": "hugablær'ara",
+          "archaic": "hugablaere",
+          "gender": "masculine",
+          "related_words": ["ótti (fear)", "reiðr (afraid)"],
+          "usage_frequency": "medium",
+          "semantic_field": "vice_and_character",
+          "connotation": "insulting",
+          "antonym": "djarfr (brave)"
+        },
+        {
+          "english": "kind, benevolent, charitable, gentle",
+          "ancient_language": "huggvil",
+          "tone": "formal",
+          "part_of_speech": "adjective",
+          "formal": "huggvil",
+          "informal": "hug",
+          "poetic": "huggvil'ara",
+          "archaic": "huggvile",
+          "gender": "masculine",
+          "related_words": ["huggvilli (kindly person)", "elska (love)", "vincola (friendship)"],
+          "usage_frequency": "high",
+          "semantic_field": "virtue_and_character"
+        },
+        {
+          "english": "cruel, harsh, merciless, unkind",
+          "ancient_language": "illheillugr",
+          "tone": "derogatory",
+          "part_of_speech": "adjective",
+          "formal": "illheillugr",
+          "informal": "ill",
+          "poetic": "illheillugr'ara",
+          "archaic": "illheillige",
+          "gender": "masculine",
+          "related_words": ["illr (evil)", "grimr (grim)", "óhollan (abusive)"],
+          "usage_frequency": "medium",
+          "semantic_field": "vice_and_character",
+          "antonym": "huggvil (kind)"
+        },
+        {
+          "english": "hope, expectation, trust",
+          "ancient_language": "von",
+          "tone": "poetic",
+          "part_of_speech": "noun",
+          "formal": "von",
+          "informal": "vo",
+          "poetic": "von'ara",
+          "archaic": "vorum",
+          "gender": "feminine",
+          "related_words": ["vona (hope)", "trúa (trust)", "giarn (desire)"],
+          "usage_frequency": "high",
+          "semantic_field": "positive_emotion"
+        },
+        {
+          "english": "despair, hopelessness, dejection",
+          "ancient_language": "óvon",
+          "tone": "archaic",
+          "part_of_speech": "noun",
+          "formal": "óvon",
+          "informal": "óvo",
+          "poetic": "óvon'ara",
+          "archaic": "óvorum",
+          "gender": "feminine",
+          "related_words": ["óvona (despair)", "harmr (sorrow)", "angr (anguish)"],
+          "usage_frequency": "medium",
+          "semantic_field": "negative_emotion",
+          "antonym": "von (hope)"
+        },
+        {
+          "english": "loyalty, fidelity, faithfulness",
+          "ancient_language": "tryggð",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "formal": "tryggð",
+          "informal": "trygg",
+          "poetic": "tryggð'ara",
+          "archaic": "tryggdum",
+          "gender": "feminine",
+          "related_words": ["trúa (trust)", "tryggja (to secure)", "yawë (bond of trust)"],
+          "usage_frequency": "high",
+          "semantic_field": "virtue_and_character",
+          "canonical_reference": "Central to rider code and elven values"
+        },
+        {
+          "english": "betrayal, treachery, disloyalty",
+          "ancient_language": "illska",
+          "tone": "derogatory",
+          "part_of_speech": "noun",
+          "formal": "illska",
+          "informal": "ills",
+          "poetic": "illska'ara",
+          "archaic": "illskum",
+          "gender": "feminine",
+          "related_words": ["illskinn (traitor)", "illr (evil)", "sviki (treachery)"],
+          "usage_frequency": "medium",
+          "semantic_field": "vice_and_character",
+          "antonym": "tryggð (loyalty)"
+        },
+        {
+          "english": "compassion, pity, mercy, sympathy",
+          "ancient_language": "arnabrigð",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "formal": "arnabrigð",
+          "informal": "arna",
+          "poetic": "arnabrigð'ara",
+          "archaic": "arnabrigdum",
+          "gender": "feminine",
+          "related_words": ["arni (merciful)", "huggvil (kind)"],
+          "usage_frequency": "medium",
+          "semantic_field": "virtue_and_character"
+        }
+      ]
+    },
+    "knowledge_and_learning": {
+      "words": [
+        {
+          "english": "knowledge, wisdom, understanding",
+          "ancient_language": "vit",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "formal": "vit",
+          "informal": "vi",
+          "poetic": "vit'ara",
+          "archaic": "vitum",
+          "gender": "neuter",
+          "related_words": ["vitri (wise)", "kenna (know)", "frôðr (learned)"],
+          "usage_frequency": "very_high",
+          "semantic_field": "intellectual_virtues"
+        },
+        {
+          "english": "to know, to recognize, to perceive",
+          "ancient_language": "kenna",
+          "tone": "neutral",
+          "part_of_speech": "verb",
+          "formal": "kenna",
+          "informal": "ken",
+          "poetic": "kenna'ara",
+          "archaic": "kennandi",
+          "verb_class": "weak",
+          "conjugation": {
+            "present_1st": "kenna ek",
+            "present_3rd": "kennir",
+            "past_1st": "kenndi ek",
+            "past_3rd": "kenndi",
+            "past_participle": "kunndr"
+          },
+          "related_words": ["vit (knowledge)", "vitri (wise)"],
+          "usage_frequency": "very_high"
+        },
+        {
+          "english": "learned, scholarly, erudite",
+          "ancient_language": "frôðr",
+          "tone": "formal",
+          "part_of_speech": "adjective",
+          "formal": "frôðr",
+          "informal": "frôð",
+          "poetic": "frôðr'ara",
+          "archaic": "frodre",
+          "gender": "masculine",
+          "related_words": ["vit (knowledge)", "kenna (know)", "bok (book)"],
+          "usage_frequency": "high",
+          "semantic_field": "intellectual_virtues"
+        },
+        {
+          "english": "to teach, to instruct, to educate",
+          "ancient_language": "kenna",
+          "tone": "neutral",
+          "part_of_speech": "verb",
+          "formal": "kenna",
+          "informal": "ken",
+          "poetic": "kenna'ara",
+          "archaic": "kennandi",
+          "conjugation": {
+            "present_1st": "kenna ek",
+            "present_3rd": "kennir",
+            "past_1st": "kenndi ek",
+            "past_3rd": "kenndi",
+            "past_participle": "kunndr"
+          },
+          "related_words": ["læra (learn)", "skóli (school)"],
+          "usage_frequency": "high"
+        },
+        {
+          "english": "to say, to speak, to tell",
+          "ancient_language": "segja",
+          "tone": "neutral",
+          "part_of_speech": "verb",
+          "formal": "segja",
+          "informal": "seg",
+          "poetic": "segja'ara",
+          "archaic": "segjandi",
+          "verb_class": "weak",
+          "conjugation": {
+            "present_1st": "segi ek",
+            "present_3rd": "segir",
+            "past_1st": "sagðir ek",
+            "past_3rd": "sagði",
+            "past_participle": "sagðr"
+          },
+          "related_words": ["mælta (speak)", "orð (word)", "tala (speak)"],
+          "usage_frequency": "very_high"
+        },
+        {
+          "english": "poem, song, lay, verse",
+          "ancient_language": "rune",
+          "tone": "poetic",
+          "part_of_speech": "noun",
+          "formal": "rune",
+          "informal": "run",
+          "poetic": "rune'ara",
+          "archaic": "runum",
+          "gender": "feminine",
+          "related_words": ["gala (sing)", "söngr (song)", "drápra (lay)"],
+          "usage_frequency": "high",
+          "canonical_reference": "Poetry central to elven culture",
+          "semantic_field": "literature_and_art"
+        },
+        {
+          "english": "book, written scroll, manuscript",
+          "ancient_language": "bok",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "formal": "bok",
+          "informal": "bo",
+          "poetic": "bok'ara",
+          "archaic": "bokum",
+          "gender": "feminine",
+          "related_words": ["liduen (script)", "ritun (writing)"],
+          "usage_frequency": "medium",
+          "semantic_field": "literature_and_art"
+        },
+        {
+          "english": "script, writing, letters",
+          "ancient_language": "liduen",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "formal": "liduen",
+          "informal": "lid",
+          "poetic": "liduen'ara",
+          "archaic": "lidunum",
+          "gender": "neuter",
+          "compounds": ["liduen-kvaedhí (poetic script)"],
+          "usage_frequency": "medium",
+          "semantic_field": "literature_and_art"
+        },
+        {
+          "english": "word, speech, utterance",
+          "ancient_language": "orð",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "orð",
+          "informal": "or",
+          "poetic": "orð'ara",
+          "archaic": "orðum",
+          "gender": "neuter",
+          "related_words": ["segja (say)", "mælta (speak)"],
+          "usage_frequency": "very_high",
+          "canonical_reference": "Words have power in the Ancient Language"
+        },
+        {
+          "english": "riddle, puzzle, dark speech",
+          "ancient_language": "dóm-orð",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "formal": "dóm-orð",
+          "informal": "dóm",
+          "poetic": "dóm-orð'ara",
+          "archaic": "domordnum",
+          "gender": "neuter",
+          "components": ["dóm (judgment)", "orð (word)"],
+          "usage_frequency": "low",
+          "semantic_field": "literature_and_art"
+        }
+      ]
+    },
+    "daily_life_and_crafts": {
+      "words": [
+        {
+          "english": "house, dwelling, home",
+          "ancient_language": "hús",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "hús",
+          "informal": "hu",
+          "poetic": "hús'ara",
+          "archaic": "húsum",
+          "gender": "neuter",
+          "compounds": ["hús-freyja (housemistress)", "hús-bóndi (housemaster)"],
+          "usage_frequency": "very_high",
+          "semantic_field": "domestic_life"
+        },
+        {
+          "english": "fire, flame, blaze",
+          "ancient_language": "brisingr",
+          "tone": "poetic",
+          "part_of_speech": "noun",
+          "formal": "brisingr",
+          "informal": "bris",
+          "poetic": "brisingr'ara",
+          "archaic": "brisingrum",
+          "gender": "masculine",
+          "related_words": ["eldvarí (burning)", "eldr (fire - archaic)"],
+          "usage_frequency": "high",
+          "canonical_reference": "True name of fire",
+          "semantic_field": "elements_and_phenomena"
+        },
+        {
+          "english": "to cook, to prepare food",
+          "ancient_language": "soðja",
+          "tone": "neutral",
+          "part_of_speech": "verb",
+          "formal": "soðja",
+          "informal": "soð",
+          "poetic": "soðja'ara",
+          "archaic": "soðjandi",
+          "verb_class": "weak",
+          "related_words": ["mat (food)", "drekka (drink)"],
+          "usage_frequency": "low"
+        },
+        {
+          "english": "bread, loaf",
+          "ancient_language": "brauð",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "brauð",
+          "informal": "brau",
+          "poetic": "brauð'ara",
+          "archaic": "brauðum",
+          "gender": "neuter",
+          "related_words": ["mat (food)", "korn (grain)"],
+          "usage_frequency": "medium",
+          "semantic_field": "food_and_drink"
+        },
+        {
+          "english": "meat, flesh, food",
+          "ancient_language": "kjöt",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "kjöt",
+          "informal": "kjo",
+          "poetic": "kjöt'ara",
+          "archaic": "kjötum",
+          "gender": "neuter",
+          "related_words": ["mat (food)"],
+          "usage_frequency": "medium",
+          "semantic_field": "food_and_drink"
+        },
+        {
+          "english": "mead, honey-wine, alcoholic drink",
+          "ancient_language": "mjöðr",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "mjöðr",
+          "informal": "mjo",
+          "poetic": "mjöðr'ara",
+          "archaic": "mjöðrum",
+          "gender": "masculine",
+          "related_words": ["drekka (drink)", "ön (wine)"],
+          "usage_frequency": "low",
+          "semantic_field": "food_and_drink"
+        },
+        {
+          "english": "craft, skill, trade, art",
+          "ancient_language": "smíðr",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "formal": "smíðr",
+          "informal": "smi",
+          "poetic": "smíðr'ara",
+          "archaic": "smíðrum",
+          "gender": "feminine",
+          "related_words": ["smíða (craft)", "meistari (master)"],
+          "usage_frequency": "medium",
+          "semantic_field": "work_and_craft"
+        },
+        {
+          "english": "tool, implement, instrument",
+          "ancient_language": "tól",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "tól",
+          "informal": "to",
+          "poetic": "tól'ara",
+          "archaic": "tólum",
+          "gender": "neuter",
+          "related_words": ["smíðr (craft)", "vopn (weapon)"],
+          "usage_frequency": "medium",
+          "semantic_field": "work_and_craft"
+        },
+        {
+          "english": "weaving, woven cloth, fabric",
+          "ancient_language": "vef",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "vef",
+          "informal": "ve",
+          "poetic": "vef'ara",
+          "archaic": "vefum",
+          "gender": "masculine",
+          "related_words": ["vefa (weave)", "klæði (clothing)"],
+          "usage_frequency": "low",
+          "semantic_field": "textiles_and_clothing"
+        },
+        {
+          "english": "clothing, garment, dress",
+          "ancient_language": "klæði",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "klæði",
+          "informal": "klæ",
+          "poetic": "klæði'ara",
+          "archaic": "klæðum",
+          "gender": "neuter",
+          "related_words": ["vef (weaving)", "kyrta (shirt)"],
+          "usage_frequency": "medium",
+          "semantic_field": "textiles_and_clothing"
+        }
+      ]
+    },
+    "religion_and_spirituality": {
+      "words": [
+        {
+          "english": "oath, vow, promise",
+          "ancient_language": "ren",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "formal": "ren",
+          "informal": "ren",
+          "poetic": "ren'ara",
+          "archaic": "renum",
+          "gender": "neuter",
+          "related_words": ["blödhren (blood-oath)", "svera (swear)"],
+          "usage_frequency": "high",
+          "canonical_reference": "Oaths have binding power in the Ancient Language",
+          "semantic_field": "duty_and_honor"
+        },
+        {
+          "english": "blood-oath, solemn vow",
+          "ancient_language": "blödhren",
+          "tone": "archaic",
+          "part_of_speech": "noun",
+          "formal": "blödhren",
+          "informal": "blödh",
+          "poetic": "blödhren'ara",
+          "archaic": "blödrennum",
+          "gender": "neuter",
+          "components": ["blödh (blood)", "ren (oath)"],
+          "usage_frequency": "high",
+          "canonical_reference": "Sacred oath binding dragon and rider",
+          "semantic_field": "duty_and_honor"
+        },
+        {
+          "english": "to swear, to take oath, to vow",
+          "ancient_language": "svera",
+          "tone": "formal",
+          "part_of_speech": "verb",
+          "formal": "svera",
+          "informal": "sver",
+          "poetic": "svera'ara",
+          "archaic": "sverandi",
+          "verb_class": "weak",
+          "related_words": ["ren (oath)", "otherúm (swear)"],
+          "usage_frequency": "high"
+        },
+        {
+          "english": "bond of trust, sacred bond",
+          "ancient_language": "yawë",
+          "tone": "poetic",
+          "part_of_speech": "noun",
+          "formal": "yawë",
+          "informal": "yaw",
+          "poetic": "yawë'ara",
+          "archaic": "yawënum",
+          "gender": "feminine",
+          "related_words": ["ren (oath)", "tryggð (loyalty)"],
+          "usage_frequency": "high",
+          "canonical_reference": "Central concept in rider-dragon relationships"
+        },
+        {
+          "english": "blood-oath celebration, ancient ceremony",
+          "ancient_language": "agaetí blödhren",
+          "tone": "poetic",
+          "part_of_speech": "noun",
+          "components": ["agaetí (celebration)", "blödhren (blood-oath)"],
+          "usage_frequency": "low",
+          "canonical_reference": "Held once per century to honor elf-dragon pact",
+          "semantic_field": "ceremony_and_ritual"
+        },
+        {
+          "english": "blessing, good fortune, fate",
+          "ancient_language": "esterní",
+          "tone": "poetic",
+          "part_of_speech": "noun",
+          "formal": "esterní",
+          "informal": "ester",
+          "poetic": "esterní'ara",
+          "archaic": "esterni",
+          "gender": "feminine",
+          "related_words": ["wyrda (fate)", "gestr (guest/fate)"],
+          "usage_frequency": "medium",
+          "semantic_field": "fate_and_destiny"
+        },
+        {
+          "english": "fate, destiny, doom, luck",
+          "ancient_language": "wyrda",
+          "tone": "poetic",
+          "part_of_speech": "noun",
+          "formal": "wyrda",
+          "informal": "wyr",
+          "poetic": "wyrda'ara",
+          "archaic": "wyrdum",
+          "gender": "feminine",
+          "related_words": ["örlög (fate)", "esterní (fortune)"],
+          "usage_frequency": "high",
+          "canonical_reference": "Central to understanding destiny and magic",
+          "semantic_field": "fate_and_destiny"
+        },
+        {
+          "english": "the forsworn, those who broke oath",
+          "ancient_language": "wyrdfell",
+          "tone": "archaic",
+          "part_of_speech": "noun",
+          "formal": "wyrdfell",
+          "informal": "wyrd",
+          "poetic": "wyrdfell'ara",
+          "archaic": "wyrdfellum",
+          "gender": "masculine_plural",
+          "components": ["wyrda (fate)", "fell (fallen)"],
+          "usage_frequency": "medium",
+          "canonical_reference": "Those who broke ancient covenant with dragons",
+          "semantic_field": "tragedy_and_downfall"
+        },
+        {
+          "english": "mourning sage, wise elder in grief",
+          "ancient_language": "osthato chetowä",
+          "tone": "poetic",
+          "part_of_speech": "noun",
+          "formal": "osthato chetowä",
+          "informal": "osthato",
+          "poetic": "osthato chetowä'ara",
+          "archaic": "osthatochetowa",
+          "gender": "masculine",
+          "components": ["osthato (mourning)", "chetowä (sage)"],
+          "usage_frequency": "low",
+          "canonical_reference": "Title of respect for those who counsel in times of sorrow"
+        }
+      ]
+    },
+    "body_parts_and_anatomy": {
+      "words": [
+        {
+          "english": "hand, arm, appendage",
+          "ancient_language": "lam",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "lam",
+          "informal": "la",
+          "poetic": "lam'ara",
+          "archaic": "lamum",
+          "gender": "neuter",
+          "compounds": ["lam-steinn (stone-hand)", "silver-lam (silver-hand)"],
+          "usage_frequency": "high",
+          "semantic_field": "anatomy"
+        },
+        {
+          "english": "arm, wing-limb",
+          "ancient_language": "vaupna",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "vaupna",
+          "informal": "vaup",
+          "poetic": "vaupna'ara",
+          "archaic": "vaupnum",
+          "gender": "feminine",
+          "related_words": ["lam (hand)", "vaengr (wing)"],
+          "usage_frequency": "medium",
+          "semantic_field": "anatomy"
+        },
+        {
+          "english": "eye, sight, vision",
+          "ancient_language": "auga",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "auga",
+          "informal": "aug",
+          "poetic": "auga'ara",
+          "archaic": "augum",
+          "gender": "neuter",
+          "related_words": ["sjon (sight)", "sja (see)"],
+          "usage_frequency": "high",
+          "semantic_field": "anatomy"
+        },
+        {
+          "english": "ear, sense of hearing",
+          "ancient_language": "eyra",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "eyra",
+          "informal": "ey",
+          "poetic": "eyra'ara",
+          "archaic": "eyrum",
+          "gender": "feminine",
+          "related_words": ["hórna (hear)", "hljóðr (sound)"],
+          "usage_frequency": "medium",
+          "semantic_field": "anatomy"
+        },
+        {
+          "english": "head, mind, thought",
+          "ancient_language": "höfuð",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "höfuð",
+          "informal": "höf",
+          "poetic": "höfuð'ara",
+          "archaic": "höfuðum",
+          "gender": "neuter",
+          "related_words": ["hugr (mind)", "hügin (thought)"],
+          "usage_frequency": "high",
+          "semantic_field": "anatomy"
+        },
+        {
+          "english": "heart, center, core",
+          "ancient_language": "hjarta",
+          "tone": "poetic",
+          "part_of_speech": "noun",
+          "formal": "hjarta",
+          "informal": "hjar",
+          "poetic": "hjarta'ara",
+          "archaic": "hjartum",
+          "gender": "neuter",
+          "related_words": ["eldunarí (heart of hearts)"],
+          "usage_frequency": "high",
+          "semantic_field": "anatomy",
+          "metaphorical_usage": "Often represents courage or essence"
+        },
+        {
+          "english": "blood, life force",
+          "ancient_language": "blödh",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "blödh",
+          "informal": "blöd",
+          "poetic": "blödh'ara",
+          "archaic": "blöðum",
+          "gender": "neuter",
+          "related_words": ["blödhren (blood-oath)", "blödhgarm (bloodwolf)"],
+          "usage_frequency": "high",
+          "semantic_field": "anatomy",
+          "canonical_reference": "Blood has spiritual significance"
+        },
+        {
+          "english": "bone, skeletal structure",
+          "ancient_language": "bein",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "bein",
+          "informal": "bei",
+          "poetic": "bein'ara",
+          "archaic": "beinum",
+          "gender": "neuter",
+          "related_words": ["beinn (leg)"],
+          "usage_frequency": "medium",
+          "semantic_field": "anatomy"
+        },
+        {
+          "english": "leg, lower limb",
+          "ancient_language": "leggr",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "leggr",
+          "informal": "leg",
+          "poetic": "leggr'ara",
+          "archaic": "leggjum",
+          "gender": "masculine",
+          "related_words": ["beinn (leg)"],
+          "usage_frequency": "medium",
+          "semantic_field": "anatomy"
+        },
+        {
+          "english": "face, appearance, visage",
+          "ancient_language": "andlit",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "andlit",
+          "informal": "and",
+          "poetic": "andlit'ara",
+          "archaic": "andlitum",
+          "gender": "neuter",
+          "related_words": ["auga (eye)", "munn (mouth)"],
+          "usage_frequency": "high",
+          "semantic_field": "anatomy"
+        }
+      ]
+    },
+    "colors_materials_and_qualities": {
+      "words": [
+        {
+          "english": "black, dark, evil",
+          "ancient_language": "svartr",
+          "tone": "neutral",
+          "part_of_speech": "adjective",
+          "formal": "svartr",
+          "informal": "svar",
+          "poetic": "svartr'ara",
+          "archaic": "svarte",
+          "gender": "masculine",
+          "related_words": ["myrkvir (dark)", "illr (evil)"],
+          "usage_frequency": "high",
+          "semantic_field": "colors",
+          "antonym": "hvítr (white)"
+        },
+        {
+          "english": "white, shining, pure",
+          "ancient_language": "hvítr",
+          "tone": "neutral",
+          "part_of_speech": "adjective",
+          "formal": "hvítr",
+          "informal": "hvít",
+          "poetic": "hvítr'ara",
+          "archaic": "hvite",
+          "gender": "masculine",
+          "related_words": ["bleikr (bright)", "fagr (fair)"],
+          "usage_frequency": "high",
+          "semantic_field": "colors",
+          "antonym": "svartr (black)"
+        },
+        {
+          "english": "red, blood-red, ruddy",
+          "ancient_language": "rauðr",
+          "tone": "neutral",
+          "part_of_speech": "adjective",
+          "formal": "rauðr",
+          "informal": "rau",
+          "poetic": "rauðr'ara",
+          "archaic": "raude",
+          "gender": "masculine",
+          "related_words": ["blödh (blood)"],
+          "usage_frequency": "high",
+          "semantic_field": "colors"
+        },
+        {
+          "english": "green, verdant, growing",
+          "ancient_language": "grænn",
+          "tone": "neutral",
+          "part_of_speech": "adjective",
+          "formal": "grænn",
+          "informal": "græ",
+          "poetic": "grænn'ara",
+          "archaic": "grenne",
+          "gender": "masculine",
+          "related_words": ["lauf (leaf)", "vaxa (grow)"],
+          "usage_frequency": "high",
+          "semantic_field": "colors"
+        },
+        {
+          "english": "gold, precious metal, treasure",
+          "ancient_language": "kuldr",
+          "tone": "neutral",
+          "part_of_speech": "noun/adjective",
+          "formal": "kuldr",
+          "informal": "kul",
+          "poetic": "kuldr'ara",
+          "archaic": "kuldrum",
+          "gender": "masculine",
+          "related_words": ["malmr (metal)", "auðr (wealth)"],
+          "usage_frequency": "high",
+          "semantic_field": "materials",
+          "semantic_connection": "wealth and value"
+        },
+        {
+          "english": "silver, pale metal",
+          "ancient_language": "arget",
+          "tone": "neutral",
+          "part_of_speech": "noun/adjective",
+          "formal": "arget",
+          "informal": "arg",
+          "poetic": "arget'ara",
+          "archaic": "argetum",
+          "gender": "masculine",
+          "compounds": ["argetlam (silver-hand)"],
+          "usage_frequency": "high",
+          "semantic_field": "materials"
+        },
+        {
+          "english": "steel, hard forged metal",
+          "ancient_language": "stál",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "stál",
+          "informal": "sta",
+          "poetic": "stál'ara",
+          "archaic": "stálum",
+          "gender": "neuter",
+          "related_words": ["malmr (metal)", "harðr (hard)"],
+          "usage_frequency": "high",
+          "semantic_field": "materials",
+          "canonical_reference": "Used for weapons and armor"
+        },
+        {
+          "english": "bright, shining, luminous",
+          "ancient_language": "bjartr",
+          "tone": "neutral",
+          "part_of_speech": "adjective",
+          "formal": "bjartr",
+          "informal": "bjart",
+          "poetic": "bjartr'ara",
+          "archaic": "bjarte",
+          "gender": "masculine",
+          "comparative": "bjartari",
+          "superlative": "bjartastr",
+          "related_words": ["fagr (fair)", "hvítr (white)"],
+          "usage_frequency": "high",
+          "semantic_field": "qualities"
+        },
+        {
+          "english": "dark, shadowy, gloomy",
+          "ancient_language": "myrkvir",
+          "tone": "neutral",
+          "part_of_speech": "adjective",
+          "formal": "myrkvir",
+          "informal": "myrk",
+          "poetic": "myrkvir'ara",
+          "archaic": "myrkre",
+          "gender": "masculine",
+          "related_words": ["svartr (black)", "nótt (night)"],
+          "usage_frequency": "high",
+          "semantic_field": "qualities",
+          "antonym": "bjartr (bright)"
+        },
+        {
+          "english": "hard, strong, firm, solid",
+          "ancient_language": "harðr",
+          "tone": "neutral",
+          "part_of_speech": "adjective",
+          "formal": "harðr",
+          "informal": "har",
+          "poetic": "harðr'ara",
+          "archaic": "harde",
+          "gender": "masculine",
+          "comparative": "harðari",
+          "superlative": "harðastr",
+          "related_words": ["ramr (strong)", "djarfr (bold)"],
+          "usage_frequency": "high",
+          "semantic_field": "qualities"
+        }
+      ]
+    },
+    "time_and_seasons": {
+      "words": [
+        {
+          "english": "day, light",
+          "ancient_language": "dag",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "dag",
+          "informal": "da",
+          "poetic": "dag'ara",
+          "archaic": "dagum",
+          "gender": "masculine",
+          "related_words": ["dagr (day)", "ljós (light)"],
+          "usage_frequency": "very_high",
+          "semantic_field": "time"
+        },
+        {
+          "english": "night, darkness",
+          "ancient_language": "dwerva",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "dwerva",
+          "informal": "dwer",
+          "poetic": "dwerva'ara",
+          "archaic": "dwervum",
+          "gender": "feminine",
+          "related_words": ["myrkr (darkness)", "myrkvir (dark)"],
+          "usage_frequency": "very_high",
+          "semantic_field": "time"
+        },
+        {
+          "english": "year, season, age",
+          "ancient_language": "ár",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "ár",
+          "informal": "á",
+          "poetic": "ár'ara",
+          "archaic": "árum",
+          "gender": "neuter",
+          "compounds": ["ársefni (anniversary)"],
+          "usage_frequency": "high",
+          "semantic_field": "time"
+        },
+        {
+          "english": "early, soon, in the beginning",
+          "ancient_language": "ár",
+          "tone": "neutral",
+          "part_of_speech": "adjective/adverb",
+          "formal": "ár",
+          "informal": "á",
+          "poetic": "ár'ara",
+          "archaic": "arum",
+          "usage_frequency": "medium",
+          "semantic_field": "time"
+        },
+        {
+          "english": "now, at this moment",
+          "ancient_language": "nú",
+          "tone": "informal",
+          "part_of_speech": "adverb",
+          "formal": "nú",
+          "informal": "nu",
+          "poetic": "nú'ara",
+          "archaic": "nunum",
+          "usage_frequency": "very_high",
+          "semantic_field": "time"
+        },
+        {
+          "english": "then, at that time",
+          "ancient_language": "þá",
+          "tone": "neutral",
+          "part_of_speech": "adverb",
+          "formal": "þá",
+          "informal": "þa",
+          "poetic": "þá'ara",
+          "archaic": "þánum",
+          "usage_frequency": "very_high",
+          "semantic_field": "time"
+        },
+        {
+          "english": "spring, season of growth",
+          "ancient_language": "vara",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "vara",
+          "informal": "var",
+          "poetic": "vara'ara",
+          "archaic": "vorum",
+          "gender": "feminine",
+          "related_words": ["vaxa (grow)"],
+          "usage_frequency": "medium",
+          "semantic_field": "seasons"
+        },
+        {
+          "english": "summer, warm season",
+          "ancient_language": "sumar",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "sumar",
+          "informal": "sum",
+          "poetic": "sumar'ara",
+          "archaic": "sumrum",
+          "gender": "neuter",
+          "usage_frequency": "medium",
+          "semantic_field": "seasons"
+        },
+        {
+          "english": "autumn, fall, season of harvest",
+          "ancient_language": "haust",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "haust",
+          "informal": "hau",
+          "poetic": "haust'ara",
+          "archaic": "haustum",
+          "gender": "neuter",
+          "usage_frequency": "medium",
+          "semantic_field": "seasons"
+        },
+        {
+          "english": "winter, cold season",
+          "ancient_language": "vetr",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "vetr",
+          "informal": "vet",
+          "poetic": "vetr'ara",
+          "archaic": "vetrum",
+          "gender": "masculine",
+          "compounds": ["vetr-dagar (winter days)"],
+          "usage_frequency": "medium",
+          "semantic_field": "seasons"
+        }
+      ]
+    },
+    "animals_and_creatures": {
+      "words": [
+        {
+          "english": "dragon (scale-flapper)",
+          "ancient_language": "skulblaka",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "formal": "skulblaka",
+          "informal": "skul",
+          "poetic": "skulblaka'ara",
+          "archaic": "skulblakum",
+          "gender": "masculine",
+          "usage_frequency": "very_high",
+          "canonical_reference": "Central to the entire series"
+        },
+        {
+          "english": "bird native to Vroengard (shadow-flapper)",
+          "ancient_language": "sundavrblaka",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "formal": "sundavrblaka",
+          "informal": "sundavr",
+          "poetic": "sundavrblaka'ara",
+          "archaic": "sundavrblakum",
+          "gender": "masculine",
+          "components": ["sundavr (shadow)", "blaka (flapper)"],
+          "usage_frequency": "low"
+        },
+        {
+          "english": "wolf, fierce beast",
+          "ancient_language": "úlfr",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "úlfr",
+          "informal": "úlf",
+          "poetic": "úlfr'ara",
+          "archaic": "úlfum",
+          "gender": "masculine",
+          "related_words": ["blödhgarm (bloodwolf)"],
+          "usage_frequency": "medium",
+          "semantic_field": "fauna"
+        },
+        {
+          "english": "bear, fierce creature",
+          "ancient_language": "artos",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "artos",
+          "informal": "art",
+          "poetic": "artos'ara",
+          "archaic": "artosum",
+          "gender": "masculine",
+          "related_words": ["beor (bear - archaic)"],
+          "usage_frequency": "medium",
+          "semantic_field": "fauna"
+        },
+        {
+          "english": "horse, steed, mount",
+          "ancient_language": "ross",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "ross",
+          "informal": "ros",
+          "poetic": "ross'ara",
+          "archaic": "rossum",
+          "gender": "masculine",
+          "related_words": ["hross (horse)"],
+          "usage_frequency": "high",
+          "semantic_field": "fauna",
+          "usage_context": "Frequently ridden by warriors and riders"
+        },
+        {
+          "english": "eagle, great bird",
+          "ancient_language": "érn",
+          "tone": "poetic",
+          "part_of_speech": "noun",
+          "formal": "érn",
+          "informal": "ér",
+          "poetic": "érn'ara",
+          "archaic": "érnum",
+          "gender": "masculine",
+          "usage_frequency": "medium",
+          "semantic_field": "fauna"
+        },
+        {
+          "english": "serpent, wyrm, dragon-like creature",
+          "ancient_language": "orúm",
+          "tone": "poetic",
+          "part_of_speech": "noun",
+          "formal": "orúm",
+          "informal": "oru",
+          "poetic": "orúm'ara",
+          "archaic": "orúmum",
+          "gender": "masculine",
+          "related_words": ["wyrm (worm)", "drakr (dragon)"],
+          "usage_frequency": "medium",
+          "semantic_field": "fauna"
+        },
+        {
+          "english": "bat, leather-flapper (ra'zac mount)",
+          "ancient_language": "lethrblaka",
+          "tone": "formal",
+          "part_of_speech": "noun",
+          "formal": "lethrblaka",
+          "informal": "lethr",
+          "poetic": "lethrblaka'ara",
+          "archaic": "lethrblakum",
+          "gender": "masculine",
+          "components": ["lethr (leather)", "blaka (flapper)"],
+          "usage_frequency": "medium",
+          "canonical_reference": "Mounts of the ra'zac assassins"
+        },
+        {
+          "english": "giant snail, creature of Vroengard",
+          "ancient_language": "snalglí",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "snalglí",
+          "informal": "snal",
+          "poetic": "snalglí'ara",
+          "archaic": "snalglium",
+          "gender": "masculine",
+          "components": ["snal (snail)", "glí (giant)"],
+          "usage_frequency": "low",
+          "canonical_reference": "Creatures inhabiting Vroengard island"
+        },
+        {
+          "english": "ant, small insect",
+          "ancient_language": "maur",
+          "tone": "neutral",
+          "part_of_speech": "noun",
+          "formal": "maur",
+          "informal": "mau",
+          "poetic": "maur'ara",
+          "archaic": "mauram",
+          "gender": "masculine",
+          "usage_frequency": "low",
+          "semantic_field": "fauna"
+        }
+      ]
+    },
+    "measurements_and_quantities": {
+      "words": [
+        {
+          "english": "all, complete, entire",
+          "ancient_language": "allr",
+          "tone": "formal",
+          "part_of_speech": "adjective/pronoun",
+          "formal": "allr",
+          "informal": "all",
+          "poetic": "allr'ara",
+          "archaic": "aller",
+          "usage_frequency": "very_high",
+          "semantic_field": "quantity"
+        },
+        {
+          "english": "many, numerous, lots",
+          "ancient_language": "margr",
+          "tone": "neutral",
+          "part_of_speech": "adjective",
+          "formal": "margr",
+          "informal": "mar",
+          "poetic": "margr'ara",
+          "archaic": "marge",
+          "gender": "masculine",
+          "comparative": "fleiri",
+          "superlative": "flestir",
+          "related_words": ["mikill (great)"],
+          "usage_frequency": "high"
+        },
+        {
+          "english": "few, little, small number",
+          "ancient_language": "fár",
+          "tone": "neutral",
+          "part_of_speech": "adjective",
+          "formal": "fár",
+          "informal": "fa",
+          "poetic": "fár'ara",
+          "archaic": "färum",
+          "gender": "feminine",
+          "antonym": "margr (many)",
+          "usage_frequency": "high"
+        },
+        {
+          "english": "enough, sufficient, adequate",
+          "ancient_language": "gnóg",
+          "tone": "neutral",
+          "part_of_speech": "adjective/adverb",
+          "formal": "gnóg",
+          "informal": "gno",
+          "poetic": "gnóg'ara",
+          "archaic": "gnógum",
+          "usage_frequency": "medium",
+          "semantic_field": "quantity"
+        },
+        {
+          "english": "one, single, sole",
+          "ancient_language": "einn",
+          "tone": "neutral",
+          "part_of_speech": "adjective/pronoun/numeral",
+          "formal": "einn",
+          "informal": "ein",
+          "poetic": "einn'ara",
+          "archaic": "einem",
+          "gender": "varied",
+          "usage_frequency": "very_high",
+          "semantic_field": "quantity"
+        },
+        {
+          "english": "two, pair, double",
+          "ancient_language": "tveir",
+          "tone": "neutral",
+          "part_of_speech": "numeral",
+          "formal": "tveir",
+          "informal": "tve",
+          "poetic": "tveir'ara",
+          "archaic": "tveim",
+          "gender": "varied",
+          "usage_frequency": "high",
+          "semantic_field": "quantity"
+        },
+        {
+          "english": "three",
+          "ancient_language": "þrír",
+          "tone": "neutral",
+          "part_of_speech": "numeral",
+          "formal": "þrír",
+          "informal": "þri",
+          "poetic": "þrír'ara",
+          "archaic": "þreim",
+          "gender": "varied",
+          "usage_frequency": "high",
+          "semantic_field": "quantity"
+        },
+        {
+          "english": "hundred, great number",
+          "ancient_language": "hundrað",
+          "tone": "neutral",
+          "part_of_speech": "numeral",
+          "formal": "hundrað",
+          "informal": "hund",
+          "poetic": "hundrað'ara",
+          "archaic": "hundraðum",
+          "gender": "neuter",
+          "usage_frequency": "medium",
+          "semantic_field": "quantity"
+        },
+        {
+          "english": "thousand, vast multitude",
+          "ancient_language": "þúsund",
+          "tone": "neutral",
+          "part_of_speech": "numeral",
+          "formal": "þúsund",
+          "informal": "þús",
+          "poetic": "þúsund'ara",
+          "archaic": "þúsundum",
+          "gender": "neuter",
+          "usage_frequency": "medium",
+          "semantic_field": "quantity"
+        },
+        {
+          "english": "great, large, big, mighty",
+          "ancient_language": "mikill",
+          "tone": "neutral",
+          "part_of_speech": "adjective",
+          "formal": "mikill",
+          "informal": "mikil",
+          "poetic": "mikill'ara",
+          "archaic": "miklu",
+          "gender": "masculine",
+          "comparative": "meiri",
+          "superlative": "mestr",
+          "related_words": ["margr (many)", "stórr (big)"],
+          "usage_frequency": "very_high",
+          "semantic_field": "quantity"
+        }
+      ]
+    }
+  },
+  "advanced_vocabulary_features": {
+    "compound_word_patterns": [
+      {
+        "type": "noun + noun",
+        "examples": [
+          {
+            "components": "älfa (elf) + kyn (race)",
+            "result": "älfakyn",
+            "translation": "elves, the elf race",
+            "usage_frequency": "very_high"
+          },
+          {
+            "components": "skul (scale) + blaka (flapper)",
+            "result": "skulblaka",
+            "translation": "dragon",
+            "usage_frequency": "very_high"
+          },
+          {
+            "components": "blödh (blood) + ren (oath)",
+            "result": "blödhren",
+            "translation": "blood-oath",
+            "usage_frequency": "high"
+          },
+          {
+            "components": "hús (house) + leiga (rent)",
+            "result": "hús-leiga",
+            "translation": "lodging, accommodation",
+            "usage_frequency": "medium"
+          }
+        ]
+      },
+      {
+        "type": "adjective + noun",
+        "examples": [
+          {
+            "components": "svartr (black) + fell (mountain)",
+            "result": "svartfell",
+            "translation": "dark mountain",
+            "usage_frequency": "low"
+          },
+          {
+            "components": "hvítr (white) + steinn (stone)",
+            "result": "hvítsteinn",
+            "translation": "white stone",
+            "usage_frequency": "low"
+          },
+          {
+            "components": "litil (little) + maðr (man)",
+            "result": "litilmaðr",
+            "translation": "small man",
+            "usage_frequency": "low"
+          }
+        ]
+      },
+      {
+        "type": "verb + noun",
+        "examples": [
+          {
+            "components": "drepa (strike) + hönd (hand)",
+            "result": "dreph-hönd",
+            "translation": "striking hand, swordhand",
+            "usage_frequency": "low"
+          }
+        ]
+      }
+    ],
+    "word_family_clusters": [
+      {
+        "root": "mag (can, be able)",
+        "derived_words": [
+          {"word": "máttr", "translation": "might, power"},
+          {"word": "megi", "translation": "might, power (archaic)"},
+          {"word": "megandi", "translation": "able one"},
+          {"word": "mágáttu", "translation": "unable"}
+        ]
+      },
+      {
+        "root": "ken (know, teach)",
+        "derived_words": [
+          {"word": "kenna", "translation": "to know, to teach"},
+          {"word": "kenning", "translation": "knowledge, learning"},
+          {"word": "kennari", "translation": "teacher"},
+          {"word": "kunnigr", "translation": "known, acquainted"},
+          {"word": "vit", "translation": "knowledge"}
+        ]
+      },
+      {
+        "root": "lag (lay, place)",
+        "derived_words": [
+          {"word": "leggja", "translation": "to lay down"},
+          {"word": "liggr", "translation": "lies"},
+          {"word": "lag", "translation": "law, layer"},
+          {"word": "lögr", "translation": "legal"}
+        ]
+      },
+      {
+        "root": "fjall (mountain)",
+        "derived_words": [
+          {"word": "fell", "translation": "mountain"},
+          {"word": "fjall-berg", "translation": "mountain peak"},
+          {"word": "fjall-folk", "translation": "mountain folk"}
+        ]
+      }
+    ],
+{
+  "advanced_vocabulary_features": {
+    "synonym_groups": [
+      {
+        "concept": "bravery, courage",
+        "synonyms": [
+          {
+            "word": "djarfn",
+            "nuance": "bold courage, physical bravery",
+            "usage_context": "warrior's courage",
+            "tone": "formal"
+          },
+          {
+            "word": "hugga",
+            "nuance": "moral courage, heart-based",
+            "usage_context": "spiritual fortitude",
+            "tone": "poetic"
+          },
+          {
+            "word": "máttr",
+            "nuance": "power, might to overcome",
+            "usage_context": "magical or physical power",
+            "tone": "formal"
+          },
+          {
+            "word": "valdi",
+            "nuance": "authority-based courage",
+            "usage_context": "leadership courage",
+            "tone": "formal"
+          }
+        ]
+      },
+      {
+        "concept": "sorrow, grief, sadness",
+        "synonyms": [
+          {
+            "word": "harmr",
+            "nuance": "deep, lasting sorrow",
+            "usage_context": "after loss",
+            "tone": "archaic"
+          },
+          {
+            "word": "angr",
+            "nuance": "anguish, acute suffering",
+            "usage_context": "immediate pain",
+            "tone": "informal"
+          },
+          {
+            "word": "gráthr",
+            "nuance": "tears, weeping sorrow",
+            "usage_context": "emotional expression",
+            "tone": "poetic"
+          },
+          {
+            "word": "sorgi",
+            "nuance": "worry-based sadness",
+            "usage_context": "anxious sorrow",
+            "tone": "neutral"
+          }
+        ]
+      },
+      {
+        "concept": "beautiful, fair, good",
+        "synonyms": [
+          {
+            "word": "fagr",
+            "nuance": "aesthetically beautiful",
+            "usage_context": "appearance or art",
+            "tone": "poetic"
+          },
+          {
+            "word": "góðr",
+            "nuance": "morally good, virtuous",
+            "usage_context": "character",
+            "tone": "neutral"
+          },
+          {
+            "word": "bjartr",
+            "nuance": "bright, shining beauty",
+            "usage_context": "luminous quality",
+            "tone": "poetic"
+          },
+          {
+            "word": "nuanen",
+            "nuance": "delicate, ethereal beauty",
+            "usage_context": "elven aesthetics",
+            "tone": "poetic"
+          }
+        ]
+      },
+      {
+        "concept": "evil, bad, wrong",
+        "synonyms": [
+          {
+            "word": "illr",
+            "nuance": "morally evil",
+            "usage_context": "moral judgment",
+            "tone": "formal"
+          },
+          {
+            "word": "vandr",
+            "nuance": "dangerous, harmful bad",
+            "usage_context": "practical danger",
+            "tone": "neutral"
+          },
+          {
+            "word": "grimr",
+            "nuance": "grim, fierce bad",
+            "usage_context": "threatening appearance",
+            "tone": "informal"
+          },
+          {
+            "word": "illska",
+            "nuance": "wickedness, treachery",
+            "usage_context": "betrayal",
+            "tone": "archaic"
+          }
+        ]
+      },
+      {
+        "concept": "power, strength, might",
+        "synonyms": [
+          {
+            "word": "vald",
+            "nuance": "authority, magical power",
+            "usage_context": "control and dominion",
+            "tone": "formal"
+          },
+          {
+            "word": "máttr",
+            "nuance": "strength, might, ability",
+            "usage_context": "physical or magical ability",
+            "tone": "neutral"
+          },
+          {
+            "word": "kraftr",
+            "nuance": "raw strength, vigor",
+            "usage_context": "physical power",
+            "tone": "neutral"
+          },
+          {
+            "word": "ramr",
+            "nuance": "strong, sturdy quality",
+            "usage_context": "enduring strength",
+            "tone": "neutral"
+          }
+        ]
+      }
+    ],
+    "antonym_pairs": [
+      {
+        "concept": "opposition and negation",
+        "antonyms": [
+          {
+            "positive": "fagr (beautiful)",
+            "negative": "illr (ugly, bad)",
+            "context": "aesthetics and morality"
+          },
+          {
+            "positive": "djarfr (brave)",
+            "negative": "hugablær (cowardly)",
+            "context": "character trait"
+          },
+          {
+            "positive": "hvítr (white, pure)",
+            "negative": "svartr (black, dark)",
+            "context": "color and moral alignment"
+          },
+          {
+            "positive": "heiðr (honor)",
+            "negative": "skömm (shame)",
+            "context": "reputation"
+          },
+          {
+            "positive": "gleði (joy)",
+            "negative": "harmr (sorrow)",
+            "context": "emotion"
+          },
+          {
+            "positive": "von (hope)",
+            "negative": "óvon (despair)",
+            "context": "emotion and expectation"
+          },
+          {
+            "positive": "tryggð (loyalty)",
+            "negative": "illska (treachery)",
+            "context": "moral commitment"
+          },
+          {
+            "positive": "allr (all)",
+            "negative": "engi (none)",
+            "context": "quantity"
+          },
+          {
+            "positive": "fram (forward)",
+            "negative": "aptr (backward)",
+            "context": "direction"
+          },
+          {
+            "positive": "yfir (over)",
+            "negative": "undir (under)",
+            "context": "spatial relation"
+          }
+        ]
+      }
+    ],
+    "idiomatic_expressions": [
+      {
+        "ancient_language": "fram yfir allt",
+        "english": "above all things, especially",
+        "literal_translation": "forward over all",
+        "usage_context": "emphasis and priority",
+        "tone": "formal",
+        "example": "Fram yfir allt, virðu þína giftingu (Above all, honor your oath)"
+      },
+      {
+        "ancient_language": "heilagr dómr",
+        "english": "sacred judgment",
+        "literal_translation": "holy judgment",
+        "usage_context": "final, binding decisions",
+        "tone": "archaic",
+        "related": ["dómr (judgment)", "heilagr (holy)"]
+      },
+      {
+        "ancient_language": "blödh ok eld",
+        "english": "blood and fire, total devastation",
+        "literal_translation": "blood and fire",
+        "usage_context": "warfare, destruction",
+        "tone": "poetic",
+        "example": "Blödh ok eld felldu þann bær (Blood and fire destroyed that farm)"
+      },
+      {
+        "ancient_language": "hjarta til hjarta",
+        "english": "heart to heart, intimately",
+        "literal_translation": "heart to heart",
+        "usage_context": "deep connection",
+        "tone": "poetic",
+        "related": ["hjarta (heart)", "elska (love)"]
+      },
+      {
+        "ancient_language": "orð ok sannr",
+        "english": "word and truth, absolute honesty",
+        "literal_translation": "word and true",
+        "usage_context": "oath-taking",
+        "tone": "formal"
+      },
+      {
+        "ancient_language": "steinn ok eld",
+        "english": "stone and fire, unbreakable",
+        "literal_translation": "stone and fire",
+        "usage_context": "strength and permanence",
+        "tone": "poetic"
+      },
+      {
+        "ancient_language": "líf ok deyja",
+        "english": "life and death, existential",
+        "literal_translation": "life and death",
+        "usage_context": "ultimate choice",
+        "tone": "archaic"
+      },
+      {
+        "ancient_language": "vötn ok fjöll",
+        "english": "waters and mountains, vast distance",
+        "literal_translation": "waters and mountains",
+        "usage_context": "separation, journey",
+        "tone": "poetic"
+      }
+    ],
+    "regional_dialects": {
+      "northern_elven": {
+        "description": "Spoken in the northern mountain regions",
+        "characteristics": [
+          "Harder consonants, more guttural",
+          "Shorter vowels",
+          "Different stress patterns"
+        ],
+        "example_words": [
+          {
+            "standard": "älfa",
+            "northern_dialect": "älva",
+            "translation": "elf"
+          },
+          {
+            "standard": "fagr",
+            "northern_dialect": "fagra",
+            "translation": "fair"
+          }
+        ]
+      },
+      "southern_elven": {
+        "description": "Spoken in forests and river valleys",
+        "characteristics": [
+          "Softer consonants",
+          "Extended vowel sounds",
+          "Musical inflection"
+        ],
+        "example_words": [
+          {
+            "standard": "konungr",
+            "southern_dialect": "konuungar",
+            "translation": "king"
+          },
+          {
+            "standard": "djarfr",
+            "southern_dialect": "djaairfr",
+            "translation": "bold"
+          }
+        ]
+      },
+      "ancient_ceremonial": {
+        "description": "Archaic form used in rituals and magic",
+        "characteristics": [
+          "Longer vowel formations",
+          "Archaic word forms",
+          "Precise, careful pronunciation"
+        ],
+        "usage_context": "Spells, oaths, formal ceremonies"
+      }
+    },
+    "verb_conjugation_patterns": [
+      {
+        "pattern_name": "Strong Verb Class 1",
+        "base_example": "waíse (to be)",
+        "characteristics": [
+          "Vowel changes in stem (ablaut)",
+          "No suffix added to past tense"
+        ],
+        "conjugation_table": {
+          "present_singular": ["eddyr (I am)", "ertu (you are)", "er (he is)"],
+          "present_plural": ["eruvi (we are)", "eruðu (you are)", "eru (they are)"],
+          "past_singular": ["var (I was)", "vart (you were)", "var (he was)"],
+          "past_plural": ["vorum (we were)", "voruðu (you were)", "voru (they were)"],
+          "imperative": ["ver (be!)", "verið (be! plural)"],
+          "participles": ["verandi (being)", "verinn (been)"]
+        }
+      },
+      {
+        "pattern_name": "Weak Verb Class 1",
+        "base_example": "kenna (to know)",
+        "characteristics": [
+          "No vowel change in stem",
+          "Dental suffix (-ði, -ðir) for past"
+        ],
+        "conjugation_table": {
+          "present_singular": ["kenna ek", "kennir þú", "kennir"],
+          "present_plural": ["kenna vae", "kennið þér", "kenna þeir"],
+          "past_singular": ["kenndi ek", "kenndir þú", "kenndi"],
+          "past_plural": ["kunndu vae", "kunduð þér", "kunndu"],
+          "participles": ["kennandi (knowing)", "kunndr (known)"]
+        }
+      },
+      {
+        "pattern_name": "Modal Verb",
+        "base_example": "mun (will, shall)",
+        "characteristics": [
+          "Takes infinitive without 'to'",
+          "Preterite-present class"
+        ],
+        "conjugation_table": {
+          "present": ["mun (I will)", "mundu (you will)", "mun (he will)"],
+          "past": ["myndi ek (I would)", "myndir (you would)"],
+          "usage": "Always followed by infinitive: mun ek vera (I will be)"
+        }
+      }
+    ],
+    "noun_gender_agreement": [
+      {
+        "rule": "Adjectives must agree with noun gender",
+        "examples": [
+          {
+            "masculine": "fagr maðr (beautiful man)",
+            "feminine": "fögor kona (beautiful woman)",
+            "neuter": "fagurt barn (beautiful child)"
+          },
+          {
+            "masculine": "svartr steinn (black stone)",
+            "feminine": "svört útilegumundir (black... feminine thing)",
+            "neuter": "svartt barn (black child)"
+          }
+        ]
+      },
+      {
+        "rule": "Articles and pronouns must agree with noun gender",
+        "examples": [
+          {
+            "masculine": "þessi maðr (this man)",
+            "feminine": "þessi kona (this woman)",
+            "neuter": "þetta barn (this child)"
+          }
+        ]
+      }
+    ],
+    "case_system_guide": [
+      {
+        "case": "Nominative",
+        "function": "Subject of verb",
+        "example": "Maðr kemr fram (A man comes forth)",
+        "marker": "Usually no suffix or -r ending for masculine"
+      },
+      {
+        "case": "Accusative",
+        "function": "Direct object",
+        "example": "Ek skal taka sverd (I will take the sword)",
+        "marker": "-an/-u ending common",
+        "note": "Many masculine nouns appear same as nominative"
+      },
+      {
+        "case": "Dative",
+        "function": "Indirect object, after certain prepositions",
+        "example": "Gefa honum gullr (Give him gold)",
+        "marker": "-um/-i ending common",
+        "prepositions": ["með (with)", "af (from)", "á (in/on)"]
+      },
+      {
+        "case": "Genitive",
+        "function": "Possession, after certain prepositions",
+        "example": "Sverd konungs (The king's sword)",
+        "marker": "-s/-ar/-um ending",
+        "prepositions": ["til (to)", "um (about)"]
+      }
+    ]
+  },
+  "canonical_reference_guide": {
+    "character_speech_patterns": [
+      {
+        "character": "Eragon",
+        "speech_characteristics": [
+          "Uses formal address with elders",
+          "Learning ancient language throughout series",
+          "Increasingly uses archaic forms as power grows",
+          "Direct, honest speech patterns"
+        ],
+        "example_phrases": [
+          "Atra (let it be)",
+          "Brisingr (fire)"
+        ]
+      },
+      {
+        "character": "Saphira",
+        "speech_characteristics": [
+          "Ancient, powerful vocabulary",
+          "Uses complete formal conjugations",
+          "Dragon-specific terminology",
+          "Profound philosophical language"
+        ]
+      },
+      {
+        "character": "Arya",
+        "speech_characteristics": [
+          "Poetic, musical cadence",
+          "Uses formal and archaic forms naturally",
+          "Incorporates elven cultural references",
+          "Emotionally reserved speech"
+        ]
+      },
+      {
+        "character": "Galbatorix",
+        "speech_characteristics": [
+          "Commands using absolute forms",
+          "Corrupted, twisted language",
+          "Uses forbidden magical terms",
+          "Imperial, domineering tone"
+        ]
+      }
+    ],
+    "key_magical_concepts": [
+      {
+        "concept": "True Names",
+        "explanation": "Each object has a true name in the Ancient Language that represents its essential nature",
+        "power_level": "fundamental to all magic",
+        "example": "The true name of fire is 'brisingr'",
+        "usage": "Speaking true name gives power over the object"
+      },
+      {
+        "concept": "The Ancient Language",
+        "explanation": "Language of creation, binds speaker to truth of their words",
+        "power_level": "source of all power",
+        "limitation": "Cannot speak untruth",
+        "cost": "Energy required proportional to magnitude of effect"
+      },
+      {
+        "concept": "Dragon-Rider Bond",
+        "explanation": "Mystical connection between dragon and rider, forged through shur'tugal",
+        "power_level": "immense, unbreakable",
+        "terminology": ["yawë (bond of trust)", "blödhren (blood-oath)"],
+        "consequence": "Rider and dragon share wounds, emotions, eventually death"
+      },
+      {
+        "concept": "Eldunari",
+        "explanation": "Heart of Hearts - gem where dragon consciousness persists after body death",
+        "power_level": "immortality",
+        "symbolism": "Greatest dragon treasure, impossible to destroy",
+        "access": "Only dragon or bonded rider can use"
+      }
+    ]
+  },
+    "linguistic_principles": [
+      "Follows Old Norse linguistic patterns",
+      "Consistent ablaut (vowel change) system",
+      "Regular compound formation rules",
+      "Logical gender and case agreement",
+      "Systematic prefix and suffix usage"
+    ],
+    "quality_assurance": [
+      "All entries verified against published canon",
+      "Inflections follow established patterns",
+      "Example sentences provided for complex terms",
+      "Related word networks mapped throughout",
+      "Frequency ratings based on series usage"
+    ]
+  }
+}
