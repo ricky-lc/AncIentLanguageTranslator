@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ancient Language Translator</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --radius-pill: 999px;
+      --glass-bg: color-mix(in oklab, #ffffff 38%, transparent);
+      --glass-stroke: color-mix(in oklab, #ffffff 72%, #93c5fd 28%);
+      --text: #f8fafc;
+      --text-dim: #cbd5e1;
+      --brand: #60a5fa;
+      --brand-strong: #2563eb;
+      --panel-bg: color-mix(in oklab, #0b1222 78%, transparent);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "SF Pro Display", "SF Pro Text", "Inter", system-ui, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 8% 10%, #38bdf8 0%, transparent 30%),
+        radial-gradient(circle at 95% 18%, #22d3ee 0%, transparent 34%),
+        radial-gradient(circle at 35% 100%, #818cf8 0%, transparent 40%),
+        linear-gradient(165deg, #020617 0%, #0f172a 48%, #111827 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      overflow: hidden;
+    }
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(6px);
+      pointer-events: none;
+      opacity: .55;
+      animation: float 9s ease-in-out infinite;
+    }
+    .orb-a { width: 240px; height: 240px; top: 4%; left: 8%; background: #67e8f9aa; }
+    .orb-b { width: 300px; height: 300px; bottom: 4%; right: 7%; background: #60a5faaa; animation-delay: 1.1s; }
+    .orb-c { width: 180px; height: 180px; top: 58%; left: 14%; background: #818cf8aa; animation-delay: 2.1s; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-12px) translateX(9px); }
+    }
+    .app-shell {
+      width: min(980px, 100%);
+      border-radius: 38px;
+      padding: 1.1rem;
+      background: var(--panel-bg);
+      border: 1px solid color-mix(in oklab, #ffffff 20%, transparent);
+      box-shadow:
+        0 36px 90px #02061799,
+        inset 0 1px 0 color-mix(in oklab, #ffffff 28%, transparent);
+      backdrop-filter: blur(22px) saturate(140%);
+      -webkit-backdrop-filter: blur(22px) saturate(140%);
+      position: relative;
+      z-index: 1;
+    }
+    .app-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 36px;
+      padding: 1px;
+      background: linear-gradient(140deg, #ffffff55, #93c5fd44, #ffffff20);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+    .glass-card {
+      border-radius: var(--radius-xl);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-stroke);
+      box-shadow: inset 0 1px 0 color-mix(in oklab, #ffffff 45%, transparent);
+      backdrop-filter: blur(22px) saturate(160%);
+      -webkit-backdrop-filter: blur(22px) saturate(160%);
+      padding: 1rem;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .75rem;
+      margin: .25rem .2rem .9rem;
+      color: var(--text-dim);
+      font-size: .84rem;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid color-mix(in oklab, #ffffff 30%, transparent);
+      background: color-mix(in oklab, #0ea5e9 24%, transparent);
+      padding: .34rem .68rem;
+      font-weight: 650;
+      letter-spacing: .01em;
+    }
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: .95rem;
+    }
+    @media (min-width: 920px) {
+      .content-grid {
+        grid-template-columns: 1.08fr .92fr;
+      }
+      .output-card {
+        margin-top: 0;
+      }
+    }
+    h1 {
+      margin: .2rem 0 .4rem;
+      font-size: clamp(1.45rem, 2.2vw, 2.1rem);
+      letter-spacing: .01em;
+      line-height: 1.15;
+      text-wrap: balance;
+    }
+    .muted { color: var(--text-dim); font-size: .95rem; margin: 0 0 1rem; }
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: .65rem;
+      margin-bottom: .55rem;
+    }
+    .lang-select {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      border: 1px solid color-mix(in oklab, #ffffff 35%, transparent);
+      background: color-mix(in oklab, #1e293b 60%, transparent);
+      color: var(--text);
+      padding: .65rem .85rem;
+      font: inherit;
+      outline: none;
+    }
+    .lang-select:focus {
+      border-color: color-mix(in oklab, var(--brand) 62%, #ffffff 38%);
+      box-shadow: 0 0 0 4px color-mix(in oklab, #2563eb 40%, transparent);
+    }
+    .direction-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .55rem;
+      margin: 0 0 .75rem;
+      padding: .35rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid color-mix(in oklab, #ffffff 30%, transparent);
+      background: color-mix(in oklab, #1e293b 55%, transparent);
+    }
+    .direction-wrap label {
+      cursor: pointer;
+      border-radius: var(--radius-pill);
+      padding: .5rem .8rem;
+      text-align: center;
+      color: var(--text-dim);
+      transition: background .2s ease, color .2s ease, box-shadow .2s ease;
+      user-select: none;
+    }
+    .direction-wrap input { position: absolute; opacity: 0; pointer-events: none; }
+    .direction-wrap input:checked + span {
+      display: block;
+      border-radius: var(--radius-pill);
+      background: color-mix(in oklab, #bfdbfe 28%, #0ea5e9 72%);
+      color: #f8fafc;
+      box-shadow: 0 6px 20px #0ea5e966;
+    }
+    textarea, button { width: 100%; font: inherit; border-radius: var(--radius-lg); }
+    .input-label {
+      display: inline-block;
+      margin: .25rem 0 .4rem;
+      color: color-mix(in oklab, #dbeafe 78%, #93c5fd 22%);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      font-size: .74rem;
+      font-weight: 700;
+    }
+    kbd {
+      font: inherit;
+      font-size: .85em;
+      padding: .08rem .34rem;
+      border-radius: 6px;
+      border: 1px solid color-mix(in oklab, #ffffff 36%, transparent);
+      background: color-mix(in oklab, #0f172a 50%, transparent);
+    }
+    textarea {
+      min-height: 148px;
+      padding: 1rem;
+      border: 1px solid color-mix(in oklab, #ffffff 45%, transparent);
+      background: color-mix(in oklab, #e2e8f0 24%, transparent);
+      color: var(--text);
+      outline: none;
+      resize: vertical;
+    }
+    textarea::placeholder { color: color-mix(in oklab, #e2e8f0 65%, #94a3b8 35%); }
+    textarea:focus {
+      border-color: color-mix(in oklab, var(--brand) 70%, #ffffff 30%);
+      box-shadow: 0 0 0 4px color-mix(in oklab, #2563eb 22%, transparent);
+    }
+    button {
+      margin-top: .85rem;
+      border: 1px solid color-mix(in oklab, #ffffff 35%, transparent);
+      background: linear-gradient(135deg, #38bdf8, #3b82f6 52%, #2563eb);
+      color: #f8fafc;
+      padding: .9rem 1.1rem;
+      font-weight: 650;
+      cursor: pointer;
+      transition: transform .15s ease, filter .15s ease;
+    }
+    button:hover { filter: brightness(1.05); transform: translateY(-1px); }
+    button:active { transform: translateY(0); }
+    .output-card { margin-top: 1rem; border-radius: var(--radius-xl); }
+    .output-title {
+      margin: 0 0 .55rem;
+      font-weight: 650;
+      color: color-mix(in oklab, #ffffff 88%, #bfdbfe 12%);
+      letter-spacing: .01em;
+    }
+    #output {
+      white-space: pre-wrap;
+      font-size: 1.13rem;
+      min-height: 4.8rem;
+      line-height: 1.45;
+      padding: .85rem;
+      border-radius: 14px;
+      background: color-mix(in oklab, #0f172a 52%, transparent);
+      border: 1px solid color-mix(in oklab, #ffffff 18%, transparent);
+    }
+    #meta { margin-top: .65rem; }
+    @media (prefers-reduced-motion: reduce) {
+      .orb { animation: none; }
+      button { transition: none; }
+    }
+  </style>
+</head>
+  <body>
+  <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
+  <div class="orb orb-c"></div>
+  <main class="app-shell">
+    <div class="topbar">
+      <span class="pill"><span aria-hidden="true">◈</span> Quick translation</span>
+      <span><kbd>⌘/Ctrl</kbd> + <kbd>Enter</kbd> to translate</span>
+    </div>
+    <div class="content-grid">
+      <section class="glass-card">
+        <h1>Ancient Language Translator</h1>
+        <p class="muted">Translate both ways between English/Italian text and Ancient Language forms.</p>
+        <div class="controls-grid">
+          <div class="direction-wrap" role="radiogroup" aria-label="Translation direction">
+            <label>
+              <input type="radio" name="direction" value="to_ancient" checked>
+              <span>Modern → Ancient</span>
+            </label>
+            <label>
+              <input type="radio" name="direction" value="from_ancient">
+              <span>Ancient → English</span>
+            </label>
+          </div>
+          <select id="sourceLanguage" class="lang-select" aria-label="Input language">
+            <option value="auto">Detect language automatically</option>
+            <option value="english">English</option>
+            <option value="italian">Italian</option>
+          </select>
+        </div>
+        <label for="input" class="input-label">Input</label>
+        <textarea id="input" placeholder="Write in English or Italian..."></textarea>
+        <button id="translateBtn">Translate</button>
+      </section>
+
+      <div class="glass-card output-card">
+        <p class="output-title">Output</p>
+        <div id="output">—</div>
+        <div id="meta" class="muted"></div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const inputEl = document.getElementById('input');
+    const outputEl = document.getElementById('output');
+    const metaEl = document.getElementById('meta');
+    const button = document.getElementById('translateBtn');
+    const directionEls = [...document.querySelectorAll('input[name="direction"]')];
+    const sourceLanguageEl = document.getElementById('sourceLanguage');
+
+    function getDirection() {
+      return directionEls.find((el) => el.checked)?.value || 'to_ancient';
+    }
+
+    function refreshPlaceholder() {
+      const direction = getDirection();
+      sourceLanguageEl.disabled = direction === 'from_ancient';
+      inputEl.placeholder = direction === 'from_ancient'
+        ? 'Write in Ancient Language...'
+        : 'Write in English or Italian...';
+    }
+
+    async function runTranslation() {
+      const text = inputEl.value.trim();
+      if (!text) {
+        outputEl.textContent = '—';
+        metaEl.textContent = '';
+        return;
+      }
+
+      outputEl.textContent = 'Translating...';
+      metaEl.textContent = '';
+
+      try {
+        const response = await fetch('/api/translate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text, direction: getDirection(), sourceLanguage: sourceLanguageEl.value })
+        });
+        const result = await response.json();
+        outputEl.textContent = result.translation || '—';
+        metaEl.textContent = `Detected: ${result.sourceLanguage || 'unknown'} • Coverage: ${Math.round((result.coverage || 0) * 100)}%`;
+      } catch (error) {
+        outputEl.textContent = 'Translation failed.';
+        metaEl.textContent = error.message;
+      }
+    }
+
+    button.addEventListener('click', runTranslation);
+    directionEls.forEach((el) => el.addEventListener('change', refreshPlaceholder));
+    refreshPlaceholder();
+    inputEl.addEventListener('keydown', (event) => {
+      if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+        runTranslation();
+      }
+    });
+  </script>
+</body>
+</html>

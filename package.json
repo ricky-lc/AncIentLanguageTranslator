@@ -1,0 +1,13 @@
+{
+  "name": "ancient-language-translator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lightweight English/Italian to Paolini Ancient Language translator",
+  "scripts": {
+    "start": "python -m backend.server",
+    "test": "python -m unittest discover -s tests -p 'test_*.py' && node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
