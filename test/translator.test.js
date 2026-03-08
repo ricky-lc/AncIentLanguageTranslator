@@ -7,7 +7,9 @@ const mockVocabulary = `
   "entry1": {"english": "fire, flame, blaze", "ancient_language": "brisingr"},
   "entry2": {"english": "water", "ancient_language": "deloi"},
   "entry3": {"english": "thank you", "ancient_language": "thorta"},
-  "entry4": {"word": "máttr", "translation": "might, power"}
+  "entry4": {"word": "máttr", "translation": "might, power"},
+  "guide": {"example_phrases": ["Atra (let it be)"], "related_words": ["varda (watch over)"]},
+  "verbs": {"strong_verbs": [{"infinitive": "glimra", "translation": "to shimmer"}]}
 }
 `;
 
@@ -21,6 +23,9 @@ test('buildDictionaryFromRawVocabulary extracts english to ancient pairs', () =>
 
 test('buildDictionaryFromRawVocabulary includes essential common word additions', () => {
   const dictionary = buildDictionaryFromRawVocabulary(mockVocabulary);
+  assert.equal(dictionary.get('let it be'), 'atra');
+  assert.equal(dictionary.get('watch over'), 'varda');
+  assert.equal(dictionary.get('shimmer'), 'glimra');
   assert.equal(dictionary.get('if'), 'ef');
   assert.equal(dictionary.get('and'), 'ok');
   assert.ok(dictionary.size >= 220);
@@ -94,4 +99,15 @@ test('translateFromAncientLanguage handles the official phrase', () => {
   const result = translateFromAncientLanguage(phrase, { dictionary });
   assert.equal(result.translation, 'strength metal you shield maiden and, many fear not those i three.');
   assert.equal(result.coverage, 1);
+});
+
+test('book quote clauses translate both directions', () => {
+  const dictionary = buildDictionaryFromRawVocabulary(mockVocabulary);
+  const english = 'May good fortune rule over you, peace live in your heart, and the stars watch over you.';
+  const ancient = "atra esterní ono thelduin, mor'ranr lífa unin hjarta onr, un du evarínya ono varda.";
+  const toAncient = translateToAncientLanguage(english, { dictionary });
+  const fromAncient = translateFromAncientLanguage(ancient, { dictionary });
+  assert.equal(toAncient.translation, ancient);
+  assert.equal(fromAncient.translation, english.toLowerCase());
+  assert.equal(fromAncient.coverage, 1);
 });

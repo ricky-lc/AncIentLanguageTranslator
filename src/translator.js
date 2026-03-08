@@ -141,7 +141,19 @@ const EXTENDED_ESSENTIAL_ANCIENT_ADDITIONS = {
   six: 'sex', seven: 'sjau', eight: 'átta', nine: 'níu', ten: 'tíu'
 };
 
-const ALL_ESSENTIAL_ANCIENT_ADDITIONS = { ...ESSENTIAL_ANCIENT_ADDITIONS, ...EXTENDED_ESSENTIAL_ANCIENT_ADDITIONS };
+const CANONICAL_BOOK_PHRASES = {
+  'let it be': 'atra',
+  'may good fortune rule over you': 'atra esterní ono thelduin',
+  'peace live in your heart': "mor'ranr lífa unin hjarta onr",
+  'the stars watch over you': 'du evarínya ono varda',
+  'and the stars watch over you': 'un du evarínya ono varda'
+};
+
+const ALL_ESSENTIAL_ANCIENT_ADDITIONS = {
+  ...ESSENTIAL_ANCIENT_ADDITIONS,
+  ...EXTENDED_ESSENTIAL_ANCIENT_ADDITIONS,
+  ...CANONICAL_BOOK_PHRASES
+};
 
 const ANCIENT_TO_ENGLISH_ADDITIONS = {
   kverst: 'strength',
@@ -164,6 +176,8 @@ const IRREGULAR_ITALIAN_GERUNDS = {
   ponendo: 'porre',
   traendo: 'trarre'
 };
+const GLOSS_STRING_KEYS = new Set(['related_words', 'components', 'example_phrases', 'example', 'base_example', 'compounds']);
+const DICTIONARY_PHRASE_SIZE_CACHE = new WeakMap();
 
 function normalizeTerm(text) {
   return text
@@ -182,10 +196,18 @@ function splitEnglishVariants(english) {
     .replace(/\s+/g, ' ')
     .trim();
   if (!normalized) return [];
-  return normalized
+  const variants = normalized
     .split(/,|\s+or\s+|\s*\/\s*|;/g)
     .map((s) => s.trim())
     .filter(Boolean);
+  const expanded = [];
+  for (const variant of variants) {
+    expanded.push(variant);
+    if (variant.startsWith('to ') && variant.length > 3) {
+      expanded.push(variant.slice(3).trim());
+    }
+  }
+  return [...new Map(expanded.filter(Boolean).map((variant) => [variant, variant])).keys()];
 }
 
 function addEssentialEntries(dictionary) {
@@ -194,6 +216,51 @@ function addEssentialEntries(dictionary) {
       dictionary.set(english, ancient);
     }
   }
+}
+
+function addNormalizedEntry(dictionary, english, ancient) {
+  const normalizedAncient = normalizeTerm(ancient);
+  if (!normalizedAncient) return;
+  for (const variant of splitEnglishVariants(english)) {
+    if (!dictionary.has(variant)) {
+      dictionary.set(variant, normalizedAncient);
+    }
+  }
+}
+
+function addGlossEntriesFromStructuredVocabulary(raw, dictionary) {
+  let parsed;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    return;
+  }
+
+  const visit = (value, parentKey = '') => {
+    if (Array.isArray(value)) {
+      for (const item of value) visit(item, parentKey);
+      return;
+    }
+
+    if (value && typeof value === 'object') {
+      if (typeof value.infinitive === 'string' && typeof value.translation === 'string') {
+        addNormalizedEntry(dictionary, value.translation, value.infinitive);
+      }
+      for (const [key, child] of Object.entries(value)) {
+        visit(child, key);
+      }
+      return;
+    }
+
+    if (typeof value === 'string' && GLOSS_STRING_KEYS.has(parentKey)) {
+      const match = value.match(/^\s*([^()]+?)\s*\(([^()]+)\)\s*$/u);
+      if (match) {
+        addNormalizedEntry(dictionary, match[2], match[1]);
+      }
+    }
+  };
+
+  visit(parsed);
 }
 
 function normalizeApostrophes(text) {
@@ -228,6 +295,7 @@ function buildDictionaryFromRawVocabulary(raw) {
     }
   }
 
+  addGlossEntriesFromStructuredVocabulary(raw, dictionary);
   addEssentialEntries(dictionary);
   return dictionary;
 }
@@ -244,6 +312,20 @@ function getDefaultDictionary() {
 
 function tokenize(text) {
   return text.match(WORD_RE) || [];
+}
+
+function getMaxDictionaryPhraseSize(dictionary) {
+  if (DICTIONARY_PHRASE_SIZE_CACHE.has(dictionary)) {
+    return DICTIONARY_PHRASE_SIZE_CACHE.get(dictionary);
+  }
+  let maxPhraseSize = 1;
+  for (const key of dictionary.keys()) {
+    const size = key.split(/\s+/).filter(Boolean).length;
+    if (size > maxPhraseSize) maxPhraseSize = size;
+  }
+  maxPhraseSize = Math.min(maxPhraseSize, 12);
+  DICTIONARY_PHRASE_SIZE_CACHE.set(dictionary, maxPhraseSize);
+  return maxPhraseSize;
 }
 
 function expandEnglishContractions(text) {
@@ -329,6 +411,7 @@ function translateToAncientLanguage(text, options = {}) {
   const allowItalianFallback = !forcedEnglish;
   const normalizedInput = isItalianInput ? input : expandEnglishContractions(input);
   const tokens = tokenize(normalizedInput);
+  const maxPhraseSize = getMaxDictionaryPhraseSize(dictionary);
   const output = [];
   let mappedTerms = 0;
   let totalTerms = 0;
@@ -344,7 +427,7 @@ function translateToAncientLanguage(text, options = {}) {
     totalTerms += 1;
 
     let replaced = false;
-    for (let size = 4; size >= 1; size -= 1) {
+    for (let size = Math.min(maxPhraseSize, tokens.length - i); size >= 1; size -= 1) {
       if (i + size > tokens.length) continue;
       const span = tokens.slice(i, i + size);
       if (!span.every(isWord)) continue;
@@ -435,6 +518,7 @@ function translateFromAncientLanguage(text, options = {}) {
   }
 
   const tokens = tokenize(input);
+  const maxPhraseSize = getMaxDictionaryPhraseSize(dictionary);
   const output = [];
   let mappedTerms = 0;
   let totalTerms = 0;
@@ -450,7 +534,7 @@ function translateFromAncientLanguage(text, options = {}) {
     totalTerms += 1;
     let replaced = false;
 
-    for (let size = 4; size >= 1; size -= 1) {
+    for (let size = Math.min(maxPhraseSize, tokens.length - i); size >= 1; size -= 1) {
       if (i + size > tokens.length) continue;
       const span = tokens.slice(i, i + size);
       if (!span.every(isWord)) continue;

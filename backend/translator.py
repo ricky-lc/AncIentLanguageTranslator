@@ -124,8 +124,20 @@ EXTENDED_ESSENTIAL_ANCIENT_ADDITIONS = {
     "six": "sex", "seven": "sjau", "eight": "átta", "nine": "níu", "ten": "tíu"
 }
 
+CANONICAL_BOOK_PHRASES = {
+    "let it be": "atra",
+    "may good fortune rule over you": "atra esterní ono thelduin",
+    "peace live in your heart": "mor'ranr lífa unin hjarta onr",
+    "the stars watch over you": "du evarínya ono varda",
+    "and the stars watch over you": "un du evarínya ono varda",
+}
+
 ALL_ITALIAN_TO_ENGLISH = {**ITALIAN_TO_ENGLISH, **EXTENDED_ITALIAN_TO_ENGLISH}
-ALL_ESSENTIAL_ANCIENT_ADDITIONS = {**ESSENTIAL_ANCIENT_ADDITIONS, **EXTENDED_ESSENTIAL_ANCIENT_ADDITIONS}
+ALL_ESSENTIAL_ANCIENT_ADDITIONS = {
+    **ESSENTIAL_ANCIENT_ADDITIONS,
+    **EXTENDED_ESSENTIAL_ANCIENT_ADDITIONS,
+    **CANONICAL_BOOK_PHRASES,
+}
 ANCIENT_TO_ENGLISH_ADDITIONS = {
     "kverst": "strength",
     "malmr": "metal",
@@ -146,6 +158,7 @@ IRREGULAR_ITALIAN_GERUNDS = {
     "ponendo": "porre",
     "traendo": "trarre"
 }
+GLOSS_STRING_KEYS = {"related_words", "components", "example_phrases", "example", "base_example", "compounds"}
 
 
 def normalize_apostrophes(text: str) -> str:
@@ -172,12 +185,55 @@ def split_english_variants(english: str) -> List[str]:
     normalized = re.sub(r"\s+", " ", normalized).strip()
     if not normalized:
         return []
-    return [s.strip() for s in re.split(r",|\s+or\s+|\s*/\s*|;", normalized) if s.strip()]
+    variants = [s.strip() for s in re.split(r",|\s+or\s+|\s*/\s*|;", normalized) if s.strip()]
+    expanded: List[str] = []
+    for variant in variants:
+        expanded.append(variant)
+        if variant.startswith("to ") and len(variant) > 3:
+            expanded.append(variant[3:].strip())
+    return list(dict.fromkeys(candidate for candidate in expanded if candidate))
 
 
 def add_essential_entries(dictionary: Dict[str, str]) -> None:
     for english, ancient in ALL_ESSENTIAL_ANCIENT_ADDITIONS.items():
         dictionary.setdefault(english, ancient)
+
+
+def add_normalized_entry(dictionary: Dict[str, str], english: str, ancient: str) -> None:
+    normalized_ancient = normalize_term(ancient)
+    if not normalized_ancient:
+        return
+    for variant in split_english_variants(english):
+        dictionary.setdefault(variant, normalized_ancient)
+
+
+def add_gloss_entries_from_structured_vocabulary(raw: str, dictionary: Dict[str, str]) -> None:
+    try:
+        parsed = json.loads(raw)
+    except json.JSONDecodeError:
+        return
+
+    def visit(value, parent_key: str = "") -> None:
+        if isinstance(value, list):
+            for item in value:
+                visit(item, parent_key)
+            return
+
+        if isinstance(value, dict):
+            infinitive = value.get("infinitive")
+            translation = value.get("translation")
+            if isinstance(infinitive, str) and isinstance(translation, str):
+                add_normalized_entry(dictionary, translation, infinitive)
+            for key, child in value.items():
+                visit(child, key)
+            return
+
+        if isinstance(value, str) and parent_key in GLOSS_STRING_KEYS:
+            match = re.fullmatch(r"\s*([^()]+?)\s*\(([^()]+)\)\s*", value)
+            if match:
+                add_normalized_entry(dictionary, match.group(2), match.group(1))
+
+    visit(parsed)
 
 
 def build_dictionary_from_raw_vocabulary(raw: str) -> Dict[str, str]:
@@ -197,6 +253,7 @@ def build_dictionary_from_raw_vocabulary(raw: str) -> Dict[str, str]:
             if normalized_ancient:
                 dictionary.setdefault(variant, normalized_ancient)
 
+    add_gloss_entries_from_structured_vocabulary(raw, dictionary)
     add_essential_entries(dictionary)
     return dictionary
 
@@ -305,6 +362,7 @@ def translate_to_ancient_language(
     allow_italian_fallback = not forced_english
     normalized_input = input_text if is_italian_input else expand_english_contractions(input_text)
     tokens = tokenize(normalized_input)
+    max_phrase_size = min(max((len(key.split()) for key in dictionary), default=1), 12)
 
     output: List[str] = []
     mapped_terms = 0
@@ -321,7 +379,7 @@ def translate_to_ancient_language(
         total_terms += 1
         replaced = False
 
-        for size in range(4, 0, -1):
+        for size in range(min(max_phrase_size, len(tokens) - i), 0, -1):
             if i + size > len(tokens):
                 continue
             span = tokens[i:i + size]
@@ -420,6 +478,7 @@ def translate_from_ancient_language(
         return {"translation": "", "sourceLanguage": "unknown", "mappedTerms": 0, "totalTerms": 0, "coverage": 0}
 
     tokens = tokenize(input_text)
+    max_phrase_size = min(max((len(key.split()) for key in dictionary), default=1), 12)
     output: List[str] = []
     mapped_terms = 0
     total_terms = 0
@@ -435,7 +494,7 @@ def translate_from_ancient_language(
         total_terms += 1
         replaced = False
 
-        for size in range(4, 0, -1):
+        for size in range(min(max_phrase_size, len(tokens) - i), 0, -1):
             if i + size > len(tokens):
                 continue
             span = tokens[i:i + size]
