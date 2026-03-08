@@ -207,7 +207,7 @@ function splitEnglishVariants(english) {
       expanded.push(variant.slice(3).trim());
     }
   }
-  return [...new Map(expanded.filter(Boolean).map((variant) => [variant, variant])).keys()];
+  return [...new Set(expanded.filter(Boolean))];
 }
 
 function addEssentialEntries(dictionary) {

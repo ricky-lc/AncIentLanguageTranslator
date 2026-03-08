@@ -191,7 +191,7 @@ def split_english_variants(english: str) -> List[str]:
         expanded.append(variant)
         if variant.startswith("to ") and len(variant) > 3:
             expanded.append(variant[3:].strip())
-    return list(dict.fromkeys(candidate for candidate in expanded if candidate))
+    return list(dict.fromkeys(expanded))
 
 
 def add_essential_entries(dictionary: Dict[str, str]) -> None:
