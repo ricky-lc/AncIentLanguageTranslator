@@ -1,7 +1,9 @@
 import unittest
 
 from backend.translator import (
+    add_reverse_entries_from_structured_vocabulary,
     build_dictionary_from_raw_vocabulary,
+    build_reverse_dictionary,
     translate_from_ancient_language,
     translate_to_ancient_language,
 )
@@ -12,7 +14,12 @@ MOCK_VOCABULARY = """
   "entry1": {"english": "fire, flame, blaze", "ancient_language": "brisingr"},
   "entry2": {"english": "water", "ancient_language": "deloi"},
   "entry3": {"english": "thank you", "ancient_language": "thorta"},
-  "entry4": {"word": "máttr", "translation": "might, power"}
+  "entry4": {"word": "máttr", "translation": "might, power"},
+  "guide": {"example_phrases": ["Atra (let it be)"], "related_words": ["varda (watch over)"]},
+  "verbs": {"strong_verbs": [{"infinitive": "glimra", "translation": "to shimmer", "present": {"1st_singular": "glimri"}}, {"infinitive": "waíse", "translation": "to be", "present": {"1st_singular": "eddyr"}}]},
+  "entry5": {"english": "book, written scroll", "ancient_language": "bok", "poetic": "bok'ara"},
+  "entry6": {"english": "dragon", "ancient_language": "dreki"},
+  "grammar": {"adjective_system": {"strong_adjectives": [{"base": "fagr", "translation": "fair, beautiful, good", "comparative": "fagri", "superlative": "fagrest"}, {"base": "mikill", "translation": "great", "comparative": "meiri", "superlative": "mestr"}, {"base": "lítill", "translation": "small", "comparative": "minni", "superlative": "minnstr"}]}}
 }
 """
 
@@ -23,6 +30,12 @@ class TranslatorTests(unittest.TestCase):
         self.assertEqual(dictionary.get("fire"), "brisingr")
         self.assertEqual(dictionary.get("flame"), "brisingr")
         self.assertEqual(dictionary.get("might"), "máttr")
+        self.assertEqual(dictionary.get("let it be"), "atra")
+        self.assertEqual(dictionary.get("watch over"), "varda")
+        self.assertEqual(dictionary.get("shimmer"), "glimra")
+        self.assertEqual(dictionary.get("beautiful"), "fagr")
+        self.assertEqual(dictionary.get("greater"), "meiri")
+        self.assertEqual(dictionary.get("smallest"), "minnstr")
         self.assertEqual(dictionary.get("if"), "ef")
         self.assertEqual(dictionary.get("and"), "ok")
         self.assertGreaterEqual(len(dictionary), 220)
@@ -61,6 +74,16 @@ class TranslatorTests(unittest.TestCase):
         result = translate_to_ancient_language("doing making speaking", dictionary)
         self.assertEqual(result["translation"], "gera gera mæla")
 
+    def test_regular_english_plurals_map_to_singular_entries(self):
+        dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
+        result = translate_to_ancient_language("books dragons stars", dictionary)
+        self.assertEqual(result["translation"], "bok dreki stjarna")
+
+    def test_quantifiers_and_adjective_degrees_translate_more_accurately(self):
+        dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
+        result = translate_to_ancient_language("each beautiful person is greater than the smallest", dictionary)
+        self.assertEqual(result["translation"], "hverr fagr maðr er meiri en sá minnstr")
+
     def test_italian_gerund_forms_map_to_base_verbs(self):
         dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
         result = translate_to_ancient_language("facendo parlando", dictionary, source_language="italian")
@@ -83,7 +106,25 @@ class TranslatorTests(unittest.TestCase):
         dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
         phrase = "kverst malmr du huildrs edtha, mar frëma né thön eka threyja."
         result = translate_from_ancient_language(phrase, dictionary)
-        self.assertEqual(result["translation"], "strength metal you shield maiden and, many fear not those i three.")
+        self.assertEqual(result["translation"], "strength and steel, shield-maiden; many fear those three, but i do not.")
+        self.assertEqual(result["coverage"], 1.0)
+
+    def test_book_quote_clauses_translate_both_directions(self):
+        dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
+        english = "May good fortune rule over you, peace live in your heart, and the stars watch over you."
+        ancient = "atra esterní ono thelduin, mor'ranr lífa unin hjarta onr, un du evarínya ono varda."
+        to_ancient = translate_to_ancient_language(english, dictionary)
+        from_ancient = translate_from_ancient_language(ancient, dictionary)
+        self.assertEqual(to_ancient["translation"], ancient)
+        self.assertEqual(from_ancient["translation"], english.lower())
+        self.assertEqual(from_ancient["coverage"], 1.0)
+
+    def test_reverse_dictionary_understands_variant_and_verb_forms(self):
+        dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
+        reverse_dictionary = build_reverse_dictionary(dictionary)
+        add_reverse_entries_from_structured_vocabulary(MOCK_VOCABULARY, reverse_dictionary)
+        result = translate_from_ancient_language("bok'ara eddyr glimri", dictionary, reverse_dictionary)
+        self.assertEqual(result["translation"], "book be shimmer")
         self.assertEqual(result["coverage"], 1.0)
 
 

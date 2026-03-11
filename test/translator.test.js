@@ -1,13 +1,24 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { buildDictionaryFromRawVocabulary, buildReverseDictionary, translateToAncientLanguage, translateFromAncientLanguage } = require('../src/translator');
+const {
+  addReverseEntriesFromStructuredVocabulary,
+  buildDictionaryFromRawVocabulary,
+  buildReverseDictionary,
+  translateToAncientLanguage,
+  translateFromAncientLanguage
+} = require('../src/translator');
 
 const mockVocabulary = `
 {
   "entry1": {"english": "fire, flame, blaze", "ancient_language": "brisingr"},
   "entry2": {"english": "water", "ancient_language": "deloi"},
   "entry3": {"english": "thank you", "ancient_language": "thorta"},
-  "entry4": {"word": "máttr", "translation": "might, power"}
+  "entry4": {"word": "máttr", "translation": "might, power"},
+  "guide": {"example_phrases": ["Atra (let it be)"], "related_words": ["varda (watch over)"]},
+  "verbs": {"strong_verbs": [{"infinitive": "glimra", "translation": "to shimmer", "present": {"1st_singular": "glimri"}}, {"infinitive": "waíse", "translation": "to be", "present": {"1st_singular": "eddyr"}}]},
+  "entry5": {"english": "book, written scroll", "ancient_language": "bok", "poetic": "bok'ara"},
+  "entry6": {"english": "dragon", "ancient_language": "dreki"},
+  "grammar": {"adjective_system": {"strong_adjectives": [{"base": "fagr", "translation": "fair, beautiful, good", "comparative": "fagri", "superlative": "fagrest"}, {"base": "mikill", "translation": "great", "comparative": "meiri", "superlative": "mestr"}, {"base": "lítill", "translation": "small", "comparative": "minni", "superlative": "minnstr"}]}}
 }
 `;
 
@@ -21,6 +32,12 @@ test('buildDictionaryFromRawVocabulary extracts english to ancient pairs', () =>
 
 test('buildDictionaryFromRawVocabulary includes essential common word additions', () => {
   const dictionary = buildDictionaryFromRawVocabulary(mockVocabulary);
+  assert.equal(dictionary.get('let it be'), 'atra');
+  assert.equal(dictionary.get('watch over'), 'varda');
+  assert.equal(dictionary.get('shimmer'), 'glimra');
+  assert.equal(dictionary.get('beautiful'), 'fagr');
+  assert.equal(dictionary.get('greater'), 'meiri');
+  assert.equal(dictionary.get('smallest'), 'minnstr');
   assert.equal(dictionary.get('if'), 'ef');
   assert.equal(dictionary.get('and'), 'ok');
   assert.ok(dictionary.size >= 220);
@@ -67,6 +84,18 @@ test('translateToAncientLanguage english -ing forms map to base verbs', () => {
   assert.equal(result.translation, 'gera gera mæla');
 });
 
+test('translateToAncientLanguage regular english plurals map to singular entries', () => {
+  const dictionary = buildDictionaryFromRawVocabulary(mockVocabulary);
+  const result = translateToAncientLanguage('books dragons stars', { dictionary });
+  assert.equal(result.translation, 'bok dreki stjarna');
+});
+
+test('translateToAncientLanguage handles quantifiers and adjective degrees more accurately', () => {
+  const dictionary = buildDictionaryFromRawVocabulary(mockVocabulary);
+  const result = translateToAncientLanguage('each beautiful person is greater than the smallest', { dictionary });
+  assert.equal(result.translation, 'hverr fagr maðr er meiri en sá minnstr');
+});
+
 test('translateToAncientLanguage italian gerund forms map to base verbs', () => {
   const dictionary = buildDictionaryFromRawVocabulary(mockVocabulary);
   const result = translateToAncientLanguage('facendo parlando', { dictionary, sourceLanguage: 'italian' });
@@ -92,6 +121,26 @@ test('translateFromAncientLanguage handles the official phrase', () => {
   const dictionary = buildDictionaryFromRawVocabulary(mockVocabulary);
   const phrase = 'kverst malmr du huildrs edtha, mar frëma né thön eka threyja.';
   const result = translateFromAncientLanguage(phrase, { dictionary });
-  assert.equal(result.translation, 'strength metal you shield maiden and, many fear not those i three.');
+  assert.equal(result.translation, 'strength and steel, shield-maiden; many fear those three, but i do not.');
+  assert.equal(result.coverage, 1);
+});
+
+test('book quote clauses translate both directions', () => {
+  const dictionary = buildDictionaryFromRawVocabulary(mockVocabulary);
+  const english = 'May good fortune rule over you, peace live in your heart, and the stars watch over you.';
+  const ancient = "atra esterní ono thelduin, mor'ranr lífa unin hjarta onr, un du evarínya ono varda.";
+  const toAncient = translateToAncientLanguage(english, { dictionary });
+  const fromAncient = translateFromAncientLanguage(ancient, { dictionary });
+  assert.equal(toAncient.translation, ancient);
+  assert.equal(fromAncient.translation, english.toLowerCase());
+  assert.equal(fromAncient.coverage, 1);
+});
+
+test('translateFromAncientLanguage understands variant and verb forms', () => {
+  const dictionary = buildDictionaryFromRawVocabulary(mockVocabulary);
+  const reverseDictionary = buildReverseDictionary(dictionary);
+  addReverseEntriesFromStructuredVocabulary(mockVocabulary, reverseDictionary);
+  const result = translateFromAncientLanguage("bok'ara eddyr glimri", { dictionary, reverseDictionary });
+  assert.equal(result.translation, 'book be shimmer');
   assert.equal(result.coverage, 1);
 });

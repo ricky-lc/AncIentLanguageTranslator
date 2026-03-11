@@ -75,10 +75,12 @@ ESSENTIAL_ANCIENT_ADDITIONS = {
     "know": "kenna", "say": "segja", "speak": "mæla", "think": "hugsa", "want": "vilja", "need": "þurfa",
     "give": "gefa", "take": "taka", "find": "finna", "tell": "segja", "ask": "spyrja",
     "who": "hver", "what": "hvat", "where": "hvar", "when": "hvenær", "why": "hví", "how": "hvernig",
-    "all": "allr", "some": "sumr", "many": "margir", "more": "meira", "most": "mest", "few": "fáir",
+    "all": "allr", "any": "einhverr", "each": "hverr", "every": "hverr", "both": "báðir", "either": "annarr hvárr",
+    "neither": "engi", "some": "sumr", "many": "margir", "more": "meira", "most": "mest", "few": "fáir",
     "very": "mjök", "much": "mikit", "little": "lítit", "good": "góðr", "bad": "illr",
     "true": "sannr", "new": "nýr", "old": "forn", "first": "fyrstr", "last": "síðastr",
     "today": "í dag", "tomorrow": "á morgin", "yesterday": "í gær", "now": "nú", "always": "æ", "never": "aldri",
+    "while": "meðan", "unless": "nema", "than": "en", "as": "sem",
     "please": "blítt", "hello": "heill", "thanks": "þakkir", "thank": "þakka"
 }
 
@@ -124,8 +126,20 @@ EXTENDED_ESSENTIAL_ANCIENT_ADDITIONS = {
     "six": "sex", "seven": "sjau", "eight": "átta", "nine": "níu", "ten": "tíu"
 }
 
+CANONICAL_BOOK_PHRASES = {
+    "let it be": "atra",
+    "may good fortune rule over you": "atra esterní ono thelduin",
+    "peace live in your heart": "mor'ranr lífa unin hjarta onr",
+    "the stars watch over you": "du evarínya ono varda",
+    "and the stars watch over you": "un du evarínya ono varda",
+}
+
 ALL_ITALIAN_TO_ENGLISH = {**ITALIAN_TO_ENGLISH, **EXTENDED_ITALIAN_TO_ENGLISH}
-ALL_ESSENTIAL_ANCIENT_ADDITIONS = {**ESSENTIAL_ANCIENT_ADDITIONS, **EXTENDED_ESSENTIAL_ANCIENT_ADDITIONS}
+ALL_ESSENTIAL_ANCIENT_ADDITIONS = {
+    **ESSENTIAL_ANCIENT_ADDITIONS,
+    **EXTENDED_ESSENTIAL_ANCIENT_ADDITIONS,
+    **CANONICAL_BOOK_PHRASES,
+}
 ANCIENT_TO_ENGLISH_ADDITIONS = {
     "kverst": "strength",
     "malmr": "metal",
@@ -138,6 +152,7 @@ ANCIENT_TO_ENGLISH_ADDITIONS = {
     "thön": "those",
     "eka": "i",
     "threyja": "three",
+    "kverst malmr du huildrs edtha mar frëma né thön eka threyja": "strength and steel, shield-maiden; many fear those three, but i do not",
 }
 IRREGULAR_ITALIAN_GERUNDS = {
     "facendo": "fare",
@@ -146,6 +161,9 @@ IRREGULAR_ITALIAN_GERUNDS = {
     "ponendo": "porre",
     "traendo": "trarre"
 }
+GLOSS_STRING_KEYS = {"related_words", "components", "example_phrases", "example", "base_example", "compounds"}
+ANCIENT_VARIANT_KEYS = ("ancient_language", "formal", "informal", "poetic", "archaic")
+VERB_FORM_KEYS = ("present", "past", "future", "subjunctive", "imperative", "participles")
 
 
 def normalize_apostrophes(text: str) -> str:
@@ -172,12 +190,116 @@ def split_english_variants(english: str) -> List[str]:
     normalized = re.sub(r"\s+", " ", normalized).strip()
     if not normalized:
         return []
-    return [s.strip() for s in re.split(r",|\s+or\s+|\s*/\s*|;", normalized) if s.strip()]
+    variants = [s.strip() for s in re.split(r",|\s+or\s+|\s*/\s*|;", normalized) if s.strip()]
+    expanded: List[str] = []
+    for variant in variants:
+        expanded.append(variant)
+        if variant.startswith("to ") and len(variant) > 3:
+            expanded.append(variant[3:].strip())
+    return list(dict.fromkeys(expanded))
 
 
 def add_essential_entries(dictionary: Dict[str, str]) -> None:
     for english, ancient in ALL_ESSENTIAL_ANCIENT_ADDITIONS.items():
         dictionary.setdefault(english, ancient)
+
+
+def add_normalized_entry(dictionary: Dict[str, str], english: str, ancient: str) -> None:
+    normalized_ancient = normalize_term(ancient)
+    if not normalized_ancient:
+        return
+    for variant in split_english_variants(english):
+        dictionary.setdefault(variant, normalized_ancient)
+
+
+IRREGULAR_ENGLISH_DEGREES = {
+    "good": ("better", "best"),
+    "well": ("better", "best"),
+    "bad": ("worse", "worst"),
+    "ill": ("worse", "worst"),
+    "little": ("less", "least"),
+    "many": ("more", "most"),
+    "much": ("more", "most"),
+    "far": ("farther", "farthest"),
+    "great": ("greater", "greatest"),
+}
+
+
+def build_english_degree_forms(english: str) -> tuple[List[str], List[str]]:
+    comparatives: List[str] = []
+    superlatives: List[str] = []
+    for variant in split_english_variants(english):
+        if not re.fullmatch(r"[a-z]+", variant):
+            continue
+        irregular = IRREGULAR_ENGLISH_DEGREES.get(variant)
+        if irregular:
+            comparatives.append(irregular[0])
+            superlatives.append(irregular[1])
+            continue
+        if len(variant) <= 2:
+            continue
+        if variant.endswith("y") and len(variant) > 2 and variant[-2] not in "aeiou":
+            stem = variant[:-1]
+            comparatives.append(f"{stem}ier")
+            superlatives.append(f"{stem}iest")
+            continue
+        if variant.endswith("e"):
+            comparatives.append(f"{variant}r")
+            superlatives.append(f"{variant}st")
+            continue
+        if (
+            len(variant) >= 3
+            and variant[-1] not in "aeiouwxy"
+            and variant[-2] in "aeiou"
+            and variant[-3] not in "aeiou"
+        ):
+            comparatives.append(f"{variant}{variant[-1]}er")
+            superlatives.append(f"{variant}{variant[-1]}est")
+            continue
+        comparatives.append(f"{variant}er")
+        superlatives.append(f"{variant}est")
+    return list(dict.fromkeys(comparatives)), list(dict.fromkeys(superlatives))
+
+
+def add_gloss_entries_from_structured_vocabulary(raw: str, dictionary: Dict[str, str]) -> None:
+    try:
+        parsed = json.loads(raw)
+    except json.JSONDecodeError:
+        return
+
+    def visit(value, parent_key: str = "") -> None:
+        if isinstance(value, list):
+            for item in value:
+                visit(item, parent_key)
+            return
+
+        if isinstance(value, dict):
+            infinitive = value.get("infinitive")
+            translation = value.get("translation")
+            if isinstance(infinitive, str) and isinstance(translation, str):
+                add_normalized_entry(dictionary, translation, infinitive)
+            base = value.get("base")
+            comparative = value.get("comparative")
+            superlative = value.get("superlative")
+            if isinstance(base, str) and isinstance(translation, str):
+                add_normalized_entry(dictionary, translation, base)
+                comparative_variants, superlative_variants = build_english_degree_forms(translation)
+                if isinstance(comparative, str):
+                    for english_comparative in comparative_variants:
+                        add_normalized_entry(dictionary, english_comparative, comparative)
+                if isinstance(superlative, str):
+                    for english_superlative in superlative_variants:
+                        add_normalized_entry(dictionary, english_superlative, superlative)
+            for key, child in value.items():
+                visit(child, key)
+            return
+
+        if isinstance(value, str) and parent_key in GLOSS_STRING_KEYS:
+            match = re.fullmatch(r"\s*([^()]+?)\s*\(([^()]+)\)\s*", value)
+            if match:
+                add_normalized_entry(dictionary, match.group(2), match.group(1))
+
+    visit(parsed)
 
 
 def build_dictionary_from_raw_vocabulary(raw: str) -> Dict[str, str]:
@@ -197,6 +319,7 @@ def build_dictionary_from_raw_vocabulary(raw: str) -> Dict[str, str]:
             if normalized_ancient:
                 dictionary.setdefault(variant, normalized_ancient)
 
+    add_gloss_entries_from_structured_vocabulary(raw, dictionary)
     add_essential_entries(dictionary)
     return dictionary
 
@@ -269,7 +392,28 @@ def italian_gerund_candidates(word: str) -> List[str]:
     return list(dict.fromkeys([candidate for candidate in candidates if len(candidate) > 2]))
 
 
+def english_plural_candidates(word: str) -> List[str]:
+    lower = word.lower()
+    if len(lower) <= 3 or not lower.endswith("s"):
+        return []
+
+    candidates: List[str] = []
+    if lower.endswith("ies") and len(lower) > 4:
+        candidates.append(f"{lower[:-3]}y")
+    if lower.endswith(("sses", "shes", "ches", "xes", "zes")) and len(lower) > 4:
+        candidates.append(lower[:-2])
+    if lower.endswith("ves") and len(lower) > 4:
+        candidates.append(f"{lower[:-3]}f")
+        candidates.append(f"{lower[:-3]}fe")
+    if not lower.endswith(("ss", "us", "is")):
+        candidates.append(lower[:-1])
+
+    return list(dict.fromkeys(candidate for candidate in candidates if len(candidate) > 1))
+
+
 _cached_dictionary: Dict[str, str] | None = None
+_cached_reverse_dictionary: Dict[str, str] | None = None
+_dictionary_phrase_size_cache: Dict[int, int] = {}
 
 
 class TranslationResult(TypedDict):
@@ -289,6 +433,25 @@ def get_default_dictionary() -> Dict[str, str]:
     return _cached_dictionary
 
 
+def get_default_reverse_dictionary() -> Dict[str, str]:
+    global _cached_reverse_dictionary
+    if _cached_reverse_dictionary is not None:
+        return _cached_reverse_dictionary
+    raw = Path(__file__).resolve().parent.parent.joinpath("vocabulary.json").read_text(encoding="utf-8")
+    _cached_reverse_dictionary = build_reverse_dictionary(get_default_dictionary())
+    add_reverse_entries_from_structured_vocabulary(raw, _cached_reverse_dictionary)
+    return _cached_reverse_dictionary
+
+
+def get_max_dictionary_phrase_size(dictionary: Dict[str, str]) -> int:
+    cache_key = id(dictionary)
+    if cache_key in _dictionary_phrase_size_cache:
+        return _dictionary_phrase_size_cache[cache_key]
+    max_phrase_size = min(max((len(key.split()) for key in dictionary), default=1), 12)
+    _dictionary_phrase_size_cache[cache_key] = max_phrase_size
+    return max_phrase_size
+
+
 def translate_to_ancient_language(
     text: str,
     dictionary: Dict[str, str] | None = None,
@@ -305,6 +468,7 @@ def translate_to_ancient_language(
     allow_italian_fallback = not forced_english
     normalized_input = input_text if is_italian_input else expand_english_contractions(input_text)
     tokens = tokenize(normalized_input)
+    max_phrase_size = get_max_dictionary_phrase_size(dictionary)
 
     output: List[str] = []
     mapped_terms = 0
@@ -321,7 +485,7 @@ def translate_to_ancient_language(
         total_terms += 1
         replaced = False
 
-        for size in range(4, 0, -1):
+        for size in range(min(max_phrase_size, len(tokens) - i), 0, -1):
             if i + size > len(tokens):
                 continue
             span = tokens[i:i + size]
@@ -354,6 +518,12 @@ def translate_to_ancient_language(
                 (candidate for candidate in english_ing_candidates(lower) if dictionary.get(candidate)),
                 None
             )
+        english_plural_as_base = None
+        if not forced_italian and not english_ing_as_base:
+            english_plural_as_base = next(
+                (candidate for candidate in english_plural_candidates(lower) if dictionary.get(candidate)),
+                None
+            )
         italian_gerund_as_english = None
         if allow_italian_fallback and not italian_as_english:
             for italian_candidate in italian_gerund_candidates(lower):
@@ -366,6 +536,7 @@ def translate_to_ancient_language(
             dictionary.get(lower)
             or (dictionary.get(italian_as_english) if italian_as_english else None)
             or (dictionary.get(english_ing_as_base) if english_ing_as_base else None)
+            or (dictionary.get(english_plural_as_base) if english_plural_as_base else None)
             or (dictionary.get(italian_gerund_as_english) if italian_gerund_as_english else None)
         )
         if ancient:
@@ -397,6 +568,65 @@ def build_reverse_dictionary(dictionary: Dict[str, str]) -> Dict[str, str]:
     return reverse_dictionary
 
 
+def add_reverse_entry(reverse_dictionary: Dict[str, str], ancient: str, english: str) -> None:
+    normalized_ancient = normalize_term(ancient)
+    english_variants = split_english_variants(english)
+    if not normalized_ancient or not english_variants:
+        return
+    preferred_english = next((variant for variant in english_variants if not variant.startswith("to ")), english_variants[0])
+    reverse_dictionary.setdefault(normalized_ancient, preferred_english)
+    plain_ancient = strip_diacritics(normalized_ancient)
+    if plain_ancient != normalized_ancient:
+        reverse_dictionary.setdefault(plain_ancient, preferred_english)
+
+
+def add_reverse_entries_from_structured_vocabulary(raw: str, reverse_dictionary: Dict[str, str]) -> None:
+    try:
+        parsed = json.loads(raw)
+    except json.JSONDecodeError:
+        return
+
+    def add_nested_forms(value, english: str) -> None:
+        if isinstance(value, str):
+            add_reverse_entry(reverse_dictionary, value, english)
+            return
+        if isinstance(value, list):
+            for item in value:
+                add_nested_forms(item, english)
+            return
+        if isinstance(value, dict):
+            for child in value.values():
+                add_nested_forms(child, english)
+
+    def visit(value) -> None:
+        if isinstance(value, list):
+            for item in value:
+                visit(item)
+            return
+
+        if not isinstance(value, dict):
+            return
+
+        english = value.get("english")
+        if isinstance(english, str):
+            for key in ANCIENT_VARIANT_KEYS:
+                variant = value.get(key)
+                if isinstance(variant, str):
+                    add_reverse_entry(reverse_dictionary, variant, english)
+
+        translation = value.get("translation")
+        if isinstance(translation, str):
+            for key in VERB_FORM_KEYS:
+                forms = value.get(key)
+                if forms is not None:
+                    add_nested_forms(forms, translation)
+
+        for child in value.values():
+            visit(child)
+
+    visit(parsed)
+
+
 def lookup_ancient_to_english(source_phrase: str, reverse_dictionary: Dict[str, str]) -> Optional[str]:
     lowered = source_phrase.lower()
     plain = strip_diacritics(lowered)
@@ -414,12 +644,28 @@ def translate_from_ancient_language(
     reverse_dictionary: Dict[str, str] | None = None
 ) -> TranslationResult:
     dictionary = dictionary or get_default_dictionary()
-    reverse_dictionary = reverse_dictionary or build_reverse_dictionary(dictionary)
+    if reverse_dictionary is None:
+        reverse_dictionary = get_default_reverse_dictionary() if dictionary is get_default_dictionary() else build_reverse_dictionary(dictionary)
     input_text = normalize_apostrophes((text or "").strip())
     if not input_text:
         return {"translation": "", "sourceLanguage": "unknown", "mappedTerms": 0, "totalTerms": 0, "coverage": 0}
 
     tokens = tokenize(input_text)
+    max_phrase_size = get_max_dictionary_phrase_size(dictionary)
+    normalized_input_phrase = " ".join(token.lower() for token in tokens if is_word(token))
+    exact_phrase_translation = lookup_ancient_to_english(normalized_input_phrase, reverse_dictionary) if normalized_input_phrase else None
+    if exact_phrase_translation:
+        word_count = len(normalized_input_phrase.split())
+        trailing_punctuation_match = re.search(r"([,.;:!?]+)\s*$", input_text)
+        trailing_punctuation = trailing_punctuation_match.group(1) if trailing_punctuation_match else ""
+        return {
+            "translation": f"{exact_phrase_translation}{trailing_punctuation}",
+            "sourceLanguage": "ancient",
+            "mappedTerms": word_count,
+            "totalTerms": word_count,
+            "coverage": 1.0
+        }
+
     output: List[str] = []
     mapped_terms = 0
     total_terms = 0
@@ -435,7 +681,7 @@ def translate_from_ancient_language(
         total_terms += 1
         replaced = False
 
-        for size in range(4, 0, -1):
+        for size in range(min(max_phrase_size, len(tokens) - i), 0, -1):
             if i + size > len(tokens):
                 continue
             span = tokens[i:i + size]

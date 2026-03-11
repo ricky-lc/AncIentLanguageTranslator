@@ -92,10 +92,12 @@ const ESSENTIAL_ANCIENT_ADDITIONS = {
   know: 'kenna', say: 'segja', speak: 'mæla', think: 'hugsa', want: 'vilja', need: 'þurfa',
   give: 'gefa', take: 'taka', find: 'finna', tell: 'segja', ask: 'spyrja',
   who: 'hver', what: 'hvat', where: 'hvar', when: 'hvenær', why: 'hví', how: 'hvernig',
-  all: 'allr', some: 'sumr', many: 'margir', more: 'meira', most: 'mest', few: 'fáir',
+  all: 'allr', any: 'einhverr', each: 'hverr', every: 'hverr', both: 'báðir', either: 'annarr hvárr',
+  neither: 'engi', some: 'sumr', many: 'margir', more: 'meira', most: 'mest', few: 'fáir',
   very: 'mjök', much: 'mikit', little: 'lítit', good: 'góðr', bad: 'illr',
   true: 'sannr', new: 'nýr', old: 'forn', first: 'fyrstr', last: 'síðastr',
   today: 'í dag', tomorrow: 'á morgin', yesterday: 'í gær', now: 'nú', always: 'æ', never: 'aldri',
+  while: 'meðan', unless: 'nema', than: 'en', as: 'sem',
   please: 'blítt', hello: 'heill', thanks: 'þakkir', thank: 'þakka'
 };
 
@@ -141,7 +143,19 @@ const EXTENDED_ESSENTIAL_ANCIENT_ADDITIONS = {
   six: 'sex', seven: 'sjau', eight: 'átta', nine: 'níu', ten: 'tíu'
 };
 
-const ALL_ESSENTIAL_ANCIENT_ADDITIONS = { ...ESSENTIAL_ANCIENT_ADDITIONS, ...EXTENDED_ESSENTIAL_ANCIENT_ADDITIONS };
+const CANONICAL_BOOK_PHRASES = {
+  'let it be': 'atra',
+  'may good fortune rule over you': 'atra esterní ono thelduin',
+  'peace live in your heart': "mor'ranr lífa unin hjarta onr",
+  'the stars watch over you': 'du evarínya ono varda',
+  'and the stars watch over you': 'un du evarínya ono varda'
+};
+
+const ALL_ESSENTIAL_ANCIENT_ADDITIONS = {
+  ...ESSENTIAL_ANCIENT_ADDITIONS,
+  ...EXTENDED_ESSENTIAL_ANCIENT_ADDITIONS,
+  ...CANONICAL_BOOK_PHRASES
+};
 
 const ANCIENT_TO_ENGLISH_ADDITIONS = {
   kverst: 'strength',
@@ -154,7 +168,8 @@ const ANCIENT_TO_ENGLISH_ADDITIONS = {
   'né': 'not',
   'thön': 'those',
   eka: 'i',
-  threyja: 'three'
+  threyja: 'three',
+  'kverst malmr du huildrs edtha mar frëma né thön eka threyja': 'strength and steel, shield-maiden; many fear those three, but i do not'
 };
 
 const IRREGULAR_ITALIAN_GERUNDS = {
@@ -164,6 +179,10 @@ const IRREGULAR_ITALIAN_GERUNDS = {
   ponendo: 'porre',
   traendo: 'trarre'
 };
+const GLOSS_STRING_KEYS = new Set(['related_words', 'components', 'example_phrases', 'example', 'base_example', 'compounds']);
+const ANCIENT_VARIANT_KEYS = ['ancient_language', 'formal', 'informal', 'poetic', 'archaic'];
+const VERB_FORM_KEYS = ['present', 'past', 'future', 'subjunctive', 'imperative', 'participles'];
+const DICTIONARY_PHRASE_SIZE_CACHE = new WeakMap();
 
 function normalizeTerm(text) {
   return text
@@ -182,10 +201,18 @@ function splitEnglishVariants(english) {
     .replace(/\s+/g, ' ')
     .trim();
   if (!normalized) return [];
-  return normalized
+  const variants = normalized
     .split(/,|\s+or\s+|\s*\/\s*|;/g)
     .map((s) => s.trim())
     .filter(Boolean);
+  const expanded = [];
+  for (const variant of variants) {
+    expanded.push(variant);
+    if (variant.startsWith('to ') && variant.length > 3) {
+      expanded.push(variant.slice(3).trim());
+    }
+  }
+  return [...new Set(expanded.filter(Boolean))];
 }
 
 function addEssentialEntries(dictionary) {
@@ -194,6 +221,116 @@ function addEssentialEntries(dictionary) {
       dictionary.set(english, ancient);
     }
   }
+}
+
+function addNormalizedEntry(dictionary, english, ancient) {
+  const normalizedAncient = normalizeTerm(ancient);
+  if (!normalizedAncient) return;
+  for (const variant of splitEnglishVariants(english)) {
+    if (!dictionary.has(variant)) {
+      dictionary.set(variant, normalizedAncient);
+    }
+  }
+}
+
+const IRREGULAR_ENGLISH_DEGREES = {
+  good: ['better', 'best'],
+  well: ['better', 'best'],
+  bad: ['worse', 'worst'],
+  ill: ['worse', 'worst'],
+  little: ['less', 'least'],
+  many: ['more', 'most'],
+  much: ['more', 'most'],
+  far: ['farther', 'farthest'],
+  great: ['greater', 'greatest']
+};
+
+function buildEnglishDegreeForms(english) {
+  const comparatives = [];
+  const superlatives = [];
+  for (const variant of splitEnglishVariants(english)) {
+    if (!/^[a-z]+$/.test(variant)) continue;
+    if (IRREGULAR_ENGLISH_DEGREES[variant]) {
+      const [comparative, superlative] = IRREGULAR_ENGLISH_DEGREES[variant];
+      comparatives.push(comparative);
+      superlatives.push(superlative);
+      continue;
+    }
+    if (variant.length <= 2) continue;
+    if (variant.endsWith('y') && variant.length > 2 && !'aeiou'.includes(variant[variant.length - 2])) {
+      const stem = variant.slice(0, -1);
+      comparatives.push(`${stem}ier`);
+      superlatives.push(`${stem}iest`);
+      continue;
+    }
+    if (variant.endsWith('e')) {
+      comparatives.push(`${variant}r`);
+      superlatives.push(`${variant}st`);
+      continue;
+    }
+    if (
+      variant.length >= 3
+      && !'aeiouwxy'.includes(variant[variant.length - 1])
+      && 'aeiou'.includes(variant[variant.length - 2])
+      && !'aeiou'.includes(variant[variant.length - 3])
+    ) {
+      comparatives.push(`${variant}${variant[variant.length - 1]}er`);
+      superlatives.push(`${variant}${variant[variant.length - 1]}est`);
+      continue;
+    }
+    comparatives.push(`${variant}er`);
+    superlatives.push(`${variant}est`);
+  }
+  return [new Set(comparatives), new Set(superlatives)];
+}
+
+function addGlossEntriesFromStructuredVocabulary(raw, dictionary) {
+  let parsed;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    return;
+  }
+
+  const visit = (value, parentKey = '') => {
+    if (Array.isArray(value)) {
+      for (const item of value) visit(item, parentKey);
+      return;
+    }
+
+    if (value && typeof value === 'object') {
+      if (typeof value.infinitive === 'string' && typeof value.translation === 'string') {
+        addNormalizedEntry(dictionary, value.translation, value.infinitive);
+      }
+      if (typeof value.base === 'string' && typeof value.translation === 'string') {
+        addNormalizedEntry(dictionary, value.translation, value.base);
+        const [comparatives, superlatives] = buildEnglishDegreeForms(value.translation);
+        if (typeof value.comparative === 'string') {
+          for (const englishComparative of comparatives) {
+            addNormalizedEntry(dictionary, englishComparative, value.comparative);
+          }
+        }
+        if (typeof value.superlative === 'string') {
+          for (const englishSuperlative of superlatives) {
+            addNormalizedEntry(dictionary, englishSuperlative, value.superlative);
+          }
+        }
+      }
+      for (const [key, child] of Object.entries(value)) {
+        visit(child, key);
+      }
+      return;
+    }
+
+    if (typeof value === 'string' && GLOSS_STRING_KEYS.has(parentKey)) {
+      const match = value.match(/^\s*([^()]+?)\s*\(([^()]+)\)\s*$/u);
+      if (match) {
+        addNormalizedEntry(dictionary, match[2], match[1]);
+      }
+    }
+  };
+
+  visit(parsed);
 }
 
 function normalizeApostrophes(text) {
@@ -228,11 +365,13 @@ function buildDictionaryFromRawVocabulary(raw) {
     }
   }
 
+  addGlossEntriesFromStructuredVocabulary(raw, dictionary);
   addEssentialEntries(dictionary);
   return dictionary;
 }
 
 let cachedDictionary = null;
+let cachedReverseDictionary = null;
 
 function getDefaultDictionary() {
   if (cachedDictionary) return cachedDictionary;
@@ -242,8 +381,31 @@ function getDefaultDictionary() {
   return cachedDictionary;
 }
 
+function getDefaultReverseDictionary() {
+  if (cachedReverseDictionary) return cachedReverseDictionary;
+  const vocabularyPath = path.resolve(__dirname, '..', 'vocabulary.json');
+  const raw = fs.readFileSync(vocabularyPath, 'utf8');
+  cachedReverseDictionary = buildReverseDictionary(getDefaultDictionary());
+  addReverseEntriesFromStructuredVocabulary(raw, cachedReverseDictionary);
+  return cachedReverseDictionary;
+}
+
 function tokenize(text) {
   return text.match(WORD_RE) || [];
+}
+
+function getMaxDictionaryPhraseSize(dictionary) {
+  if (DICTIONARY_PHRASE_SIZE_CACHE.has(dictionary)) {
+    return DICTIONARY_PHRASE_SIZE_CACHE.get(dictionary);
+  }
+  let maxPhraseSize = 1;
+  for (const key of dictionary.keys()) {
+    const size = key.split(/\s+/).filter(Boolean).length;
+    if (size > maxPhraseSize) maxPhraseSize = size;
+  }
+  maxPhraseSize = Math.min(maxPhraseSize, 12);
+  DICTIONARY_PHRASE_SIZE_CACHE.set(dictionary, maxPhraseSize);
+  return maxPhraseSize;
 }
 
 function expandEnglishContractions(text) {
@@ -315,6 +477,25 @@ function italianGerundCandidates(word) {
   return [...new Map(candidates.filter((c) => c.length > 2).map((c) => [c, c])).keys()];
 }
 
+function englishPluralCandidates(word) {
+  const lower = word.toLowerCase();
+  if (lower.length <= 3 || !lower.endsWith('s')) return [];
+  const candidates = [];
+  if (lower.endsWith('ies') && lower.length > 4) {
+    candidates.push(`${lower.slice(0, -3)}y`);
+  }
+  if (/(sses|shes|ches|xes|zes)$/.test(lower) && lower.length > 4) {
+    candidates.push(lower.slice(0, -2));
+  }
+  if (lower.endsWith('ves') && lower.length > 4) {
+    candidates.push(`${lower.slice(0, -3)}f`, `${lower.slice(0, -3)}fe`);
+  }
+  if (!/(ss|us|is)$/.test(lower)) {
+    candidates.push(lower.slice(0, -1));
+  }
+  return [...new Set(candidates.filter((candidate) => candidate.length > 1))];
+}
+
 function translateToAncientLanguage(text, options = {}) {
   const dictionary = options.dictionary || getDefaultDictionary();
   const sourceLanguage = (options.sourceLanguage || 'auto').toLowerCase();
@@ -329,6 +510,7 @@ function translateToAncientLanguage(text, options = {}) {
   const allowItalianFallback = !forcedEnglish;
   const normalizedInput = isItalianInput ? input : expandEnglishContractions(input);
   const tokens = tokenize(normalizedInput);
+  const maxPhraseSize = getMaxDictionaryPhraseSize(dictionary);
   const output = [];
   let mappedTerms = 0;
   let totalTerms = 0;
@@ -344,7 +526,7 @@ function translateToAncientLanguage(text, options = {}) {
     totalTerms += 1;
 
     let replaced = false;
-    for (let size = 4; size >= 1; size -= 1) {
+    for (let size = Math.min(maxPhraseSize, tokens.length - i); size >= 1; size -= 1) {
       if (i + size > tokens.length) continue;
       const span = tokens.slice(i, i + size);
       if (!span.every(isWord)) continue;
@@ -372,6 +554,10 @@ function translateToAncientLanguage(text, options = {}) {
       if (!forcedItalian) {
         engIngBase = englishIngCandidates(lower).find((c) => dictionary.has(c)) || null;
       }
+      let englishPluralBase = null;
+      if (!forcedItalian && !engIngBase) {
+        englishPluralBase = englishPluralCandidates(lower).find((c) => dictionary.has(c)) || null;
+      }
       let italianGerundAsEnglish = null;
       if (allowItalianFallback && !italianAsEnglish) {
         for (const candidate of italianGerundCandidates(lower)) {
@@ -382,6 +568,7 @@ function translateToAncientLanguage(text, options = {}) {
       const ancient = dictionary.get(lower)
         || (italianAsEnglish ? dictionary.get(italianAsEnglish) : null)
         || (engIngBase ? dictionary.get(engIngBase) : null)
+        || (englishPluralBase ? dictionary.get(englishPluralBase) : null)
         || (italianGerundAsEnglish ? dictionary.get(italianGerundAsEnglish) : null);
       if (ancient) {
         output.push(ancient);
@@ -416,6 +603,71 @@ function buildReverseDictionary(dictionary) {
   return reverse;
 }
 
+function addReverseEntry(reverseDictionary, ancient, english) {
+  const normalizedAncient = normalizeTerm(ancient);
+  const englishVariants = splitEnglishVariants(english);
+  if (!normalizedAncient || englishVariants.length === 0) return;
+  const preferredEnglish = englishVariants.find((variant) => !variant.startsWith('to ')) || englishVariants[0];
+  if (!reverseDictionary.has(normalizedAncient)) reverseDictionary.set(normalizedAncient, preferredEnglish);
+  const plainAncient = stripDiacritics(normalizedAncient);
+  if (plainAncient !== normalizedAncient && !reverseDictionary.has(plainAncient)) {
+    reverseDictionary.set(plainAncient, preferredEnglish);
+  }
+}
+
+function addReverseEntriesFromStructuredVocabulary(raw, reverseDictionary) {
+  let parsed;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    return;
+  }
+
+  const addNestedForms = (value, english) => {
+    if (typeof value === 'string') {
+      addReverseEntry(reverseDictionary, value, english);
+      return;
+    }
+    if (Array.isArray(value)) {
+      for (const item of value) addNestedForms(item, english);
+      return;
+    }
+    if (value && typeof value === 'object') {
+      for (const child of Object.values(value)) addNestedForms(child, english);
+    }
+  };
+
+  const visit = (value) => {
+    if (Array.isArray(value)) {
+      for (const item of value) visit(item);
+      return;
+    }
+    if (!value || typeof value !== 'object') return;
+
+    if (typeof value.english === 'string') {
+      for (const key of ANCIENT_VARIANT_KEYS) {
+        if (typeof value[key] === 'string') {
+          addReverseEntry(reverseDictionary, value[key], value.english);
+        }
+      }
+    }
+
+    if (typeof value.translation === 'string') {
+      for (const key of VERB_FORM_KEYS) {
+        if (value[key] !== undefined) {
+          addNestedForms(value[key], value.translation);
+        }
+      }
+    }
+
+    for (const child of Object.values(value)) {
+      visit(child);
+    }
+  };
+
+  visit(parsed);
+}
+
 function lookupAncientToEnglish(sourcePhrase, reverseDictionary) {
   const lowered = sourcePhrase.toLowerCase();
   const plain = stripDiacritics(lowered);
@@ -428,13 +680,29 @@ function lookupAncientToEnglish(sourcePhrase, reverseDictionary) {
 
 function translateFromAncientLanguage(text, options = {}) {
   const dictionary = options.dictionary || getDefaultDictionary();
-  const reverseDictionary = options.reverseDictionary || buildReverseDictionary(dictionary);
+  const reverseDictionary = options.reverseDictionary
+    || (dictionary === getDefaultDictionary() ? getDefaultReverseDictionary() : buildReverseDictionary(dictionary));
   const input = normalizeApostrophes(`${text || ''}`.trim());
   if (!input) {
     return { translation: '', sourceLanguage: 'unknown', mappedTerms: 0, totalTerms: 0, coverage: 0 };
   }
 
   const tokens = tokenize(input);
+  const maxPhraseSize = getMaxDictionaryPhraseSize(dictionary);
+  const normalizedInputPhrase = tokens.filter(isWord).map((token) => token.toLowerCase()).join(' ');
+  const exactPhraseTranslation = normalizedInputPhrase ? lookupAncientToEnglish(normalizedInputPhrase, reverseDictionary) : null;
+  if (exactPhraseTranslation) {
+    const wordCount = normalizedInputPhrase.split(/\s+/).filter(Boolean).length;
+    const trailingPunctuation = input.match(/([,.;:!?]+)\s*$/u)?.[1] || '';
+    return {
+      translation: `${exactPhraseTranslation}${trailingPunctuation}`,
+      sourceLanguage: 'ancient',
+      mappedTerms: wordCount,
+      totalTerms: wordCount,
+      coverage: 1
+    };
+  }
+
   const output = [];
   let mappedTerms = 0;
   let totalTerms = 0;
@@ -450,7 +718,7 @@ function translateFromAncientLanguage(text, options = {}) {
     totalTerms += 1;
     let replaced = false;
 
-    for (let size = 4; size >= 1; size -= 1) {
+    for (let size = Math.min(maxPhraseSize, tokens.length - i); size >= 1; size -= 1) {
       if (i + size > tokens.length) continue;
       const span = tokens.slice(i, i + size);
       if (!span.every(isWord)) continue;
@@ -484,9 +752,11 @@ function translateFromAncientLanguage(text, options = {}) {
 
 module.exports = {
   addEssentialEntries,
+  addReverseEntriesFromStructuredVocabulary,
   buildDictionaryFromRawVocabulary,
   buildReverseDictionary,
   detectLikelyItalian,
+  getDefaultReverseDictionary,
   translateToAncientLanguage,
   translateFromAncientLanguage
 };
