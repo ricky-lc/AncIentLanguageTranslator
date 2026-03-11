@@ -349,6 +349,7 @@ def english_plural_candidates(word: str) -> List[str]:
 
 _cached_dictionary: Dict[str, str] | None = None
 _cached_reverse_dictionary: Dict[str, str] | None = None
+_dictionary_phrase_size_cache: Dict[int, int] = {}
 
 
 class TranslationResult(TypedDict):
@@ -378,6 +379,15 @@ def get_default_reverse_dictionary() -> Dict[str, str]:
     return _cached_reverse_dictionary
 
 
+def get_max_dictionary_phrase_size(dictionary: Dict[str, str]) -> int:
+    cache_key = id(dictionary)
+    if cache_key in _dictionary_phrase_size_cache:
+        return _dictionary_phrase_size_cache[cache_key]
+    max_phrase_size = min(max((len(key.split()) for key in dictionary), default=1), 12)
+    _dictionary_phrase_size_cache[cache_key] = max_phrase_size
+    return max_phrase_size
+
+
 def translate_to_ancient_language(
     text: str,
     dictionary: Dict[str, str] | None = None,
@@ -394,7 +404,7 @@ def translate_to_ancient_language(
     allow_italian_fallback = not forced_english
     normalized_input = input_text if is_italian_input else expand_english_contractions(input_text)
     tokens = tokenize(normalized_input)
-    max_phrase_size = min(max((len(key.split()) for key in dictionary), default=1), 12)
+    max_phrase_size = get_max_dictionary_phrase_size(dictionary)
 
     output: List[str] = []
     mapped_terms = 0
@@ -577,7 +587,7 @@ def translate_from_ancient_language(
         return {"translation": "", "sourceLanguage": "unknown", "mappedTerms": 0, "totalTerms": 0, "coverage": 0}
 
     tokens = tokenize(input_text)
-    max_phrase_size = min(max((len(key.split()) for key in dictionary), default=1), 12)
+    max_phrase_size = get_max_dictionary_phrase_size(dictionary)
     output: List[str] = []
     mapped_terms = 0
     total_terms = 0
