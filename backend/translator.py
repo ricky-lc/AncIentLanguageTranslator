@@ -159,6 +159,8 @@ IRREGULAR_ITALIAN_GERUNDS = {
     "traendo": "trarre"
 }
 GLOSS_STRING_KEYS = {"related_words", "components", "example_phrases", "example", "base_example", "compounds"}
+ANCIENT_VARIANT_KEYS = ("ancient_language", "formal", "informal", "poetic", "archaic")
+VERB_FORM_KEYS = ("present", "past", "future", "subjunctive", "imperative", "participles")
 
 
 def normalize_apostrophes(text: str) -> str:
@@ -326,7 +328,27 @@ def italian_gerund_candidates(word: str) -> List[str]:
     return list(dict.fromkeys([candidate for candidate in candidates if len(candidate) > 2]))
 
 
+def english_plural_candidates(word: str) -> List[str]:
+    lower = word.lower()
+    if len(lower) <= 3 or not lower.endswith("s"):
+        return []
+
+    candidates: List[str] = []
+    if lower.endswith("ies") and len(lower) > 4:
+        candidates.append(f"{lower[:-3]}y")
+    if lower.endswith(("sses", "shes", "ches", "xes", "zes")) and len(lower) > 4:
+        candidates.append(lower[:-2])
+    if lower.endswith("ves") and len(lower) > 4:
+        candidates.append(f"{lower[:-3]}f")
+        candidates.append(f"{lower[:-3]}fe")
+    if not lower.endswith(("ss", "us", "is")):
+        candidates.append(lower[:-1])
+
+    return list(dict.fromkeys(candidate for candidate in candidates if len(candidate) > 1))
+
+
 _cached_dictionary: Dict[str, str] | None = None
+_cached_reverse_dictionary: Dict[str, str] | None = None
 
 
 class TranslationResult(TypedDict):
@@ -344,6 +366,16 @@ def get_default_dictionary() -> Dict[str, str]:
     raw = Path(__file__).resolve().parent.parent.joinpath("vocabulary.json").read_text(encoding="utf-8")
     _cached_dictionary = build_dictionary_from_raw_vocabulary(raw)
     return _cached_dictionary
+
+
+def get_default_reverse_dictionary() -> Dict[str, str]:
+    global _cached_reverse_dictionary
+    if _cached_reverse_dictionary is not None:
+        return _cached_reverse_dictionary
+    raw = Path(__file__).resolve().parent.parent.joinpath("vocabulary.json").read_text(encoding="utf-8")
+    _cached_reverse_dictionary = build_reverse_dictionary(get_default_dictionary())
+    add_reverse_entries_from_structured_vocabulary(raw, _cached_reverse_dictionary)
+    return _cached_reverse_dictionary
 
 
 def translate_to_ancient_language(
@@ -412,6 +444,12 @@ def translate_to_ancient_language(
                 (candidate for candidate in english_ing_candidates(lower) if dictionary.get(candidate)),
                 None
             )
+        english_plural_as_base = None
+        if not forced_italian and not english_ing_as_base:
+            english_plural_as_base = next(
+                (candidate for candidate in english_plural_candidates(lower) if dictionary.get(candidate)),
+                None
+            )
         italian_gerund_as_english = None
         if allow_italian_fallback and not italian_as_english:
             for italian_candidate in italian_gerund_candidates(lower):
@@ -424,6 +462,7 @@ def translate_to_ancient_language(
             dictionary.get(lower)
             or (dictionary.get(italian_as_english) if italian_as_english else None)
             or (dictionary.get(english_ing_as_base) if english_ing_as_base else None)
+            or (dictionary.get(english_plural_as_base) if english_plural_as_base else None)
             or (dictionary.get(italian_gerund_as_english) if italian_gerund_as_english else None)
         )
         if ancient:
@@ -455,6 +494,65 @@ def build_reverse_dictionary(dictionary: Dict[str, str]) -> Dict[str, str]:
     return reverse_dictionary
 
 
+def add_reverse_entry(reverse_dictionary: Dict[str, str], ancient: str, english: str) -> None:
+    normalized_ancient = normalize_term(ancient)
+    english_variants = split_english_variants(english)
+    if not normalized_ancient or not english_variants:
+        return
+    preferred_english = next((variant for variant in english_variants if not variant.startswith("to ")), english_variants[0])
+    reverse_dictionary.setdefault(normalized_ancient, preferred_english)
+    plain_ancient = strip_diacritics(normalized_ancient)
+    if plain_ancient != normalized_ancient:
+        reverse_dictionary.setdefault(plain_ancient, preferred_english)
+
+
+def add_reverse_entries_from_structured_vocabulary(raw: str, reverse_dictionary: Dict[str, str]) -> None:
+    try:
+        parsed = json.loads(raw)
+    except json.JSONDecodeError:
+        return
+
+    def add_nested_forms(value, english: str) -> None:
+        if isinstance(value, str):
+            add_reverse_entry(reverse_dictionary, value, english)
+            return
+        if isinstance(value, list):
+            for item in value:
+                add_nested_forms(item, english)
+            return
+        if isinstance(value, dict):
+            for child in value.values():
+                add_nested_forms(child, english)
+
+    def visit(value) -> None:
+        if isinstance(value, list):
+            for item in value:
+                visit(item)
+            return
+
+        if not isinstance(value, dict):
+            return
+
+        english = value.get("english")
+        if isinstance(english, str):
+            for key in ANCIENT_VARIANT_KEYS:
+                variant = value.get(key)
+                if isinstance(variant, str):
+                    add_reverse_entry(reverse_dictionary, variant, english)
+
+        translation = value.get("translation")
+        if isinstance(translation, str):
+            for key in VERB_FORM_KEYS:
+                forms = value.get(key)
+                if forms is not None:
+                    add_nested_forms(forms, translation)
+
+        for child in value.values():
+            visit(child)
+
+    visit(parsed)
+
+
 def lookup_ancient_to_english(source_phrase: str, reverse_dictionary: Dict[str, str]) -> Optional[str]:
     lowered = source_phrase.lower()
     plain = strip_diacritics(lowered)
@@ -472,7 +570,8 @@ def translate_from_ancient_language(
     reverse_dictionary: Dict[str, str] | None = None
 ) -> TranslationResult:
     dictionary = dictionary or get_default_dictionary()
-    reverse_dictionary = reverse_dictionary or build_reverse_dictionary(dictionary)
+    if reverse_dictionary is None:
+        reverse_dictionary = get_default_reverse_dictionary() if dictionary is get_default_dictionary() else build_reverse_dictionary(dictionary)
     input_text = normalize_apostrophes((text or "").strip())
     if not input_text:
         return {"translation": "", "sourceLanguage": "unknown", "mappedTerms": 0, "totalTerms": 0, "coverage": 0}

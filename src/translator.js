@@ -177,6 +177,8 @@ const IRREGULAR_ITALIAN_GERUNDS = {
   traendo: 'trarre'
 };
 const GLOSS_STRING_KEYS = new Set(['related_words', 'components', 'example_phrases', 'example', 'base_example', 'compounds']);
+const ANCIENT_VARIANT_KEYS = ['ancient_language', 'formal', 'informal', 'poetic', 'archaic'];
+const VERB_FORM_KEYS = ['present', 'past', 'future', 'subjunctive', 'imperative', 'participles'];
 const DICTIONARY_PHRASE_SIZE_CACHE = new WeakMap();
 
 function normalizeTerm(text) {
@@ -301,6 +303,7 @@ function buildDictionaryFromRawVocabulary(raw) {
 }
 
 let cachedDictionary = null;
+let cachedReverseDictionary = null;
 
 function getDefaultDictionary() {
   if (cachedDictionary) return cachedDictionary;
@@ -308,6 +311,15 @@ function getDefaultDictionary() {
   const raw = fs.readFileSync(vocabularyPath, 'utf8');
   cachedDictionary = buildDictionaryFromRawVocabulary(raw);
   return cachedDictionary;
+}
+
+function getDefaultReverseDictionary() {
+  if (cachedReverseDictionary) return cachedReverseDictionary;
+  const vocabularyPath = path.resolve(__dirname, '..', 'vocabulary.json');
+  const raw = fs.readFileSync(vocabularyPath, 'utf8');
+  cachedReverseDictionary = buildReverseDictionary(getDefaultDictionary());
+  addReverseEntriesFromStructuredVocabulary(raw, cachedReverseDictionary);
+  return cachedReverseDictionary;
 }
 
 function tokenize(text) {
@@ -397,6 +409,25 @@ function italianGerundCandidates(word) {
   return [...new Map(candidates.filter((c) => c.length > 2).map((c) => [c, c])).keys()];
 }
 
+function englishPluralCandidates(word) {
+  const lower = word.toLowerCase();
+  if (lower.length <= 3 || !lower.endsWith('s')) return [];
+  const candidates = [];
+  if (lower.endsWith('ies') && lower.length > 4) {
+    candidates.push(`${lower.slice(0, -3)}y`);
+  }
+  if (/(sses|shes|ches|xes|zes)$/.test(lower) && lower.length > 4) {
+    candidates.push(lower.slice(0, -2));
+  }
+  if (lower.endsWith('ves') && lower.length > 4) {
+    candidates.push(`${lower.slice(0, -3)}f`, `${lower.slice(0, -3)}fe`);
+  }
+  if (!/(ss|us|is)$/.test(lower)) {
+    candidates.push(lower.slice(0, -1));
+  }
+  return [...new Set(candidates.filter((candidate) => candidate.length > 1))];
+}
+
 function translateToAncientLanguage(text, options = {}) {
   const dictionary = options.dictionary || getDefaultDictionary();
   const sourceLanguage = (options.sourceLanguage || 'auto').toLowerCase();
@@ -455,6 +486,10 @@ function translateToAncientLanguage(text, options = {}) {
       if (!forcedItalian) {
         engIngBase = englishIngCandidates(lower).find((c) => dictionary.has(c)) || null;
       }
+      let englishPluralBase = null;
+      if (!forcedItalian && !engIngBase) {
+        englishPluralBase = englishPluralCandidates(lower).find((c) => dictionary.has(c)) || null;
+      }
       let italianGerundAsEnglish = null;
       if (allowItalianFallback && !italianAsEnglish) {
         for (const candidate of italianGerundCandidates(lower)) {
@@ -465,6 +500,7 @@ function translateToAncientLanguage(text, options = {}) {
       const ancient = dictionary.get(lower)
         || (italianAsEnglish ? dictionary.get(italianAsEnglish) : null)
         || (engIngBase ? dictionary.get(engIngBase) : null)
+        || (englishPluralBase ? dictionary.get(englishPluralBase) : null)
         || (italianGerundAsEnglish ? dictionary.get(italianGerundAsEnglish) : null);
       if (ancient) {
         output.push(ancient);
@@ -499,6 +535,71 @@ function buildReverseDictionary(dictionary) {
   return reverse;
 }
 
+function addReverseEntry(reverseDictionary, ancient, english) {
+  const normalizedAncient = normalizeTerm(ancient);
+  const englishVariants = splitEnglishVariants(english);
+  if (!normalizedAncient || englishVariants.length === 0) return;
+  const preferredEnglish = englishVariants.find((variant) => !variant.startsWith('to ')) || englishVariants[0];
+  if (!reverseDictionary.has(normalizedAncient)) reverseDictionary.set(normalizedAncient, preferredEnglish);
+  const plainAncient = stripDiacritics(normalizedAncient);
+  if (plainAncient !== normalizedAncient && !reverseDictionary.has(plainAncient)) {
+    reverseDictionary.set(plainAncient, preferredEnglish);
+  }
+}
+
+function addReverseEntriesFromStructuredVocabulary(raw, reverseDictionary) {
+  let parsed;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    return;
+  }
+
+  const addNestedForms = (value, english) => {
+    if (typeof value === 'string') {
+      addReverseEntry(reverseDictionary, value, english);
+      return;
+    }
+    if (Array.isArray(value)) {
+      for (const item of value) addNestedForms(item, english);
+      return;
+    }
+    if (value && typeof value === 'object') {
+      for (const child of Object.values(value)) addNestedForms(child, english);
+    }
+  };
+
+  const visit = (value) => {
+    if (Array.isArray(value)) {
+      for (const item of value) visit(item);
+      return;
+    }
+    if (!value || typeof value !== 'object') return;
+
+    if (typeof value.english === 'string') {
+      for (const key of ANCIENT_VARIANT_KEYS) {
+        if (typeof value[key] === 'string') {
+          addReverseEntry(reverseDictionary, value[key], value.english);
+        }
+      }
+    }
+
+    if (typeof value.translation === 'string') {
+      for (const key of VERB_FORM_KEYS) {
+        if (value[key] !== undefined) {
+          addNestedForms(value[key], value.translation);
+        }
+      }
+    }
+
+    for (const child of Object.values(value)) {
+      visit(child);
+    }
+  };
+
+  visit(parsed);
+}
+
 function lookupAncientToEnglish(sourcePhrase, reverseDictionary) {
   const lowered = sourcePhrase.toLowerCase();
   const plain = stripDiacritics(lowered);
@@ -511,7 +612,8 @@ function lookupAncientToEnglish(sourcePhrase, reverseDictionary) {
 
 function translateFromAncientLanguage(text, options = {}) {
   const dictionary = options.dictionary || getDefaultDictionary();
-  const reverseDictionary = options.reverseDictionary || buildReverseDictionary(dictionary);
+  const reverseDictionary = options.reverseDictionary
+    || (dictionary === getDefaultDictionary() ? getDefaultReverseDictionary() : buildReverseDictionary(dictionary));
   const input = normalizeApostrophes(`${text || ''}`.trim());
   if (!input) {
     return { translation: '', sourceLanguage: 'unknown', mappedTerms: 0, totalTerms: 0, coverage: 0 };
@@ -568,9 +670,11 @@ function translateFromAncientLanguage(text, options = {}) {
 
 module.exports = {
   addEssentialEntries,
+  addReverseEntriesFromStructuredVocabulary,
   buildDictionaryFromRawVocabulary,
   buildReverseDictionary,
   detectLikelyItalian,
+  getDefaultReverseDictionary,
   translateToAncientLanguage,
   translateFromAncientLanguage
 };

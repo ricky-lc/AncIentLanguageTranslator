@@ -1,7 +1,9 @@
 import unittest
 
 from backend.translator import (
+    add_reverse_entries_from_structured_vocabulary,
     build_dictionary_from_raw_vocabulary,
+    build_reverse_dictionary,
     translate_from_ancient_language,
     translate_to_ancient_language,
 )
@@ -14,7 +16,9 @@ MOCK_VOCABULARY = """
   "entry3": {"english": "thank you", "ancient_language": "thorta"},
   "entry4": {"word": "máttr", "translation": "might, power"},
   "guide": {"example_phrases": ["Atra (let it be)"], "related_words": ["varda (watch over)"]},
-  "verbs": {"strong_verbs": [{"infinitive": "glimra", "translation": "to shimmer"}]}
+  "verbs": {"strong_verbs": [{"infinitive": "glimra", "translation": "to shimmer", "present": {"1st_singular": "glimri"}}, {"infinitive": "waíse", "translation": "to be", "present": {"1st_singular": "eddyr"}}]},
+  "entry5": {"english": "book, written scroll", "ancient_language": "bok", "poetic": "bok'ara"},
+  "entry6": {"english": "dragon", "ancient_language": "dreki"}
 }
 """
 
@@ -66,6 +70,11 @@ class TranslatorTests(unittest.TestCase):
         result = translate_to_ancient_language("doing making speaking", dictionary)
         self.assertEqual(result["translation"], "gera gera mæla")
 
+    def test_regular_english_plurals_map_to_singular_entries(self):
+        dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
+        result = translate_to_ancient_language("books dragons stars", dictionary)
+        self.assertEqual(result["translation"], "bok dreki stjarna")
+
     def test_italian_gerund_forms_map_to_base_verbs(self):
         dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
         result = translate_to_ancient_language("facendo parlando", dictionary, source_language="italian")
@@ -100,6 +109,14 @@ class TranslatorTests(unittest.TestCase):
         self.assertEqual(to_ancient["translation"], ancient)
         self.assertEqual(from_ancient["translation"], english.lower())
         self.assertEqual(from_ancient["coverage"], 1.0)
+
+    def test_reverse_dictionary_understands_variant_and_verb_forms(self):
+        dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
+        reverse_dictionary = build_reverse_dictionary(dictionary)
+        add_reverse_entries_from_structured_vocabulary(MOCK_VOCABULARY, reverse_dictionary)
+        result = translate_from_ancient_language("bok'ara eddyr glimri", dictionary, reverse_dictionary)
+        self.assertEqual(result["translation"], "book be shimmer")
+        self.assertEqual(result["coverage"], 1.0)
 
 
 if __name__ == "__main__":
