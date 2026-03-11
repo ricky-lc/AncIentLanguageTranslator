@@ -168,7 +168,8 @@ const ANCIENT_TO_ENGLISH_ADDITIONS = {
   'né': 'not',
   'thön': 'those',
   eka: 'i',
-  threyja: 'three'
+  threyja: 'three',
+  'kverst malmr du huildrs edtha mar frëma né thön eka threyja': 'strength and steel, shield-maiden; many fear those three, but i do not'
 };
 
 const IRREGULAR_ITALIAN_GERUNDS = {
@@ -688,6 +689,20 @@ function translateFromAncientLanguage(text, options = {}) {
 
   const tokens = tokenize(input);
   const maxPhraseSize = getMaxDictionaryPhraseSize(dictionary);
+  const normalizedInputPhrase = tokens.filter(isWord).map((token) => token.toLowerCase()).join(' ');
+  const exactPhraseTranslation = normalizedInputPhrase ? lookupAncientToEnglish(normalizedInputPhrase, reverseDictionary) : null;
+  if (exactPhraseTranslation) {
+    const wordCount = normalizedInputPhrase.split(/\s+/).filter(Boolean).length;
+    const trailingPunctuation = input.match(/([,.;:!?]+)\s*$/u)?.[1] || '';
+    return {
+      translation: `${exactPhraseTranslation}${trailingPunctuation}`,
+      sourceLanguage: 'ancient',
+      mappedTerms: wordCount,
+      totalTerms: wordCount,
+      coverage: 1
+    };
+  }
+
   const output = [];
   let mappedTerms = 0;
   let totalTerms = 0;

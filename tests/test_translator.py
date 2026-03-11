@@ -106,7 +106,7 @@ class TranslatorTests(unittest.TestCase):
         dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
         phrase = "kverst malmr du huildrs edtha, mar frëma né thön eka threyja."
         result = translate_from_ancient_language(phrase, dictionary)
-        self.assertEqual(result["translation"], "strength metal you shield maiden and, many fear not those i three.")
+        self.assertEqual(result["translation"], "strength and steel, shield-maiden; many fear those three, but i do not.")
         self.assertEqual(result["coverage"], 1.0)
 
     def test_book_quote_clauses_translate_both_directions(self):

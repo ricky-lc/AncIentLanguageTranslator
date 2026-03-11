@@ -121,7 +121,7 @@ test('translateFromAncientLanguage handles the official phrase', () => {
   const dictionary = buildDictionaryFromRawVocabulary(mockVocabulary);
   const phrase = 'kverst malmr du huildrs edtha, mar frëma né thön eka threyja.';
   const result = translateFromAncientLanguage(phrase, { dictionary });
-  assert.equal(result.translation, 'strength metal you shield maiden and, many fear not those i three.');
+  assert.equal(result.translation, 'strength and steel, shield-maiden; many fear those three, but i do not.');
   assert.equal(result.coverage, 1);
 });
 

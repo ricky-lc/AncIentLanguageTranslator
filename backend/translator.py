@@ -152,6 +152,7 @@ ANCIENT_TO_ENGLISH_ADDITIONS = {
     "thön": "those",
     "eka": "i",
     "threyja": "three",
+    "kverst malmr du huildrs edtha mar frëma né thön eka threyja": "strength and steel, shield-maiden; many fear those three, but i do not",
 }
 IRREGULAR_ITALIAN_GERUNDS = {
     "facendo": "fare",
@@ -651,6 +652,20 @@ def translate_from_ancient_language(
 
     tokens = tokenize(input_text)
     max_phrase_size = get_max_dictionary_phrase_size(dictionary)
+    normalized_input_phrase = " ".join(token.lower() for token in tokens if is_word(token))
+    exact_phrase_translation = lookup_ancient_to_english(normalized_input_phrase, reverse_dictionary) if normalized_input_phrase else None
+    if exact_phrase_translation:
+        word_count = len(normalized_input_phrase.split())
+        trailing_punctuation_match = re.search(r"([,.;:!?]+)\s*$", input_text)
+        trailing_punctuation = trailing_punctuation_match.group(1) if trailing_punctuation_match else ""
+        return {
+            "translation": f"{exact_phrase_translation}{trailing_punctuation}",
+            "sourceLanguage": "ancient",
+            "mappedTerms": word_count,
+            "totalTerms": word_count,
+            "coverage": 1.0
+        }
+
     output: List[str] = []
     mapped_terms = 0
     total_terms = 0
