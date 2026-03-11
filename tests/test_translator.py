@@ -18,7 +18,8 @@ MOCK_VOCABULARY = """
   "guide": {"example_phrases": ["Atra (let it be)"], "related_words": ["varda (watch over)"]},
   "verbs": {"strong_verbs": [{"infinitive": "glimra", "translation": "to shimmer", "present": {"1st_singular": "glimri"}}, {"infinitive": "waíse", "translation": "to be", "present": {"1st_singular": "eddyr"}}]},
   "entry5": {"english": "book, written scroll", "ancient_language": "bok", "poetic": "bok'ara"},
-  "entry6": {"english": "dragon", "ancient_language": "dreki"}
+  "entry6": {"english": "dragon", "ancient_language": "dreki"},
+  "grammar": {"adjective_system": {"strong_adjectives": [{"base": "fagr", "translation": "fair, beautiful, good", "comparative": "fagri", "superlative": "fagrest"}, {"base": "mikill", "translation": "great", "comparative": "meiri", "superlative": "mestr"}, {"base": "lítill", "translation": "small", "comparative": "minni", "superlative": "minnstr"}]}}
 }
 """
 
@@ -32,6 +33,9 @@ class TranslatorTests(unittest.TestCase):
         self.assertEqual(dictionary.get("let it be"), "atra")
         self.assertEqual(dictionary.get("watch over"), "varda")
         self.assertEqual(dictionary.get("shimmer"), "glimra")
+        self.assertEqual(dictionary.get("beautiful"), "fagr")
+        self.assertEqual(dictionary.get("greater"), "meiri")
+        self.assertEqual(dictionary.get("smallest"), "minnstr")
         self.assertEqual(dictionary.get("if"), "ef")
         self.assertEqual(dictionary.get("and"), "ok")
         self.assertGreaterEqual(len(dictionary), 220)
@@ -74,6 +78,11 @@ class TranslatorTests(unittest.TestCase):
         dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
         result = translate_to_ancient_language("books dragons stars", dictionary)
         self.assertEqual(result["translation"], "bok dreki stjarna")
+
+    def test_quantifiers_and_adjective_degrees_translate_more_accurately(self):
+        dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)
+        result = translate_to_ancient_language("each beautiful person is greater than the smallest", dictionary)
+        self.assertEqual(result["translation"], "hverr fagr maðr er meiri en sá minnstr")
 
     def test_italian_gerund_forms_map_to_base_verbs(self):
         dictionary = build_dictionary_from_raw_vocabulary(MOCK_VOCABULARY)

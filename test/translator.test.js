@@ -17,7 +17,8 @@ const mockVocabulary = `
   "guide": {"example_phrases": ["Atra (let it be)"], "related_words": ["varda (watch over)"]},
   "verbs": {"strong_verbs": [{"infinitive": "glimra", "translation": "to shimmer", "present": {"1st_singular": "glimri"}}, {"infinitive": "waíse", "translation": "to be", "present": {"1st_singular": "eddyr"}}]},
   "entry5": {"english": "book, written scroll", "ancient_language": "bok", "poetic": "bok'ara"},
-  "entry6": {"english": "dragon", "ancient_language": "dreki"}
+  "entry6": {"english": "dragon", "ancient_language": "dreki"},
+  "grammar": {"adjective_system": {"strong_adjectives": [{"base": "fagr", "translation": "fair, beautiful, good", "comparative": "fagri", "superlative": "fagrest"}, {"base": "mikill", "translation": "great", "comparative": "meiri", "superlative": "mestr"}, {"base": "lítill", "translation": "small", "comparative": "minni", "superlative": "minnstr"}]}}
 }
 `;
 
@@ -34,6 +35,9 @@ test('buildDictionaryFromRawVocabulary includes essential common word additions'
   assert.equal(dictionary.get('let it be'), 'atra');
   assert.equal(dictionary.get('watch over'), 'varda');
   assert.equal(dictionary.get('shimmer'), 'glimra');
+  assert.equal(dictionary.get('beautiful'), 'fagr');
+  assert.equal(dictionary.get('greater'), 'meiri');
+  assert.equal(dictionary.get('smallest'), 'minnstr');
   assert.equal(dictionary.get('if'), 'ef');
   assert.equal(dictionary.get('and'), 'ok');
   assert.ok(dictionary.size >= 220);
@@ -84,6 +88,12 @@ test('translateToAncientLanguage regular english plurals map to singular entries
   const dictionary = buildDictionaryFromRawVocabulary(mockVocabulary);
   const result = translateToAncientLanguage('books dragons stars', { dictionary });
   assert.equal(result.translation, 'bok dreki stjarna');
+});
+
+test('translateToAncientLanguage handles quantifiers and adjective degrees more accurately', () => {
+  const dictionary = buildDictionaryFromRawVocabulary(mockVocabulary);
+  const result = translateToAncientLanguage('each beautiful person is greater than the smallest', { dictionary });
+  assert.equal(result.translation, 'hverr fagr maðr er meiri en sá minnstr');
 });
 
 test('translateToAncientLanguage italian gerund forms map to base verbs', () => {

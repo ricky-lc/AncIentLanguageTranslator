@@ -75,10 +75,12 @@ ESSENTIAL_ANCIENT_ADDITIONS = {
     "know": "kenna", "say": "segja", "speak": "mæla", "think": "hugsa", "want": "vilja", "need": "þurfa",
     "give": "gefa", "take": "taka", "find": "finna", "tell": "segja", "ask": "spyrja",
     "who": "hver", "what": "hvat", "where": "hvar", "when": "hvenær", "why": "hví", "how": "hvernig",
-    "all": "allr", "some": "sumr", "many": "margir", "more": "meira", "most": "mest", "few": "fáir",
+    "all": "allr", "any": "einhverr", "each": "hverr", "every": "hverr", "both": "báðir", "either": "annarr hvárr",
+    "neither": "engi", "some": "sumr", "many": "margir", "more": "meira", "most": "mest", "few": "fáir",
     "very": "mjök", "much": "mikit", "little": "lítit", "good": "góðr", "bad": "illr",
     "true": "sannr", "new": "nýr", "old": "forn", "first": "fyrstr", "last": "síðastr",
     "today": "í dag", "tomorrow": "á morgin", "yesterday": "í gær", "now": "nú", "always": "æ", "never": "aldri",
+    "while": "meðan", "unless": "nema", "than": "en", "as": "sem",
     "please": "blítt", "hello": "heill", "thanks": "þakkir", "thank": "þakka"
 }
 
@@ -209,6 +211,55 @@ def add_normalized_entry(dictionary: Dict[str, str], english: str, ancient: str)
         dictionary.setdefault(variant, normalized_ancient)
 
 
+IRREGULAR_ENGLISH_DEGREES = {
+    "good": ("better", "best"),
+    "well": ("better", "best"),
+    "bad": ("worse", "worst"),
+    "ill": ("worse", "worst"),
+    "little": ("less", "least"),
+    "many": ("more", "most"),
+    "much": ("more", "most"),
+    "far": ("farther", "farthest"),
+    "great": ("greater", "greatest"),
+}
+
+
+def build_english_degree_forms(english: str) -> tuple[List[str], List[str]]:
+    comparatives: List[str] = []
+    superlatives: List[str] = []
+    for variant in split_english_variants(english):
+        if not re.fullmatch(r"[a-z]+", variant):
+            continue
+        irregular = IRREGULAR_ENGLISH_DEGREES.get(variant)
+        if irregular:
+            comparatives.append(irregular[0])
+            superlatives.append(irregular[1])
+            continue
+        if len(variant) <= 2:
+            continue
+        if variant.endswith("y") and len(variant) > 2 and variant[-2] not in "aeiou":
+            stem = variant[:-1]
+            comparatives.append(f"{stem}ier")
+            superlatives.append(f"{stem}iest")
+            continue
+        if variant.endswith("e"):
+            comparatives.append(f"{variant}r")
+            superlatives.append(f"{variant}st")
+            continue
+        if (
+            len(variant) >= 3
+            and variant[-1] not in "aeiouwxy"
+            and variant[-2] in "aeiou"
+            and variant[-3] not in "aeiou"
+        ):
+            comparatives.append(f"{variant}{variant[-1]}er")
+            superlatives.append(f"{variant}{variant[-1]}est")
+            continue
+        comparatives.append(f"{variant}er")
+        superlatives.append(f"{variant}est")
+    return list(dict.fromkeys(comparatives)), list(dict.fromkeys(superlatives))
+
+
 def add_gloss_entries_from_structured_vocabulary(raw: str, dictionary: Dict[str, str]) -> None:
     try:
         parsed = json.loads(raw)
@@ -226,6 +277,18 @@ def add_gloss_entries_from_structured_vocabulary(raw: str, dictionary: Dict[str,
             translation = value.get("translation")
             if isinstance(infinitive, str) and isinstance(translation, str):
                 add_normalized_entry(dictionary, translation, infinitive)
+            base = value.get("base")
+            comparative = value.get("comparative")
+            superlative = value.get("superlative")
+            if isinstance(base, str) and isinstance(translation, str):
+                add_normalized_entry(dictionary, translation, base)
+                comparative_variants, superlative_variants = build_english_degree_forms(translation)
+                if isinstance(comparative, str):
+                    for english_comparative in comparative_variants:
+                        add_normalized_entry(dictionary, english_comparative, comparative)
+                if isinstance(superlative, str):
+                    for english_superlative in superlative_variants:
+                        add_normalized_entry(dictionary, english_superlative, superlative)
             for key, child in value.items():
                 visit(child, key)
             return

@@ -92,10 +92,12 @@ const ESSENTIAL_ANCIENT_ADDITIONS = {
   know: 'kenna', say: 'segja', speak: 'mæla', think: 'hugsa', want: 'vilja', need: 'þurfa',
   give: 'gefa', take: 'taka', find: 'finna', tell: 'segja', ask: 'spyrja',
   who: 'hver', what: 'hvat', where: 'hvar', when: 'hvenær', why: 'hví', how: 'hvernig',
-  all: 'allr', some: 'sumr', many: 'margir', more: 'meira', most: 'mest', few: 'fáir',
+  all: 'allr', any: 'einhverr', each: 'hverr', every: 'hverr', both: 'báðir', either: 'annarr hvárr',
+  neither: 'engi', some: 'sumr', many: 'margir', more: 'meira', most: 'mest', few: 'fáir',
   very: 'mjök', much: 'mikit', little: 'lítit', good: 'góðr', bad: 'illr',
   true: 'sannr', new: 'nýr', old: 'forn', first: 'fyrstr', last: 'síðastr',
   today: 'í dag', tomorrow: 'á morgin', yesterday: 'í gær', now: 'nú', always: 'æ', never: 'aldri',
+  while: 'meðan', unless: 'nema', than: 'en', as: 'sem',
   please: 'blítt', hello: 'heill', thanks: 'þakkir', thank: 'þakka'
 };
 
@@ -230,6 +232,57 @@ function addNormalizedEntry(dictionary, english, ancient) {
   }
 }
 
+const IRREGULAR_ENGLISH_DEGREES = {
+  good: ['better', 'best'],
+  well: ['better', 'best'],
+  bad: ['worse', 'worst'],
+  ill: ['worse', 'worst'],
+  little: ['less', 'least'],
+  many: ['more', 'most'],
+  much: ['more', 'most'],
+  far: ['farther', 'farthest'],
+  great: ['greater', 'greatest']
+};
+
+function buildEnglishDegreeForms(english) {
+  const comparatives = [];
+  const superlatives = [];
+  for (const variant of splitEnglishVariants(english)) {
+    if (!/^[a-z]+$/.test(variant)) continue;
+    if (IRREGULAR_ENGLISH_DEGREES[variant]) {
+      const [comparative, superlative] = IRREGULAR_ENGLISH_DEGREES[variant];
+      comparatives.push(comparative);
+      superlatives.push(superlative);
+      continue;
+    }
+    if (variant.length <= 2) continue;
+    if (variant.endsWith('y') && variant.length > 2 && !'aeiou'.includes(variant[variant.length - 2])) {
+      const stem = variant.slice(0, -1);
+      comparatives.push(`${stem}ier`);
+      superlatives.push(`${stem}iest`);
+      continue;
+    }
+    if (variant.endsWith('e')) {
+      comparatives.push(`${variant}r`);
+      superlatives.push(`${variant}st`);
+      continue;
+    }
+    if (
+      variant.length >= 3
+      && !'aeiouwxy'.includes(variant[variant.length - 1])
+      && 'aeiou'.includes(variant[variant.length - 2])
+      && !'aeiou'.includes(variant[variant.length - 3])
+    ) {
+      comparatives.push(`${variant}${variant[variant.length - 1]}er`);
+      superlatives.push(`${variant}${variant[variant.length - 1]}est`);
+      continue;
+    }
+    comparatives.push(`${variant}er`);
+    superlatives.push(`${variant}est`);
+  }
+  return [new Set(comparatives), new Set(superlatives)];
+}
+
 function addGlossEntriesFromStructuredVocabulary(raw, dictionary) {
   let parsed;
   try {
@@ -247,6 +300,20 @@ function addGlossEntriesFromStructuredVocabulary(raw, dictionary) {
     if (value && typeof value === 'object') {
       if (typeof value.infinitive === 'string' && typeof value.translation === 'string') {
         addNormalizedEntry(dictionary, value.translation, value.infinitive);
+      }
+      if (typeof value.base === 'string' && typeof value.translation === 'string') {
+        addNormalizedEntry(dictionary, value.translation, value.base);
+        const [comparatives, superlatives] = buildEnglishDegreeForms(value.translation);
+        if (typeof value.comparative === 'string') {
+          for (const englishComparative of comparatives) {
+            addNormalizedEntry(dictionary, englishComparative, value.comparative);
+          }
+        }
+        if (typeof value.superlative === 'string') {
+          for (const englishSuperlative of superlatives) {
+            addNormalizedEntry(dictionary, englishSuperlative, value.superlative);
+          }
+        }
       }
       for (const [key, child] of Object.entries(value)) {
         visit(child, key);
